@@ -3,10 +3,29 @@
   'use strict';
   const api=globalThis.browser||globalThis.chrome,Core=globalThis.PurrpleCore;
   if(!api||!Core)return;
-  const KEY='purrpleState',POSITION='purrplePosition';
-  let queue=Promise.resolve(),lease=null,requestCache=new Map(),notificationRetryAt=0,scheduledAt=null;
+  const KEY='purrpleState',POSITION='purrplePosition',JOURNAL='purrpleRequestJournal';
+  const PANEL_KEY='purrplePanelCapabilities',PANEL_TTL=12*60*60*1000;
+  const panelStorage=api.storage.session||api.storage.local;
+  let queue=Promise.resolve(),lease=null,notificationRetryAt=0,scheduledAt=null;
   const extensionURL=api.runtime.getURL('');
-  const isUI=sender=>typeof sender?.url==='string'&&sender.url.startsWith(extensionURL);
+  async function panelCapabilities(){
+    const data=await panelStorage.get(PANEL_KEY),now=Date.now(),records=data[PANEL_KEY]||{};
+    for(const key of Object.keys(records))if(!records[key]||records[key].expiresAt<=now)delete records[key];
+    return records;
+  }
+  async function isUI(sender){
+    if(typeof sender?.url!=='string'||!sender.url.startsWith(extensionURL))return false;
+    let url;try{url=new URL(sender.url);}catch{return false;}
+    if(!['/app.html','/popup.html'].includes(url.pathname))return false;
+    const embedded=sender.tab&&Number.isInteger(sender.frameId)&&sender.frameId>0;
+    if(url.searchParams.get('panel')!=='1')return !embedded;
+    if(url.pathname!=='/popup.html'||!embedded)return false;
+    const token=url.searchParams.get('token'),records=await panelCapabilities(),record=records[token];
+    if(!record||record.tabId!==sender.tab.id||record.frameId!==null&&record.frameId!==sender.frameId)return false;
+    const needsSave=record.frameId===null||record.expiresAt-Date.now()<PANEL_TTL/2;
+    record.frameId=sender.frameId;
+    if(needsSave){record.expiresAt=Date.now()+PANEL_TTL;await panelStorage.set({[PANEL_KEY]:records});}return true;
+  }
   const isContent=sender=>!!sender?.tab&&sender.frameId===0&&/^https?:\/\//.test(sender.url||'');
   function serial(fn){const next=queue.then(fn,fn);queue=next.catch(()=>{});return next;}
   async function load(){
@@ -17,9 +36,27 @@
     if(result[KEY].version!==1)throw Error('This Purrple save needs a compatible version. Your data has been kept.');
     return result[KEY];
   }
-  async function save(state){await api.storage.local.set({[KEY]:state});}
+  async function save(state,journal){await api.storage.local.set({[KEY]:state,...(journal?{[JOURNAL]:journal}:{})});}
+  async function fingerprint(action){
+    if(!action||typeof action!=='object')throw Error('Choose an action.');
+    // Canonical JSON makes object-key order irrelevant. Retain a digest, never
+    // hundreds of duplicated full task lists or private action bodies.
+    const clean=JSON.parse(JSON.stringify(action));
+    const stable=value=>value&&typeof value==='object'?(Array.isArray(value)?'['+value.map(stable).join(',')+']':'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+stable(value[k])).join(',')+'}'):JSON.stringify(value);
+    const encoded=stable(clean),bytes=typeof TextEncoder==='function'?new TextEncoder().encode(encoded):Uint8Array.from(unescape(encodeURIComponent(encoded)),c=>c.charCodeAt(0));
+    const hash=await globalThis.crypto.subtle.digest('SHA-256',bytes);
+    return Array.from(new Uint8Array(hash),b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  async function requestJournal(){
+    const data=await api.storage.local.get(JOURNAL),saved=data[JOURNAL];
+    if(saved===undefined)return[];
+    if(!Array.isArray(saved)||saved.some(r=>!r||typeof r.id!=='string'||typeof r.fingerprint!=='string'||!/^[a-f0-9]{64}$/.test(r.fingerprint)))throw Error('The recent request journal is invalid. Your saved data has been kept.');
+    return saved.slice(-200);
+  }
   async function broadcast(state){
-    api.runtime.sendMessage({type:'STATE_CHANGED',state}).catch(()=>{});
+    // Full state is fetched by each authorized extension surface. A broadcast
+    // itself must not disclose task data to an unapproved embedded frame.
+    api.runtime.sendMessage({type:'STATE_CHANGED'}).catch(()=>{});
     const tabs=await api.tabs.query({}).catch(()=>[]);
     await Promise.all(tabs.filter(t=>/^https?:\/\//.test(t.url||'')).map(t=>api.tabs.sendMessage(t.id,{type:'STATE_CHANGED',state:Core.publicState(state)}).catch(()=>{})));
   }
@@ -88,29 +125,42 @@
   async function handler(request,sender){
     if(!request||typeof request.type!=='string')return undefined;
     if(request.type==='STATE_CHANGED')return undefined;
-    if(!isUI(sender)&&!isContent(sender))return {ok:false,error:'This request is not from a Purrple surface.'};
+    const ui=await isUI(sender);
+    if(!ui&&!isContent(sender))return {ok:false,error:'This request is not from a Purrple surface.'};
     switch(request.type){
       case 'GET_STATE':{
-        const state=await reconcileAndNotify(await load());return {ok:true,state:isUI(sender)?state:Core.publicState(state),catalog:Core.CATALOG};
+        const state=await reconcileAndNotify(await load());return {ok:true,state:ui?state:Core.publicState(state),catalog:Core.CATALOG};
       }
       case 'ACTION':{
-        if(!isUI(sender))throw Error('Open Purrple to change your plans or progress.');
-        const token=typeof request.requestId==='string'?request.requestId.slice(0,120):null;
-        if(token&&requestCache.has(token))return requestCache.get(token);
+        if(!ui)throw Error('Open Purrple to change your plans or progress.');
+        const token=request.requestId==null?null:request.requestId;
+        if(token!==null&&(typeof token!=='string'||!token.length||token.length>120))throw Error('The request identifier is invalid. Please try again.');
+        const journal=token?await requestJournal():null,digest=token?await fingerprint(request.action):null;
+        const receipt=token?journal.find(r=>r.id===token):null;
+        if(receipt){
+          if(receipt.fingerprint!==digest)throw Error('This request identifier was already used for a different action. Please try again.');
+          return{ok:true,state:await reconcileAndNotify(await load()),catalog:Core.CATALOG};
+        }
         const previous=await load(),state=Core.reduce(previous,request.action);
-        await save(state);await schedule(state);await broadcast(state);
+        const nextJournal=token?[...journal,{id:token,fingerprint:digest,at:Date.now()}].slice(-200):null;
+        // Commit the state and its compact receipt together. Replay safety must
+        // survive an MV3 event-page restart, not only an in-memory cache.
+        await save(state,nextJournal);await schedule(state);await broadcast(state);
         const response={ok:true,state,catalog:Core.CATALOG};
-        if(token){requestCache.set(token,response);if(requestCache.size>200)requestCache.delete(requestCache.keys().next().value);}
         return response;
       }
       case 'BACKUP_EXPORT':{
-        if(!isUI(sender))throw Error('Open Purrple to export a backup.');
+        if(!ui)throw Error('Open Purrple to export a backup.');
         return{ok:true,backup:{app:'Purrple',exportedAt:Date.now(),state:await reconcileAndNotify(await load())}};
       }
       case 'OPEN_APP':{
-        const url=api.runtime.getURL('app.html');
-        const tabs=await api.tabs.query({});const existing=tabs.find(t=>t.url?.split('#')[0]===url);
-        if(existing){await api.tabs.update(existing.id,{active:true});await api.windows.update(existing.windowId,{focused:true});}
+        const base=api.runtime.getURL('app.html'),requested=request.view??request.route;
+        if(requested!==undefined&&requested!==null&&typeof requested!=='string')throw Error('Choose a Purrple page.');
+        const route=typeof requested==='string'?requested.replace(/^#/,''):null;
+        if(route!==null&&!['today','focus','wardrobe','talk','settings'].includes(route))throw Error('Choose a Purrple page.');
+        const url=base+(route?'#'+route:'');
+        const tabs=await api.tabs.query({});const existing=tabs.find(t=>t.url?.split('#')[0]===base);
+        if(existing){await api.tabs.update(existing.id,{active:true,...(route?{url}:{})});await api.windows.update(existing.windowId,{focused:true});}
         else await api.tabs.create({url});return{ok:true};
       }
       case 'PET_CLAIM':{
@@ -119,6 +169,24 @@
         if(!lease)lease={id:globalThis.crypto.randomUUID(),tabId:sender.tab.id};
         const stored=await api.storage.local.get(POSITION);
         return{ok:true,active:true,leaseId:lease.id,position:stored[POSITION]||{x:.82,y:1}};
+      }
+      case 'PET_PANEL_OPEN':{
+        if(!isContent(sender)||!await activeSender(sender)||lease?.id!==request.leaseId||lease.tabId!==sender.tab.id)throw Error('Open the companion in the active tab first.');
+        const records=await panelCapabilities();
+        for(const key of Object.keys(records))if(records[key].tabId===sender.tab.id)delete records[key];
+        const token=globalThis.crypto.randomUUID();records[token]={tabId:sender.tab.id,frameId:null,expiresAt:Date.now()+PANEL_TTL};
+        await panelStorage.set({[PANEL_KEY]:records});
+        return{ok:true,token,url:api.runtime.getURL('popup.html')+'?panel=1&token='+encodeURIComponent(token)};
+      }
+      case 'PET_PANEL_CLOSE':{
+        if(!isContent(sender))throw Error('This companion panel could not be identified.');
+        const records=await panelCapabilities();if(records[request.token]?.tabId===sender.tab.id){delete records[request.token];await panelStorage.set({[PANEL_KEY]:records});}
+        return{ok:true};
+      }
+      case 'PET_TALK':{
+        if(!isContent(sender)||!await activeSender(sender))throw Error('Talk to Purrple from the active tab.');
+        const state=Core.reduce(await load(),{type:'TALK_REPLY',promptId:request.promptId});await save(state);await broadcast(state);
+        return{ok:true,state:Core.publicState(state)};
       }
       case 'PET_SAVE':{
         if(!isContent(sender)||lease?.id!==request.leaseId||lease.tabId!==sender.tab.id)return{ok:true,saved:false};

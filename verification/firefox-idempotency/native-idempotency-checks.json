@@ -1,0 +1,56 @@
+{
+  "native_extension": true,
+  "mocked_apis": false,
+  "installed_from": "/workspace/scratch/0c303cdde899/purrple_product/extension",
+  "runtime_sha256": null,
+  "checks": [
+    {
+      "check": "native-eight-absolute-completions-stay-done-award-once",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-purchase-initial-balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-completion-request-deduplicates-after-browser-restart",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-purchase-request-deduplicates-after-browser-restart",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-request-id-reuse-with-different-action-rejected",
+      "pass": true,
+      "detail": {
+        "error": "This request identifier was already used for a different action. Please try again.",
+        "ok": false
+      }
+    },
+    {
+      "check": "native-new-request-absolute-completion-remains-idempotent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-durable-journal-evicts-to-two-hundred-after-overflow",
+      "pass": true,
+      "detail": {
+        "entries": 200
+      }
+    },
+    {
+      "check": "native-permanent-ledger-prevents-bonus-after-journal-eviction",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "browser_version": "160.0",
+  "passed": 8,
+  "failed": 0
+}

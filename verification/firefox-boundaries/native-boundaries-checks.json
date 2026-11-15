@@ -1,0 +1,109 @@
+{
+  "native_extension": true,
+  "mocked_apis": false,
+  "checks": [
+    {
+      "check": "strict-csp-roaming-active",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "strict-csp-canvas-extension-origin-protection",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "strict-csp-host-js-and-clickthrough",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "strict-csp-private-iframe-native-state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "strict-csp-ready-handshake-completes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-page-zoom-one-hundred-fifty-percent",
+      "pass": true,
+      "detail": {
+        "devicePixelRatio": 1.5,
+        "innerHeight": 231,
+        "innerWidth": 333
+      }
+    },
+    {
+      "check": "native-zoomed-short-panel-clamped-to-viewport",
+      "pass": true,
+      "detail": {
+        "bottom": 218.6666717529297,
+        "height": 206.6666717529297,
+        "innerHeight": 231,
+        "innerWidth": 333,
+        "right": 321.33331298828125,
+        "width": 309.33331298828125,
+        "x": 12,
+        "y": 12
+      }
+    },
+    {
+      "check": "native-zoomed-short-panel-no-horizontal-overflow",
+      "pass": true,
+      "detail": {
+        "innerHeight": 167,
+        "innerWidth": 308,
+        "scroll": 304
+      }
+    },
+    {
+      "check": "native-short-panel-usable-content-scroll-owner",
+      "pass": true,
+      "detail": {
+        "documentHeight": 610,
+        "innerHeight": 167,
+        "mainHeight": 434
+      }
+    },
+    {
+      "check": "native-short-panel-talk-control-operates",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-short-panel-reply-can-be-scrolled-fully-into-view",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-host-created-popup.html-private-operations-denied",
+      "pass": true,
+      "detail": {
+        "state": {
+          "error": "This request is not from a Purrple surface.",
+          "ok": false
+        },
+        "backup": {
+          "error": "This request is not from a Purrple surface.",
+          "ok": false
+        },
+        "action": {
+          "error": "This request is not from a Purrple surface.",
+          "ok": false
+        }
+      }
+    },
+    {
+      "check": "native-full-app-not-web-accessible-and-frame-blocked",
+      "pass": true,
+      "detail": "Firefox refused frame navigation to the unexposed full app."
+    }
+  ],
+  "csp": "default-src 'self'; frame-src 'none'; script-src 'self'; img-src 'self'; style-src 'self'; object-src 'none'",
+  "browser_version": "160.0",
+  "passed": 13,
+  "failed": 0
+}

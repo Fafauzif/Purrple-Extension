@@ -1,0 +1,14 @@
+{
+  "scope": "Full fixed-artwork regeneration in a separate fresh source copy; every extension file compared by SHA-256. No image-generation service called.",
+  "scripts": [
+    "art/prepare_motion_atlases.py",
+    "art/prepare_wardrobe.py",
+    "art/prepare_refinements.py",
+    "art/prepare_refinements_supplement.py",
+    "art/measure_motion_anchors.py",
+    "art/merge_renderer_data.py"
+  ],
+  "all_exit_codes": 0,
+  "changed_runtime_files": [],
+  "result": "All prepared artwork and merged metadata reproduced byte-for-byte."
+}

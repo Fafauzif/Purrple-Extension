@@ -12,7 +12,10 @@ Core loop: complete personal tasks, earn coins, permanently unlock cosmetic
 items, customize Purrple, and let her accompany browser work and study.
 
 Approved surfaces: roaming companion on supported ordinary webpages, Firefox
-sidebar, full dashboard and quick popup. Keep the user's new-tab page unchanged.
+sidebar, full dashboard, a functional compact toolbar popup, and an on-page
+compact panel. The toolbar and page panel share `popup.html?panel=1` with Today,
+Focus, Wardrobe and Talk tabs, rather than merely redirecting to the full tab.
+Keep the user's new-tab page unchanged.
 The optional new-tab idea is not needed for this release. No mailbox/letters.
 
 Task effort earns 10/20/30 coins for small/medium/large. Completed study sessions
@@ -28,7 +31,8 @@ Moon bow, Star bandana, Cozy beanie. Accessories must stay equipped and follow
 every illustrated frame and movement; profile, curled, stretched and airborne
 poses require deliberate fitting rather than one fixed overlay coordinate.
 
-Persistence includes settings, tasks, purchases, equipment and reward history.
+Persistence includes settings, tasks, purchases, equipment, reward history,
+conversation preferences and the complete quick-task draft, including effort size.
 Backups restore local data. Duplicate clicks, repeated completion or multiple
 tabs must not award the same reward twice. Source history must avoid a fixed
 5000-task lifetime cap. Browser API changes can require future maintenance;
@@ -40,7 +44,8 @@ the product does not require an ongoing content or server update service.
 2. Complete GitHub-ready source ZIP containing runtime, asset sources/preparation,
    build/test tools, architecture, decisions, context and handover documentation.
 
-Mozilla signing is deferred because the user has no developer account yet.
+The owner is willing to set up Mozilla signing, but no authenticated account or
+completed signing submission is available in this implementation run.
 An unsigned ZIP supports Firefox temporary add-on loading, not permanent
 installation in normal release Firefox. Do not imply otherwise.
 
@@ -50,3 +55,19 @@ Preserve rewards and purchases across tabs and restarts. Exercise task and
 timer workflows in the real browser. Equipped items must follow every source
 pose, with deliberate profile, sleep and prop occlusion. Distinguish native
 extension tests from preview adapters in the factual verification summary.
+
+## Version 1.1 direction
+
+Provide 90 fixed, cheeky and affectionate English conversation prompts, each
+with three local replies, for 270 variants. This is a finite authored interaction, not AI-generated chat
+at runtime. No free-text model endpoint or remote messages are needed. Purrple
+can react to a strong throw with a brief, theatrical cry and recover gently.
+The movement set contains 45 behaviors and 198 newly accepted illustrations.
+Variable per-frame timing and registered 30 Hz geometry add secondary motion
+while keeping the same character identity.
+
+The recipient gets a cute offline installation guide containing the exact
+personal sentence “I love you”. This is guide copy, not a mailbox/letter feature.
+The owner gets separate, honest unsigned/signed installation and signing steps.
+The source ZIP must extract directly into the confirmed repository root so
+matching files can be replaced without an extra wrapper directory.

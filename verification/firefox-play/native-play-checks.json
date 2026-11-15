@@ -1,0 +1,102 @@
+{
+  "native_extension": true,
+  "mocked_apis": false,
+  "installed_from": "/workspace/scratch/0c303cdde899/purrple_product/qa-runtime/install-copy",
+  "runtime_sha256": "76924955115350c43784848a131287ae845936f1e8b14bd9d9aa50763e7f79db",
+  "checks": [
+    {
+      "check": "native-visible-play-drawer-has-eight-actions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-knead-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-wave-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-nuzzle-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-roll-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-stretch-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-visible-play-loaf-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-nap-enters-doze-then-sleep",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-wake-reaches-authored-clip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-house-wake-keeps-paw-control-clear",
+      "pass": true,
+      "detail": {
+        "overlap": false
+      }
+    },
+    {
+      "check": "native-soft-drop-has-no-dramatic-cry",
+      "pass": true,
+      "detail": [
+        "jump",
+        "tumble",
+        "land",
+        "idle"
+      ]
+    },
+    {
+      "check": "native-strong-throw-reaches-soothe-before-settling",
+      "pass": true,
+      "detail": [
+        "released",
+        "tumble",
+        "impact",
+        "cry",
+        "paw-wipe",
+        "soothe",
+        "idle"
+      ]
+    },
+    {
+      "check": "native-tab-return-reacquires-visible-cat-artwork",
+      "pass": true,
+      "detail": {
+        "purplePixels": 5040,
+        "size": [
+          110,
+          116
+        ]
+      }
+    },
+    {
+      "check": "native-play-and-recovery-preserve-host-clickthrough",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "browser_version": "160.0",
+  "passed": 14,
+  "failed": 0
+}

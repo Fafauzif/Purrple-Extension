@@ -1,0 +1,71 @@
+{
+  "passed": 16,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "compact-draft-effort-survives-immediate-reload",
+      "pass": true
+    },
+    {
+      "name": "compact-draft-survives-immediate-reload",
+      "pass": true
+    },
+    {
+      "name": "freshly-created-task-completes-on-first-real-click",
+      "pass": true
+    },
+    {
+      "name": "compact-undo-reopens-without-removing-earned-coins",
+      "pass": true
+    },
+    {
+      "name": "four-quick-thoughts-visible-without-scrolling",
+      "pass": true
+    },
+    {
+      "name": "all-reply-choices-show-pending-disabled-state",
+      "pass": true
+    },
+    {
+      "name": "pending-reply-is-explained",
+      "pass": true
+    },
+    {
+      "name": "reply-choices-reenable-after-save",
+      "pass": true
+    },
+    {
+      "name": "compact-reply-stays-visible-while-browsing",
+      "pass": true
+    },
+    {
+      "name": "keyboard-focused-prompt-clears-sticky-reply",
+      "pass": true
+    },
+    {
+      "name": "full-home-shares-large-draft-size",
+      "pass": true
+    },
+    {
+      "name": "full-home-draft-survives-immediate-reload",
+      "pass": true
+    },
+    {
+      "name": "existing-full-home-receives-settings-route",
+      "pass": true
+    },
+    {
+      "name": "draft-effort-shares-from-full-home-to-popup",
+      "pass": true
+    },
+    {
+      "name": "draft-shares-from-full-home-to-popup",
+      "pass": true
+    },
+    {
+      "name": "no-browser-page-errors",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

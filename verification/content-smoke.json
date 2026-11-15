@@ -1,5 +1,5 @@
 {
-  "scope": "Chromium DOM smoke test with stubbed browser API, renderer and deterministic document-visibility state; not native extension proof",
+  "scope": "Chromium DOM checks using the real renderer and bundled artwork; browser APIs, capability iframe and visibility are fixtures, clock is controlled; native Firefox integration is separate",
   "results": [
     {
       "id": "inactive-tab-defers-art-preload",
@@ -7,6 +7,10 @@
     },
     {
       "id": "inactive-tab-has-tiny-canvas",
+      "pass": true
+    },
+    {
+      "id": "closed-root-hides-private-iframe-dom",
       "pass": true
     },
     {
@@ -22,11 +26,75 @@
       "pass": true
     },
     {
-      "id": "play-menu-visible",
+      "id": "inactive-talk-waits-for-return",
+      "pass": true
+    },
+    {
+      "id": "queued-talk-flushes-immediately-on-reclaim",
+      "pass": true
+    },
+    {
+      "id": "expired-queued-notice-is-discarded",
+      "pass": true
+    },
+    {
+      "id": "menu-four-primary-actions",
+      "pass": true
+    },
+    {
+      "id": "menu-compact-border-box",
       "pass": true
     },
     {
       "id": "pat-state",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-knead",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-knead",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-wave",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-wave",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-roll",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-roll",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-loaf",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-loaf",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-nuzzle",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-nuzzle",
+      "pass": true
+    },
+    {
+      "id": "play-drawer-stretch",
+      "pass": true
+    },
+    {
+      "id": "product-plays-real-art-stretch",
       "pass": true
     },
     {
@@ -42,7 +110,27 @@
       "pass": true
     },
     {
+      "id": "floating-dashboard-uses-capability-url",
+      "pass": true
+    },
+    {
+      "id": "floating-dashboard-ready",
+      "pass": true
+    },
+    {
+      "id": "pin-keeps-panel-open",
+      "pass": true
+    },
+    {
+      "id": "panel-close-revokes-capability",
+      "pass": true
+    },
+    {
       "id": "drag-held-state",
+      "pass": true
+    },
+    {
+      "id": "reminder-does-not-interrupt-held",
       "pass": true
     },
     {
@@ -50,7 +138,37 @@
       "pass": true
     },
     {
-      "id": "throw-settles-in-bounds",
+      "id": "strong-throw-cries-once",
+      "pass": true
+    },
+    {
+      "id": "cry-recovers-through-paw-wipe",
+      "pass": true
+    },
+    {
+      "id": "paw-wipe-recovers-through-soothe",
+      "pass": true
+    },
+    {
+      "id": "queued-reminder-runs-after-recovery",
+      "pass": true
+    },
+    {
+      "id": "cry-not-repeated-per-throw",
+      "pass": true,
+      "detail": [
+        "held",
+        "released",
+        "tumble",
+        "impact",
+        "cry",
+        "paw-wipe",
+        "soothe",
+        "reminder"
+      ]
+    },
+    {
+      "id": "throw-remains-in-bounds",
       "pass": true,
       "detail": {
         "mounted": true,
@@ -58,12 +176,40 @@
         "active": true,
         "lease": true,
         "state": "action",
-        "clip": "impact",
-        "x": 668.7760955150434,
+        "clip": "reminder",
+        "x": 668.1946499622343,
         "y": 688,
         "atHome": false,
         "size": 128
       }
+    },
+    {
+      "id": "soft-drop-restores-sleeper",
+      "pass": true
+    },
+    {
+      "id": "gentle-ambient-listen",
+      "pass": true
+    },
+    {
+      "id": "gentle-ambient-knead",
+      "pass": true
+    },
+    {
+      "id": "gentle-ambient-loaf",
+      "pass": true
+    },
+    {
+      "id": "gentle-ambient-peek",
+      "pass": true
+    },
+    {
+      "id": "gentle-ambient-nuzzle",
+      "pass": true
+    },
+    {
+      "id": "focus-suppresses-ambient-movement",
+      "pass": true
     },
     {
       "id": "setting-hide-removes-companion",
@@ -78,6 +224,10 @@
       "pass": true
     },
     {
+      "id": "hide-releases-decoded-art",
+      "pass": true
+    },
+    {
       "id": "lease-release-sent",
       "pass": true
     },
@@ -87,6 +237,6 @@
       "detail": []
     }
   ],
-  "passed": 18,
+  "passed": 53,
   "failed": 0
 }

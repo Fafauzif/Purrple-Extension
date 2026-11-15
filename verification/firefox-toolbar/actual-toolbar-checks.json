@@ -1,0 +1,79 @@
+{
+  "native_extension": true,
+  "mocked_apis": false,
+  "installed_from": "/workspace/scratch/0c303cdde899/purrple_product/qa-runtime/install-copy",
+  "runtime_sha256": "76924955115350c43784848a131287ae845936f1e8b14bd9d9aa50763e7f79db",
+  "actual_toolbar_popup": true,
+  "checks": [
+    {
+      "check": "actual-toolbar-popup-usable-intrinsic-size",
+      "pass": true,
+      "detail": {
+        "className": "compact-body is-native-popup",
+        "height": 590,
+        "native": true,
+        "preview": false,
+        "scroll": 360,
+        "width": 366
+      }
+    },
+    {
+      "check": "actual-toolbar-popup-no-horizontal-overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-popup-native-ready",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-popup-four-working-tabs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-native-keyboard-input",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-native-click-adds-task",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-focus-tab-opens",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-wardrobe-catalog-visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-talk-reply-saved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-close-button-closes-native-popup",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-reply-appears-immediately-on-cat-reclaim",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual-toolbar-reopen-keeps-task-and-talk",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "browser_version": "160.0",
+  "passed": 12,
+  "failed": 0
+}

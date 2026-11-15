@@ -17,8 +17,9 @@ profiles or replacing it with a signed release. Signing through Mozilla is
 needed for permanent installation in standard Firefox; renaming ZIP to XPI
 does not replace that step.
 
-`extension/START_HERE.html` contains the illustrated welcome icon and complete
-installation, daily-use and backup instructions.
+Open **INSTALL-PURRPLE.html** for the friendly illustrated five-step guide.
+The same guide is inside the runtime folder, linked from `START_HERE.html`.
+It clearly separates this temporary development build from a future signed XPI.
 
 ## Everyday use
 
@@ -30,11 +31,17 @@ installation, daily-use and backup instructions.
   Take 5/10-minute breaks without a penalty.
 - Try on 15 accessories, buy favorites permanently and save a head+neck outfit.
 - Pet, brush, play, pick up, gently toss, or send Purrple to her little house.
+  Explore 45 movements in `extension/animations.html`.
+- Choose from 90 authored thoughts with 270 local replies. Quick task drafts
+  remember both their title and selected reward size.
 - Change size, 24/30 fps presentation, motion level, remarks, quiet hours and the
   list of sites where she should stay hidden.
 - Download and restore a complete JSON backup from Settings.
 
-The sidebar and dashboard use the same data. Your existing new-tab page remains
+The compact toolbar popup, on-page panel, sidebar and dashboard use the same
+data. The compact popup and page panel both offer tasks, focus, wardrobe and
+fixed local conversations, so daily actions do not require opening a full tab.
+Your existing new-tab page remains
 unchanged. Firefox protects settings, add-ons and its built-in PDF viewer from
 webpage injection; use the sidebar or dashboard there. When Firefox is fully
 closed, reminders catch up when it is running again.
@@ -63,9 +70,12 @@ cap; archive and export old plans for a manageable list and safe long-term use.
 | `art/` | Approved references, accessory sources and reproducible preparation |
 | `scripts/build_release.py` | Build both ZIPs without network access |
 | `tests/` | Data, background, browser and interaction test scripts |
-| `verification/` | Factual test results and inspection captures |
+| `verification/` | Factual test reports; internal browser captures are excluded |
 | `CONTEXT.md`, `PRODUCT.md` | Decisions, requirements and future handover |
 | `DESIGN.md`, `UX-CONTRACT.md` | Visual system and interaction contracts |
+| `INSTALL-PURRPLE.html` | Offline illustrated guide for the recipient |
+| `docs/MOZILLA-SIGNING.md` | Private owner-operated Mozilla signing steps |
+| `docs/REPLACE-AND-BUILD.md` | Repository-root replacement and reproducible ZIPs |
 
 ## Build and test
 
@@ -91,7 +101,26 @@ with `npm install`, then `npx playwright install chromium`. Run
 `node tests/ui_preview.cjs` and `node tests/ui_contrast.cjs`. You can select an
 existing browser executable with `PURRPLE_BROWSER`. Native tests instead use
 `PURRPLE_FIREFOX` and `PURRPLE_GECKODRIVER` paths and
-`python tests/firefox_native.py`. They create a separate synthetic-data profile.
+`python tests/firefox_refinement.py`. They create a separate synthetic-data profile.
+See `docs/TESTING.md` for actual toolbar, strict-CSP/zoom, animation and exact-ZIP
+checks, their prerequisites, and the distinction between native and preview tests.
 
 All fonts are bundled with their licenses. Read `ARCHITECTURE.md` before
 changing persistence, messaging, shared rendering or wardrobe anchors.
+
+## Update the GitHub checkout
+
+Version 1.1.0's source ZIP contains the repository contents directly, without
+the old enclosing `Purrple/` folder. Extract it into the directory containing
+`extension/` and `package.json`, and replace matching files. Preserve `.git/`.
+The user confirmed no edits since the previous source ZIP; save any newer edits
+before replacement. See `docs/REPLACE-AND-BUILD.md` for the full procedure.
+
+## Prepare permanent installation
+
+Mozilla signing is not complete in this package. The owner can prepare an
+unlisted signing submission with `python scripts/sign_release.py`; that default
+command performs no upload. The explicit `--submit` operation needs the owner's
+private Mozilla API environment and uploads to Mozilla. Read
+`docs/MOZILLA-SIGNING.md` before using it. Never commit credentials or describe
+an unsigned build as signed.

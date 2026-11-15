@@ -1,0 +1,1346 @@
+[
+  {
+    "clip": "groom",
+    "key": 0,
+    "sourceCell": 0,
+    "bbox": [
+      44,
+      35,
+      216,
+      244
+    ],
+    "eye": [
+      128.5,
+      117.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 1,
+    "sourceCell": 1,
+    "bbox": [
+      42,
+      35,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      118.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 2,
+    "sourceCell": 2,
+    "bbox": [
+      40,
+      35,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      120.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 3,
+    "sourceCell": 3,
+    "bbox": [
+      40,
+      35,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      123.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 4,
+    "sourceCell": 4,
+    "bbox": [
+      42,
+      35,
+      215,
+      244
+    ],
+    "eye": [
+      128.75,
+      126.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 5,
+    "sourceCell": 5,
+    "bbox": [
+      40,
+      35,
+      212,
+      244
+    ],
+    "eye": [
+      128.0,
+      117.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 6,
+    "sourceCell": 6,
+    "bbox": [
+      41,
+      36,
+      212,
+      244
+    ],
+    "eye": [
+      128.5,
+      113.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 7,
+    "sourceCell": 7,
+    "bbox": [
+      43,
+      36,
+      214,
+      244
+    ],
+    "eye": [
+      128.75,
+      113.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 8,
+    "sourceCell": 8,
+    "bbox": [
+      40,
+      36,
+      212,
+      244
+    ],
+    "eye": [
+      128.75,
+      116.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 9,
+    "sourceCell": 9,
+    "bbox": [
+      42,
+      36,
+      215,
+      244
+    ],
+    "eye": [
+      128.25,
+      118.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 10,
+    "sourceCell": 10,
+    "bbox": [
+      42,
+      36,
+      215,
+      244
+    ],
+    "eye": [
+      128.25,
+      118.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "groom",
+    "key": 11,
+    "sourceCell": 11,
+    "bbox": [
+      42,
+      36,
+      215,
+      244
+    ],
+    "eye": [
+      128.25,
+      118.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 0,
+    "sourceCell": 0,
+    "bbox": [
+      44,
+      7,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      130.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 1,
+    "sourceCell": 1,
+    "bbox": [
+      44,
+      20,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      130.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 2,
+    "sourceCell": 2,
+    "bbox": [
+      44,
+      29,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      131.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 3,
+    "sourceCell": 3,
+    "bbox": [
+      44,
+      43,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      133.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 4,
+    "sourceCell": 4,
+    "bbox": [
+      45,
+      56,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      137.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 5,
+    "sourceCell": 5,
+    "bbox": [
+      46,
+      65,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      141.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 6,
+    "sourceCell": 6,
+    "bbox": [
+      46,
+      62,
+      216,
+      244
+    ],
+    "eye": [
+      128.5,
+      145.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 7,
+    "sourceCell": 7,
+    "bbox": [
+      46,
+      65,
+      215,
+      244
+    ],
+    "eye": [
+      128.0,
+      145.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 8,
+    "sourceCell": 8,
+    "bbox": [
+      46,
+      69,
+      215,
+      244
+    ],
+    "eye": [
+      128.0,
+      147.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 9,
+    "sourceCell": 9,
+    "bbox": [
+      45,
+      65,
+      215,
+      244
+    ],
+    "eye": [
+      128.0,
+      149.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 10,
+    "sourceCell": 10,
+    "bbox": [
+      45,
+      57,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      149.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 11,
+    "sourceCell": 11,
+    "bbox": [
+      45,
+      36,
+      215,
+      244
+    ],
+    "eye": [
+      127.75,
+      140.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 12,
+    "sourceCell": 12,
+    "bbox": [
+      45,
+      27,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      138.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 13,
+    "sourceCell": 13,
+    "bbox": [
+      44,
+      27,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      133.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 14,
+    "sourceCell": 14,
+    "bbox": [
+      44,
+      28,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      131.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 15,
+    "sourceCell": 15,
+    "bbox": [
+      44,
+      27,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      129.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 16,
+    "sourceCell": 16,
+    "bbox": [
+      44,
+      37,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      130.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 17,
+    "sourceCell": 17,
+    "bbox": [
+      44,
+      51,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      132.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 18,
+    "sourceCell": 18,
+    "bbox": [
+      44,
+      61,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      133.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 19,
+    "sourceCell": 19,
+    "bbox": [
+      44,
+      56,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      134.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 20,
+    "sourceCell": 20,
+    "bbox": [
+      44,
+      50,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      133.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 21,
+    "sourceCell": 21,
+    "bbox": [
+      43,
+      31,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      129.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 22,
+    "sourceCell": 22,
+    "bbox": [
+      44,
+      21,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      128.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "brush",
+    "key": 23,
+    "sourceCell": 23,
+    "bbox": [
+      44,
+      12,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      128.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "study",
+    "key": 0,
+    "sourceCell": 0,
+    "bbox": [
+      33,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      104.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 1,
+    "sourceCell": 1,
+    "bbox": [
+      34,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      112.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 2,
+    "sourceCell": 2,
+    "bbox": [
+      34,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      117.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 3,
+    "sourceCell": 3,
+    "bbox": [
+      34,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      117.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 4,
+    "sourceCell": 4,
+    "bbox": [
+      34,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      108.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 5,
+    "sourceCell": 5,
+    "bbox": [
+      34,
+      19,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      117.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 6,
+    "sourceCell": 6,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.0,
+      107.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 7,
+    "sourceCell": 7,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      111.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 8,
+    "sourceCell": 8,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      117.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 9,
+    "sourceCell": 9,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      118.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 10,
+    "sourceCell": 10,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      109.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "study",
+    "key": 11,
+    "sourceCell": 11,
+    "bbox": [
+      34,
+      18,
+      214,
+      244
+    ],
+    "eye": [
+      128.25,
+      104.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 0,
+    "sourceCell": 12,
+    "bbox": [
+      34,
+      19,
+      214,
+      243
+    ],
+    "eye": [
+      128.25,
+      106.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 1,
+    "sourceCell": 13,
+    "bbox": [
+      31,
+      19,
+      211,
+      243
+    ],
+    "eye": [
+      128.0,
+      114.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 2,
+    "sourceCell": 14,
+    "bbox": [
+      32,
+      19,
+      212,
+      243
+    ],
+    "eye": [
+      128.5,
+      119.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 3,
+    "sourceCell": 15,
+    "bbox": [
+      32,
+      19,
+      212,
+      243
+    ],
+    "eye": [
+      128.0,
+      119.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 4,
+    "sourceCell": 16,
+    "bbox": [
+      32,
+      19,
+      212,
+      243
+    ],
+    "eye": [
+      128.0,
+      119.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 5,
+    "sourceCell": 17,
+    "bbox": [
+      33,
+      19,
+      213,
+      243
+    ],
+    "eye": [
+      127.5,
+      119.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 6,
+    "sourceCell": 18,
+    "bbox": [
+      35,
+      19,
+      215,
+      243
+    ],
+    "eye": [
+      127.75,
+      120.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 7,
+    "sourceCell": 19,
+    "bbox": [
+      35,
+      19,
+      215,
+      243
+    ],
+    "eye": [
+      128.0,
+      120.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 8,
+    "sourceCell": 20,
+    "bbox": [
+      34,
+      19,
+      214,
+      243
+    ],
+    "eye": [
+      128.0,
+      109.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 9,
+    "sourceCell": 21,
+    "bbox": [
+      34,
+      19,
+      214,
+      243
+    ],
+    "eye": [
+      128.25,
+      102.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 10,
+    "sourceCell": 22,
+    "bbox": [
+      34,
+      19,
+      214,
+      243
+    ],
+    "eye": [
+      128.5,
+      116.5
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "read",
+    "key": 11,
+    "sourceCell": 23,
+    "bbox": [
+      35,
+      20,
+      215,
+      243
+    ],
+    "eye": [
+      128.25,
+      120.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 0,
+    "sourceCell": 0,
+    "bbox": [
+      44,
+      43,
+      212,
+      244
+    ],
+    "eye": [
+      127.75,
+      124.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 1,
+    "sourceCell": 1,
+    "bbox": [
+      44,
+      44,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      129.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 2,
+    "sourceCell": 2,
+    "bbox": [
+      45,
+      50,
+      215,
+      244
+    ],
+    "eye": [
+      128.25,
+      133.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 3,
+    "sourceCell": 3,
+    "bbox": [
+      40,
+      65,
+      218,
+      244
+    ],
+    "eye": [
+      128.0,
+      149.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 4,
+    "sourceCell": 4,
+    "bbox": [
+      33,
+      76,
+      219,
+      244
+    ],
+    "eye": [
+      127.75,
+      162.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 5,
+    "sourceCell": 5,
+    "bbox": [
+      31,
+      61,
+      213,
+      244
+    ],
+    "eye": [
+      128.25,
+      110.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 6,
+    "sourceCell": 6,
+    "bbox": [
+      26,
+      41,
+      211,
+      244
+    ],
+    "eye": [
+      128.25,
+      121.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 7,
+    "sourceCell": 7,
+    "bbox": [
+      38,
+      37,
+      209,
+      244
+    ],
+    "eye": [
+      128.0,
+      117.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 8,
+    "sourceCell": 8,
+    "bbox": [
+      42,
+      37,
+      212,
+      244
+    ],
+    "eye": [
+      127.75,
+      111.0
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 9,
+    "sourceCell": 9,
+    "bbox": [
+      43,
+      35,
+      213,
+      244
+    ],
+    "eye": [
+      127.75,
+      108.75
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 10,
+    "sourceCell": 10,
+    "bbox": [
+      43,
+      38,
+      216,
+      244
+    ],
+    "eye": [
+      127.5,
+      117.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "pat",
+    "key": 11,
+    "sourceCell": 11,
+    "bbox": [
+      44,
+      41,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      120.25
+    ],
+    "headWidth": 148
+  },
+  {
+    "clip": "wake",
+    "key": 0,
+    "sourceCell": 12,
+    "bbox": [
+      48,
+      94,
+      253,
+      244
+    ],
+    "eye": [
+      125.5,
+      192.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 1,
+    "sourceCell": 13,
+    "bbox": [
+      48,
+      94,
+      253,
+      244
+    ],
+    "eye": [
+      125.0,
+      188.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 2,
+    "sourceCell": 14,
+    "bbox": [
+      48,
+      94,
+      253,
+      244
+    ],
+    "eye": [
+      124.25,
+      178.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 3,
+    "sourceCell": 15,
+    "bbox": [
+      48,
+      89,
+      253,
+      244
+    ],
+    "eye": [
+      121.5,
+      169.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 4,
+    "sourceCell": 16,
+    "bbox": [
+      50,
+      78,
+      253,
+      244
+    ],
+    "eye": [
+      121.5,
+      155.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 5,
+    "sourceCell": 17,
+    "bbox": [
+      50,
+      66,
+      253,
+      244
+    ],
+    "eye": [
+      123.75,
+      141.0
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 6,
+    "sourceCell": 18,
+    "bbox": [
+      49,
+      59,
+      253,
+      245
+    ],
+    "eye": [
+      126.5,
+      127.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 7,
+    "sourceCell": 19,
+    "bbox": [
+      48,
+      68,
+      253,
+      245
+    ],
+    "eye": [
+      118.75,
+      143.25
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 8,
+    "sourceCell": 20,
+    "bbox": [
+      53,
+      68,
+      250,
+      244
+    ],
+    "eye": [
+      128.0,
+      154.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 9,
+    "sourceCell": 21,
+    "bbox": [
+      51,
+      50,
+      236,
+      245
+    ],
+    "eye": [
+      128.25,
+      142.5
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 10,
+    "sourceCell": 22,
+    "bbox": [
+      45,
+      44,
+      225,
+      245
+    ],
+    "eye": [
+      128.0,
+      134.75
+    ],
+    "headWidth": 146
+  },
+  {
+    "clip": "wake",
+    "key": 11,
+    "sourceCell": 23,
+    "bbox": [
+      44,
+      42,
+      220,
+      245
+    ],
+    "eye": [
+      128.0,
+      124.5
+    ],
+    "headWidth": 146
+  }
+]

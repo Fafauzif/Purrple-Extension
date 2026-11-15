@@ -1,0 +1,101 @@
+{
+  "native_extension": true,
+  "mocked_apis": false,
+  "installed_from": "/workspace/scratch/0c303cdde899/purrple_product/qa-runtime/install-copy",
+  "runtime_sha256": "76924955115350c43784848a131287ae845936f1e8b14bd9d9aa50763e7f79db",
+  "scope": "Actual Firefox shared renderer, all clip/outfit samples, live RAF draw timing. Headless timing is not a promise for another device.",
+  "checks": [
+    {
+      "check": "native-explorer-uses-all-forty-five-shared-clips",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-explorer-frame-and-outfit-controls",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-every-clip-and-fifteen-item-render-samples",
+      "pass": true,
+      "detail": {
+        "clips": 45,
+        "draws": 2880,
+        "failures": []
+      }
+    },
+    {
+      "check": "native-thirty-fps-draw-budget-at-128-and-256",
+      "pass": true,
+      "detail": [
+        {
+          "drawMeanMs": 0.5737704918032787,
+          "drawP95Ms": 3,
+          "equipped": {
+            "head": "moon-bow",
+            "neck": "star-bandana"
+          },
+          "measuredSeconds": 2.0083600000000006,
+          "paintedFrames": 61,
+          "size": 128
+        },
+        {
+          "drawMeanMs": 1.6,
+          "drawP95Ms": 4,
+          "equipped": {
+            "head": "cozy-beanie",
+            "neck": "cozy-scarf"
+          },
+          "measuredSeconds": 2.0143600000000004,
+          "paintedFrames": 60,
+          "size": 128
+        },
+        {
+          "drawMeanMs": 0.4,
+          "drawP95Ms": 2,
+          "equipped": {
+            "head": "moon-bow",
+            "neck": "star-bandana"
+          },
+          "measuredSeconds": 2.0166399999999993,
+          "paintedFrames": 60,
+          "size": 256
+        },
+        {
+          "drawMeanMs": 0.4666666666666667,
+          "drawP95Ms": 1,
+          "equipped": {
+            "head": "cozy-beanie",
+            "neck": "cozy-scarf"
+          },
+          "measuredSeconds": 2.016379999999997,
+          "paintedFrames": 60,
+          "size": 256
+        }
+      ]
+    },
+    {
+      "check": "native-explorer-pause-control",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-explorer-frame-step-control",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-explorer-narrow-no-overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-explorer-no-extension-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "browser_version": "160.0",
+  "passed": 8,
+  "failed": 0
+}

@@ -1,36 +1,112 @@
 {
   "manifest_version": 3,
-  "name": "Purrple · Your little study companion",
-  "version": "1.0.0",
+  "name": "Purrple \u00b7 Your little study companion",
+  "version": "1.1.0",
   "description": "A little lavender cat, your tasks, a cozy study timer, and a wardrobe earned one small win at a time. Works offline.",
   "browser_specific_settings": {
     "gecko": {
       "id": "purrple-companion@purrple.local",
       "strict_min_version": "140.0",
-      "data_collection_permissions": {"required": ["none"]}
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   },
-  "permissions": ["storage", "unlimitedStorage", "alarms", "notifications"],
-  "host_permissions": ["http://*/*", "https://*/*"],
-  "background": {"scripts": ["js/core.js", "js/background.js"]},
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "js/talk.js",
+      "js/core.js",
+      "js/background.js"
+    ]
+  },
   "action": {
     "default_title": "Spend a little time with Purrple",
     "default_popup": "popup.html",
-    "default_icon": {"16":"assets/icon16.png","32":"assets/icon32.png","48":"assets/icon48.png","128":"assets/icon128.png"}
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "32": "assets/icon32.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
   },
-  "icons": {"16":"assets/icon16.png","32":"assets/icon32.png","48":"assets/icon48.png","128":"assets/icon128.png"},
-  "sidebar_action": {"default_title":"Purrple","default_panel":"app.html?sidebar=1","default_icon":"assets/icon32.png"},
-  "options_ui": {"page":"app.html#settings","open_in_tab":true},
-  "commands": {"open-purrple":{"suggested_key":{"default":"Alt+Shift+P"},"description":"Open Purrple"}},
-  "content_scripts": [{
-    "matches":["http://*/*","https://*/*"],
-    "js":["js/renderer-data.js","js/renderer.js","js/content.js"],
-    "run_at":"document_idle",
-    "all_frames":false
-  }],
-  "web_accessible_resources": [{
-    "resources":["assets/atlases/*.png","assets/wardrobe/*.png","assets/wardrobe/*.json","assets/wardrobe/thumbs/*.png"],
-    "matches":["http://*/*","https://*/*"]
-  }],
-  "content_security_policy":{"extension_pages":"script-src 'self'; object-src 'none'; connect-src 'self'; base-uri 'none'"}
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "sidebar_action": {
+    "default_title": "Purrple",
+    "default_panel": "app.html?sidebar=1",
+    "default_icon": "assets/icon32.png"
+  },
+  "options_ui": {
+    "page": "app.html#settings",
+    "open_in_tab": true
+  },
+  "commands": {
+    "open-purrple": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Open Purrple"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/renderer-data.js",
+        "js/renderer.js",
+        "js/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "css/app.css",
+        "css/talk.css",
+        "css/compact.css",
+        "js/talk.js",
+        "js/talk-ui.js",
+        "js/core.js",
+        "js/client.js",
+        "js/renderer-data.js",
+        "js/renderer.js",
+        "js/compact.js",
+        "assets/fonts/*.ttf",
+        "assets/atlases/*.png",
+        "assets/wardrobe/*.png",
+        "assets/wardrobe/*.json",
+        "assets/wardrobe/thumbs/*.png",
+        "assets/refinement/*.png"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'self'; base-uri 'none'"
+  }
 }

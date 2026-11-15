@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "file": "INSTALL-PURRPLE.html",
+      "width": 1100,
+      "scroll": 1100,
+      "pass": true
+    },
+    {
+      "file": "INSTALL-PURRPLE.html",
+      "width": 390,
+      "scroll": 390,
+      "pass": true
+    },
+    {
+      "file": "INSTALL-PURRPLE.html",
+      "width": 320,
+      "scroll": 320,
+      "pass": true
+    },
+    {
+      "file": "extension/INSTALL-PURRPLE.html",
+      "width": 1100,
+      "scroll": 1100,
+      "pass": true
+    },
+    {
+      "file": "extension/INSTALL-PURRPLE.html",
+      "width": 390,
+      "scroll": 390,
+      "pass": true
+    },
+    {
+      "file": "extension/INSTALL-PURRPLE.html",
+      "width": 320,
+      "scroll": 320,
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "passed": 9,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "short-panel-has-intrinsic-usable-content",
+      "pass": true,
+      "detail": {
+        "viewport": 167,
+        "main": 425,
+        "document": 646,
+        "width": 298,
+        "viewWidth": 308
+      }
+    },
+    {
+      "name": "full-document-is-scrollable",
+      "pass": true
+    },
+    {
+      "name": "short-panel-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "keyboard-can-reach-talk-choice",
+      "pass": true
+    },
+    {
+      "name": "keyboard-can-send-talk-in-short-panel",
+      "pass": true
+    },
+    {
+      "name": "keyboard-reaches-task-add-within-visible-viewport",
+      "pass": true
+    },
+    {
+      "name": "keyboard-can-submit-task-in-short-panel",
+      "pass": true
+    },
+    {
+      "name": "inner-close-is-keyboard-reachable",
+      "pass": true
+    },
+    {
+      "name": "no-browser-page-errors",
+      "pass": true,
+      "detail": []
+    }
+  ]
+}

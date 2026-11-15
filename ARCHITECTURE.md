@@ -4,10 +4,13 @@
 
 Firefox's event background owns storage.local.purrpleState. Product surfaces
 send GET_STATE and ACTION messages; the background serializes mutations, saves
-successfully, then broadcasts committed state. User interfaces do not write
-directly to extension storage. A request ID deduplicates repeated UI requests,
-and durable reward/purchase ledger IDs enforce economic idempotency even after
-background restart. Never award coins from animation or click callbacks.
+successfully, then broadcasts a change notification. Authorized UI clients
+fetch the committed state; webpage companions receive only a public projection. User interfaces do not write
+directly to extension storage. The last 200 request IDs and action fingerprints form a durable journal,
+saved with state in the same storage.local.set call. Retries remain idempotent after background
+restart; reusing a request ID for different content is rejected. Task completion
+uses TASK_SET_DONE with an absolute boolean, while legacy TASK_TOGGLE remains
+compatible. Durable reward/purchase ledger IDs independently prevent extra coins. Never award coins from animation or click callbacks.
 
 The pure PurrpleCore reducer holds task, timer, shop, equipment and import rules.
 State version 1 is explicit. Unsupported versions or malformed backups are
@@ -22,10 +25,25 @@ or restart; backward clock movement must not create an unrestorable state.
 
 ## Product surfaces
 
-Dashboard, sidebar and popup share core.js, client.js, renderer.js and app.js.
+Dashboard and sidebar share app.js. Every surface shares core.js, client.js
+and renderer.js; compact surfaces use compact.js rather than the full app shell.
 The client uses browser.runtime for the real extension. A clearly labeled local
 preview adapter exists only when extension APIs are unavailable; it is not
 evidence of native Firefox behavior.
+
+Version 1.1 uses `compact.js`/`compact.css` for the fully functional compact
+toolbar surface and `popup.html?panel=1` for its extension-origin on-page iframe.
+The full home still owns the larger task editor, settings and backups. Both
+use the same background/core state, not separate task or wallet databases.
+`talk.js` loads before `core.js` and supplies 90 fixed local prompts and 270
+replies. The shared quick-task draft stores text and effort together. Committing
+the matching draft clears its text while preserving the chosen effort preference.
+
+The floating panel must not grant a normal webpage authority to read or mutate
+private plans. Its content boundary is a closed shadow root plus the background's
+surface authorization. Parent-frame messages are limited to closing, moving,
+and bounded canned speech. Private state and actions remain extension messages;
+no full saved state is posted into the ordinary webpage.
 
 Content scripts receive only a public companion-state projection. Full task
 titles, wallet and backup mutations stay on trusted extension surfaces. The
@@ -46,8 +64,10 @@ Focus sessions select quiet study poses; reduced-motion mode keeps her calmer.
 
 ## Animation and wardrobe
 
-Every product surface uses the same renderer. Fixed illustrated keyframes are
-combined with continuous breathing, movement and physics at 24/30 fps presentation.
+Every product surface uses the same renderer. The library contains 45 behaviors
+and 198 newly accepted illustrations in this refinement. Variable per-frame
+timing combines fixed illustrated keys with registered 30 Hz geometry, continuous
+breathing, secondary motion, movement and physics at 24/30 fps presentation.
 This is not 30 unique hand-drawn frames per second. Source drawings, extraction
 scripts, frame metadata and per-pose fitting data remain available for refinement.
 
@@ -72,3 +92,9 @@ Source ZIP adds original artwork, preparation and build tools, tests and context
 Browser binaries, test profiles, credentials, private review scores and critique
 exchanges are excluded. Mozilla signing is a later release operation; preserve
 the stable Gecko ID and backup/migration semantics when moving to a signed build.
+
+Version 1.1 source archives have repository-root contents directly. The runtime
+still has `manifest.json` at its own archive root. The build copies the offline
+installation guide to the source root while adjusting local asset paths. Signing
+preparation is separate from the deterministic offline builder; only the explicit
+owner-run signing command contacts Mozilla.

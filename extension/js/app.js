@@ -3,7 +3,7 @@
   const $=id=>document.getElementById(id),client=PurrpleClient;
   const popup=document.body.classList.contains('popup-body');
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  let state=null,view='today',taskFilter='open',shopFilter='all',search='',taskLimit=25,preview=null,lastSettings='',toastTimer=0;
+  let state=null,view='today',taskFilter='open',shopFilter='all',shopQuery='',search='',taskLimit=25,preview=null,lastSettings='',toastTimer=0,tasksSignature='',shopSignature='',homeDraftWrites=0;
   let pose='idle',poseStarted=performance.now(),rendererReady=false,lastPaint=0,artErrorShown=false;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const catalog=()=>PurrpleCore.CATALOG||[];
@@ -11,16 +11,16 @@
   const item=id=>catalog().find(c=>c.id===id);
   const equipped=()=>({...state?.equipped,...(preview?{[item(preview)?.slot]:preview}:{})});
   const date=at=>new Intl.DateTimeFormat('en',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(at);
-  function notify(text,error=false){const el=$('toast');if(!el)return;clearTimeout(toastTimer);el.textContent=text;el.classList.toggle('error',error);el.hidden=false;toastTimer=setTimeout(()=>el.hidden=true,4500);}
+  function notify(text,error=false,undo=null){const el=$('toast');if(!el)return;clearTimeout(toastTimer);el.replaceChildren();const span=document.createElement('span');span.textContent=text;el.append(span);if(undo){const b=document.createElement('button');b.type='button';b.textContent='Undo';b.onclick=async()=>{b.disabled=true;try{await undo();}catch{}};el.append(b);}el.classList.toggle('error',error);el.hidden=false;toastTimer=setTimeout(()=>el.hidden=true,undo?8500:4500);}
   function setPose(id){pose=id;poseStarted=performance.now();}
   function receive(next){state=next;render();}
   async function dispatch(action,message){
     try{const next=await client.action(action);receive(next);if(message)notify(message);return next;}
-    catch(error){notify(error.message,true);throw error;}
+    catch(error){notify(error?.message||'That change could not be saved. Please try again.',true);throw error;}
   }
   function remaining(){const f=state?.focus;if(!f)return 0;return f.status==='running'?Math.max(0,(f.endsAt||Date.now())-Date.now()):Math.max(0,f.remainingMs||0);}
   function formatTime(ms){const seconds=Math.ceil(ms/1000);return `${Math.floor(seconds/60).toString().padStart(2,'0')}:${(seconds%60).toString().padStart(2,'0')}`;}
-  function showView(next){view=next;preview=null;document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==`view-${view}`);document.querySelectorAll('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});setPose(next==='focus'?'study':'idle');render();}
+  function showView(next){if(!['today','focus','wardrobe','talk','settings'].includes(next))next='today';view=next;if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);document.title='Purrple · '+({today:'Today',focus:'Study together',wardrobe:'Wardrobe',talk:'Talk',settings:'Settings'}[view]);preview=null;document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==`view-${view}`);document.querySelectorAll('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});setPose(next==='focus'?'study':'idle');render();}
   function render(){
     if(!state)return;
     const active=document.activeElement;
@@ -31,7 +31,7 @@
     $('main').hidden=false;
     $('today-date').textContent=new Intl.DateTimeFormat('en',{weekday:'long',month:'long',day:'numeric'}).format(Date.now());
     $('welcome-copy').textContent=state.settings?.name?`A small plan for today, ${state.settings.name}. Purrple is right here.`:'Make a small plan. Purrple will keep you company.';
-    renderTasks();renderFocus();renderShop();renderSettings();
+    renderTasks();renderFocus();renderShop();renderSettings();talkUI?.render();if(![$('quick-title'),$('quick-effort')].includes(document.activeElement)&&!$('quick-form').dataset.busy&&!homeDraftWrites){$('quick-title').value=state.drafts?.quickTask||'';$('quick-effort').value=state.drafts?.quickEffort||'medium';}
     const start=new Date();start.setHours(0,0,0,0);
     const today=(state.tasks||[]).filter(t=>t.done&&t.completedAt>=start.getTime()).length;
     $('today-done').textContent=`${today} little win${today===1?'':'s'} today`;
@@ -41,6 +41,7 @@
     }
   }
   function renderTasks(){
+    const signature=JSON.stringify([state.tasks,state.ledger.filter(e=>e.type==='task').map(e=>e.id),taskFilter,search,taskLimit]);if(signature===tasksSignature)return;tasksSignature=signature;
     const list=$('task-list'),focused=document.activeElement?.dataset.focus;
     const tasks=state.tasks||[];const open=tasks.filter(t=>!t.done&&!t.archived);
     $('open-count').textContent=open.length;
@@ -77,18 +78,19 @@
     if(view==='focus'&&pose!=='sleep')$('focus-cat-line').textContent=active?(focus.kind==='break'?'A little breather. I’ll be right here.':focus.status==='paused'?'Paws off the notebook for a moment.':'Just you, me, and the next small step.'):'Notebook ready. Tiny paws, big plans.';
   }
   function renderShop(){
+    const signature=JSON.stringify([state.owned,state.equipped,state.wallet.balance,shopFilter,shopQuery,preview]);if(signature===shopSignature)return;shopSignature=signature;
     const active=document.activeElement;
     const activeAction=active?.dataset?.action,activeId=active?.dataset?.id;
-    const all=catalog(),list=all.filter(c=>shopFilter==='all'||shopFilter==='owned'&&owned(c.id)||c.slot===shopFilter);
+    const all=catalog(),list=all.filter(c=>(shopFilter==='all'||shopFilter==='owned'&&owned(c.id)||c.slot===shopFilter)&&`${c.name} ${c.description}`.toLowerCase().includes(shopQuery));$('clear-shop-search').hidden=!shopQuery;
     document.querySelectorAll('[data-shop-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shopFilter===shopFilter)));
     $('shop-count').textContent=`${list.length} little thing${list.length===1?'':'s'}`;
     $('shop-grid').innerHTML=list.map(c=>{
       const yours=owned(c.id),worn=state.equipped?.[c.slot]===c.id,afford=state.wallet.balance>=c.price;
-      return `<article class="shop-card ${preview===c.id?'selected':''}"><img class="shop-thumb" src="assets/wardrobe/thumbs/${encodeURIComponent(c.id)}.png" alt="Purrple wearing ${esc(c.name)}" loading="lazy"><div class="shop-info"><h3>${esc(c.name)}</h3><p class="shop-description">${esc(c.description||'A little something for Purrple.')}</p><span class="shop-price">${yours?(worn?'Wearing it':'Yours forever'):`✧ ${c.price} coins`}</span><div class="shop-actions"><button class="button subtle" type="button" data-action="preview-item" data-id="${esc(c.id)}">Try on</button>${yours?`<button class="button primary" type="button" data-action="equip-item" data-id="${esc(c.id)}" ${worn?'disabled':''}>${worn?'Wearing':'Wear'}</button>`:`<button class="button primary" type="button" data-action="buy-item" data-id="${esc(c.id)}" ${!afford?'disabled':''} title="${afford?'Buy permanently':`Save ${c.price-state.wallet.balance} more coins`}">Buy</button>`}</div></div></article>`;
+      return `<article class="shop-card ${preview===c.id?'selected':''}"><img class="shop-thumb" src="assets/wardrobe/thumbs/${encodeURIComponent(c.id)}.png" alt="Purrple wearing ${esc(c.name)}" loading="lazy"><div class="shop-info"><h3>${esc(c.name)}</h3><p class="shop-description">${esc(c.description||'A little something for Purrple.')}</p><span class="shop-state ${worn?'equipped':''}">${worn?'Equipped':yours?'Owned · not equipped':preview===c.id?'Trying on · not owned':'Not owned'}</span><span class="shop-price">${yours?'Yours forever':`✧ ${c.price} coins`}</span><div class="shop-actions"><button class="button subtle" type="button" data-action="preview-item" data-id="${esc(c.id)}">Try on</button>${yours?`<button class="button primary" type="button" data-action="equip-item" data-id="${esc(c.id)}" ${worn?'disabled':''}>${worn?'Wearing':'Wear'}</button>`:`<button class="button primary" type="button" data-action="buy-item" data-id="${esc(c.id)}" ${!afford?'disabled':''} title="${afford?'Buy permanently':`Save ${c.price-state.wallet.balance} more coins`}">Buy</button>`}</div>${!yours&&c.price>state.wallet.balance?`<p class="shop-needed">Need ${c.price-state.wallet.balance} more coins</p>`:''}</div></article>`;
     }).join('')||'<div class="empty-state shop-empty"><strong>A little space for your favorites.</strong><p>Complete tasks to earn coins, then choose something to keep.</p></div>';
     $('head-name').textContent=item(state.equipped?.head)?.name||'Nothing yet';$('neck-name').textContent=item(state.equipped?.neck)?.name||'Nothing yet';
-    $('preview-name').textContent=preview?item(preview)?.name||'A little preview':'Her everyday look';
-    $('preview-copy').textContent=preview?`${owned(preview)?'Already yours. Choose Wear to save it.':'Just trying it on. Your saved outfit stays safe.'}`:'Choose a little something to try on.';
+    $('preview-name').textContent=preview?'Trying on: '+(item(preview)?.name||'A little preview'):'Wearing now';
+    $('preview-copy').textContent=preview?`${owned(preview)?'Owned, but this preview is not a saved change. Choose Wear to equip it.':'Preview only. Buy to own it, then choose Wear.'}`:'Your saved outfit. Choose a little something to try on.';
     $('preview-tag').hidden=!preview;
     document.querySelectorAll('[data-remove-slot]').forEach(b=>b.disabled=!state.equipped?.[b.dataset.removeSlot]);
     document.querySelectorAll('.shop-thumb').forEach(img=>img.onerror=()=>{img.onerror=null;img.style.visibility='hidden';img.closest('.shop-card').classList.add('thumb-unavailable');});
@@ -145,29 +147,30 @@
     const id=b.dataset.id,action=b.dataset.action;if(!action)return;
     if(!['edit-task','preview-item'].includes(action))b.disabled=true;
     try{
-      if(action==='toggle-task'){const task=state.tasks.find(t=>t.id===id);const wasDone=task?.done;b.disabled=true;await dispatch({type:'TASK_TOGGLE',id},wasDone?'Task reopened.':'A little win. Well done!');if(!wasDone)setPose('celebrate');}
+      if(action==='toggle-task'){const wasDone=b.getAttribute('aria-pressed')==='true';b.disabled=true;await dispatch({type:'TASK_SET_DONE',id,done:!wasDone},wasDone?'Task reopened.':'A little win. Well done!');if(!wasDone){setPose('celebrate');notify('A little win. Well done!',false,async()=>{await dispatch({type:'TASK_SET_DONE',id,done:false},'Task reopened. Coins are earned only once.');});}}
       if(action==='edit-task')openTask(id);
-      if(action==='archive-task')await dispatch({type:'TASK_ARCHIVE',id,archived:b.dataset.archived==='true'},b.dataset.archived==='true'?'Task tucked into the archive.':'Task restored.');
+      if(action==='archive-task'){const archived=b.dataset.archived==='true';await dispatch({type:'TASK_ARCHIVE',id,archived},archived?'Task tucked into the archive.':'Task restored.');notify(archived?'Task tucked into the archive.':'Task restored.',false,()=>dispatch({type:'TASK_ARCHIVE',id,archived:!archived},'Archive change undone.'));}
       if(action==='preview-item'){preview=id;setPose('idle');renderShop();}
       if(action==='buy-item'){await dispatch({type:'SHOP_BUY',id},`${item(id)?.name||'Your little favorite'} is yours forever.`);preview=id;renderShop();}
       if(action==='equip-item'){preview=null;await dispatch({type:'EQUIP',slot:item(id).slot,id},'Purrple’s outfit is saved.');}
     }catch{}finally{if(b.isConnected)b.disabled=false;}
   });
+  document.addEventListener('keydown',event=>{if(event.key==='Enter'&&(event.isComposing||event.keyCode===229)&&event.target.closest('form'))event.preventDefault();});
   document.addEventListener('change',async event=>{const el=event.target;if(el.dataset.subtask)try{await dispatch({type:'TASK_SUBTASK',id:el.dataset.taskId,subtaskId:el.dataset.subtask,done:el.checked});}catch{el.checked=!el.checked;}});
   function listen(id,type,fn){$(id)?.addEventListener(type,fn);}
-  listen('quick-form','submit',async e=>{e.preventDefault();if(!state||e.currentTarget.dataset.busy)return;const title=$('quick-title').value.trim();if(!title){$('quick-error').textContent='Give this little task a name.';$('quick-error').hidden=false;$('quick-title').focus();return;}$('quick-error').hidden=true;
-    const form=e.currentTarget;form.dataset.busy='1';$('quick-title').disabled=true;form.querySelector('button').disabled=true;
-    try{await dispatch({type:'TASK_ADD',title,effort:'medium',priority:'normal',recurrence:'none',dueAt:null,subtasks:[]},'A little plan, saved.');$('quick-title').value='';}catch{}
-    finally{delete form.dataset.busy;$('quick-title').disabled=false;form.querySelector('button').disabled=false;$('quick-title').focus();}});
+  listen('quick-form','submit',async e=>{e.preventDefault();if(e.isComposing||!state||e.currentTarget.dataset.busy)return;const title=$('quick-title').value.trim();if(!title){$('quick-error').textContent='Give this little task a name.';$('quick-error').hidden=false;$('quick-title').focus();return;}$('quick-error').hidden=true;
+    const form=e.currentTarget;form.dataset.busy='1';$('quick-title').disabled=true;$('quick-effort').disabled=true;form.querySelector('button').disabled=true;
+    try{await dispatch({type:'TASK_ADD',title,effort:$('quick-effort').value,priority:'normal',recurrence:'none',dueAt:null,subtasks:[],fromDraft:true},'A little plan, saved.');$('quick-title').value='';}catch{}
+    finally{delete form.dataset.busy;$('quick-title').disabled=false;$('quick-effort').disabled=false;form.querySelector('button').disabled=false;$('quick-title').focus();}});
   listen('new-task','click',()=>openTask());listen('close-task','click',()=>$('task-dialog').close());listen('cancel-task','click',()=>$('task-dialog').close());
-  listen('task-form','submit',async e=>{e.preventDefault();const title=$('task-title').value.trim();if(!title){$('task-error').textContent='Give this task a name.';$('task-error').hidden=false;$('task-title').setAttribute('aria-invalid','true');$('task-title').focus();return;}
+  listen('task-form','submit',async e=>{e.preventDefault();if(e.isComposing||e.currentTarget.dataset.busy)return;const title=$('task-title').value.trim();if(!title){$('task-error').textContent='Give this task a name.';$('task-error').hidden=false;$('task-title').setAttribute('aria-invalid','true');$('task-title').focus();return;}
     const id=$('task-id').value,old=state.tasks.find(t=>t.id===id);const lines=$('task-subtasks').value.split('\n').map(x=>x.trim()).filter(Boolean);
     const available=(old?.subtasks||[]).slice();
     const details={title,effort:$('task-effort').value,priority:$('task-priority').value,recurrence:$('task-recurrence').value,dueAt:$('task-due').value?new Date($('task-due').value).getTime():null,subtasks:id?lines.map(title=>{const index=available.findIndex(s=>s.title===title);return index>=0?available.splice(index,1)[0]:{title,done:false};}):lines};
-    $('save-task').disabled=true;try{await dispatch(id?{type:'TASK_UPDATE',id,patch:details}:{type:'TASK_ADD',...details},'Your little plan is saved.');$('task-dialog').close();}catch(error){$('task-error').textContent=error.message;$('task-error').hidden=false;}finally{$('save-task').disabled=false;}});
+    e.currentTarget.dataset.busy='1';$('save-task').disabled=true;try{await dispatch(id?{type:'TASK_UPDATE',id,patch:details}:{type:'TASK_ADD',...details},'Your little plan is saved.');$('task-dialog').close();}catch(error){$('task-error').textContent=error.message;$('task-error').hidden=false;}finally{delete $('task-form').dataset.busy;$('save-task').disabled=false;}});
   listen('task-search','input',e=>{if(e.isComposing)return;search=e.target.value.trim().toLowerCase();taskLimit=25;renderTasks();});listen('task-search','compositionend',e=>{search=e.target.value.trim().toLowerCase();renderTasks();});
   listen('clear-task-search','click',()=>{$('task-search').value='';search='';renderTasks();$('task-search').focus();});listen('load-more','click',()=>{taskLimit+=25;renderTasks();});
-  listen('focus-form','submit',async e=>{e.preventDefault();try{await dispatch({type:'FOCUS_START',minutes:Number($('focus-minutes').value),taskId:$('focus-task').value||null},'Notebook open. Let’s begin.');setPose('study');}catch{}});
+  listen('focus-form','submit',async e=>{e.preventDefault();if(e.isComposing)return;try{await dispatch({type:'FOCUS_START',minutes:Number($('focus-minutes').value),taskId:$('focus-task').value||null},'Notebook open. Let’s begin.');setPose('study');}catch{}});
   listen('focus-minutes','change',()=>{if(!state?.focus)$('timer-display').textContent=`${$('focus-minutes').value}:00`;});
   listen('focus-pause','click',async()=>{try{await dispatch({type:state.focus?.status==='paused'?'FOCUS_RESUME':'FOCUS_PAUSE'},state.focus?.status==='paused'?'Back to it, gently.':'Take your time.');}catch{}});
   listen('focus-cancel','click',async()=>{try{await dispatch({type:'FOCUS_CANCEL'},'Session ended. You can start fresh whenever you like.');setPose('idle');}catch{}});
@@ -181,8 +184,15 @@
   listen('confirm-cancel','click',()=>{pendingBackup=null;$('confirm-dialog').close();});listen('confirm-ok','click',async()=>{if(!pendingBackup)return;try{await dispatch({type:'BACKUP_IMPORT',backup:pendingBackup},'Your little world is restored.');pendingBackup=null;preview=null;$('confirm-dialog').close();}catch{}});
   listen('open-app','click',()=>client.openApp().catch(e=>notify(e.message,true)));listen('open-sidebar','click',()=>client.openSidebar().catch(e=>notify(e.message,true)));listen('popup-pet','change',async e=>{try{await dispatch({type:'SETTINGS',patch:{petEnabled:e.target.checked}});}catch{e.target.checked=!e.target.checked;}});
   async function permissions(){if(popup||!client.native)return;const row=document.createElement('div');row.className='permission-row';const p=document.createElement('p');p.textContent='Allow website access so Purrple can roam beside you. Your tasks and sidebar also work without it.';const b=document.createElement('button');b.type='button';b.className='button subtle';b.textContent='Allow Purrple on websites';b.onclick=async()=>{try{const granted=await client.requestWebsitePermission();if(granted){row.remove();notify('Purrple can now join you on supported websites.');}else notify('Website access stays off. Your sidebar still works.');}catch(error){notify(error.message,true);}};row.append(p,b);try{if(!await client.websitePermission())$('setting-pet').closest('.switch-row').after(row);}catch{}}
+  const talkUI=globalThis.PurrpleTalkUI?.mount($('talk-root'),{getState:()=>state,dispatch,onReply:last=>setPose(last.reaction)});
+  listen('shop-search','input',e=>{if(e.isComposing)return;shopQuery=e.target.value.trim().toLowerCase();renderShop();});
+  listen('shop-search','compositionend',e=>{shopQuery=e.target.value.trim().toLowerCase();renderShop();});
+  listen('clear-shop-search','click',()=>{shopQuery='';$('shop-search').value='';renderShop();$('shop-search').focus();});
+  const saveHomeDraft=()=>{if($('quick-form').dataset.busy)return;const text=$('quick-title').value,effort=$('quick-effort').value;if(!homeDraftWrites&&text===(state?.drafts?.quickTask||'')&&effort===(state?.drafts?.quickEffort||'medium'))return;homeDraftWrites++;client.saveQuickDraft(text,effort).then(receive).catch(error=>notify(error.message||'Your draft could not be saved. Please keep this page open.',true)).finally(()=>homeDraftWrites--);};
+  listen('quick-title','input',e=>{if(!e.isComposing)saveHomeDraft();});listen('quick-title','compositionend',saveHomeDraft);listen('quick-effort','change',saveHomeDraft);
+  addEventListener('hashchange',()=>showView(location.hash.slice(1)||'today'));
   client.subscribe(receive);
-  client.get().then(receive).then(permissions).catch(error=>{$('loading').hidden=true;$('load-error').textContent=error.message||'Purrple could not open her saved data. Try reopening this page.';$('load-error').hidden=false;});
+  client.get().then(next=>{receive(next);showView(location.hash.slice(1)||'today');}).then(permissions).catch(error=>{$('loading').hidden=true;$('load-error').textContent=error.message||'Purrple could not open her saved data. Try reopening this page.';$('load-error').hidden=false;});
   Promise.resolve(globalThis.PurrpleRenderer?.preload?.()).then(()=>rendererReady=!!globalThis.PurrpleRenderer).catch(()=>notify('Purrple’s artwork could not load. Try reopening this page.',true));
   setInterval(()=>{if(!state)return;if(popup){if(state.focus)$('popup-focus').textContent=`${state.focus.kind==='break'?'Break':'Study session'} · ${formatTime(remaining())}${state.focus.status==='paused'?' · paused':''}`;}else if(state.focus)$('timer-display').textContent=formatTime(remaining());if(state.focus?.status==='running'&&remaining()===0)client.get().then(receive).catch(()=>{});},500);
   requestAnimationFrame(animate);

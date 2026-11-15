@@ -12,7 +12,7 @@ COPY=ROOT/'qa-runtime/install-copy'
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     native.OUT=OUT
-    report={'artifact':ZIP.name,'sha256':hashlib.sha256(ZIP.read_bytes()).hexdigest(),'native_extension':True,'checks':[]}
+    report={'version':json.loads((ROOT/'extension/manifest.json').read_text())['version'],'artifact':ZIP.name,'sha256':hashlib.sha256(ZIP.read_bytes()).hexdigest(),'native_extension':True,'checks':[]}
     def check(name,value,detail=None):
         report['checks'].append({'check':name,'pass':bool(value),'detail':detail});print(('PASS 'if value else'FAIL ')+name,flush=True)
     if COPY.exists():shutil.rmtree(COPY)
@@ -25,7 +25,7 @@ def main():
     exact=True
     for p in (ROOT/'extension').rglob('*'):
         if p.is_file():exact=exact and (COPY/p.relative_to(ROOT/'extension')).read_bytes()==p.read_bytes()
-    check('extracted-runtime-matches-working-tree',exact)
+    check('extracted-runtime-matches-working-tree',exact and {str(p.relative_to(COPY))for p in COPY.rglob('*')if p.is_file()}=={str(p.relative_to(ROOT/'extension'))for p in (ROOT/'extension').rglob('*')if p.is_file()})
     d=None;server=None
     try:
         d=native.Driver();report['browser_version']=d.capabilities['browserVersion']
@@ -55,8 +55,14 @@ def main():
         check('packaged-all-fifteen-thumbnails-load',True)
         check('packaged-combined-equipped-outfit',d.state()['equipped']=={'head':'cozy-beanie','neck':'star-bandana'})
         d.screenshot('packaged-wardrobe-native.png')
-        d.navigate(base+'popup.html');d.wait("return !document.getElementById('popup-content').hidden")
+        d.navigate(base+'popup.html');d.wait("return !document.getElementById('compact-main').hidden")
         check('packaged-popup-shares-outfit',d.state()['equipped']['head']=='cozy-beanie')
+        check('packaged-compact-four-tabs',d.js('return document.querySelectorAll("[data-compact-view]").length')==4)
+        check('packaged-talk-ninety-prompts-two-hundred-seventy-replies',d.js('return PurrpleTalk.CATALOG.length===90 && PurrpleTalk.CATALOG.reduce((n,p)=>n+p.variants.length,0)===270'))
+        check('packaged-forty-five-shared-movements',d.js('return PurrpleRenderer.clips.length')==45)
+        payload='<img src=x onerror="document.body.dataset.compactXss=1">'
+        d.fill('#compact-task-title',payload);d.click('#compact-task-add');d.wait('return PurrpleCompact.getState().tasks.some(t=>t.title.startsWith("<img"))')
+        check('packaged-compact-task-html-payload-is-text',d.js('return !document.body.dataset.compactXss && document.getElementById("compact-task-list").textContent.includes("<img") && !document.getElementById("compact-task-list").querySelector("img")'))
         d.screenshot('packaged-popup-native.png')
         server=http.server.ThreadingHTTPServer(('127.0.0.1',0),native.QuietHandler)
         threading.Thread(target=server.serve_forever,daemon=True).start()

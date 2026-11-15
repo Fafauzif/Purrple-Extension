@@ -2,29 +2,34 @@
 
 ## Canonical ownership
 
-| Capability | Owner | Source of truth | Verification |
-| --- | --- | --- | --- |
-| Task operations | PurrpleCore / background | Core action contract | Reducer and browser workflows |
-| Data client | `extension/js/client.js` | Runtime messages | Native Firefox and preview |
-| Native select and date controls | Browser | Platform interaction model | Keyboard / narrow viewport |
-| Forms and validation | `extension/js/app.js` | Core validation plus visible field errors | Empty and valid submit |
-| Toast and error feedback | Shared `notify` helper | App state | Success and failure paths |
-| Confirmation | Native dialog with authored content | Backup import workflow | Cancel / restore / Escape |
-| Scrollbars | `extension/css/app.css` | DESIGN token mapping | Responsive screenshots |
-| Character and accessories | Shared PurrpleRenderer | Asset manifest and fitted slot data | Pose / surface matrix |
+| Capability | Canonical owner | Source of truth | Allowed variants | Verification |
+| --- | --- | --- | --- | --- |
+| Select/Listbox | Native Firefox select | Platform keyboard and popup behavior | Full dashboard and compact panel geometry | Keyboard selection and narrow native viewport |
+| Date | Native Firefox datetime-local/time inputs | Local browser timezone and core timestamp validation | Task deadline and quiet-hours clock | Valid/invalid date entry and persistence |
+| Form | Shared app/compact handlers plus PurrpleCore | Core action contract and visible validation errors | Task, focus, settings and backup confirmation | Submit, invalid input, cancel and restore workflows |
+| Scrollbar | Shared app/compact CSS tokens | DESIGN color and overflow ownership | Dashboard document, compact panel and task list | Narrow viewport and keyboard scrolling |
+| Toast | Shared surface feedback helpers | Committed response or validation error | Full-home toast and compact status message | Success, failure, focus and recovery feedback |
+| CRUD | PurrpleCore and serialized background | GET_STATE/ACTION domain contract | Full task editor and compact quick actions | Reducer, concurrency and native Firefox workflows |
+
+The shared renderer owns character/accessory fitting on every surface. Native
+dialogs with authored content own confirmation, Escape and focus restoration.
+`client.js` owns native messaging and the explicitly labeled development preview.
 
 ## Shared behavior
 
 All durable changes use GET_STATE/ACTION runtime messages. The background
 owns serialized writes. UI does not directly mutate stored extension state.
-On successful writes, every surface receives STATE_CHANGED and redraws the
-same data. In a normal browser without extension APIs, a clearly labeled Local
+On successful writes, trusted surfaces receive STATE_CHANGED, fetch the
+authorized state and redraw the same data. Content scripts receive only the
+public companion projection. In a normal browser without extension APIs, a clearly labeled Local
 preview uses localStorage and the identical pure reducer. Preview is not
 presented as evidence that a native extension has loaded.
 
-Tasks are created and edited in the same editor. Save closes on success;
+Tasks use the full editor or compact quick form. A quick draft persists its
+title and effort together. Save closes the full editor on success;
 validation failure preserves the form and exposes the error. Completion is
-immediate with coin feedback; reopening cannot farm a second reward. Archive
+immediate with coin feedback; reopening cannot farm a second reward. Completion uses absolute TASK_SET_DONE
+values; retries are deduplicated by the durable 200-entry request journal. Archive
 is reversible through the Archive filter. Empty and no-search-results states
 are distinct. User-written text is HTML-escaped before insertion.
 
@@ -59,6 +64,12 @@ is visible. Dialogs support Escape and modal focus behavior. Loading and
 errors have stable, readable feedback. Pointer-only pet gestures have explicit
 button alternatives. Reduced motion stops the character's decorative motion.
 
-The popup links to the full home and opens the Firefox sidebar directly from
-a user gesture. It shows at most three upcoming tasks and a live timer summary.
-App and sidebar are one responsive document, never divergent implementations.
+The compact popup and authorized floating panel share Today, Focus, Wardrobe
+and Talk views. They support quick tasks, durable title-and-effort draft recovery,
+timer controls,
+explicit try/buy/wear actions and the same 90-prompt, 270-reply conversation bank.
+Every surface uses the 45-behavior renderer with the 198 new illustrations,
+variable frame timing and registered 30 Hz geometry; equipment never changes
+merely because a motion or conversation preview is shown. Full home
+and Firefox sidebar remain available from deliberate controls. The full home
+and sidebar are one responsive document, never divergent implementations.

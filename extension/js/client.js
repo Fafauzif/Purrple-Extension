@@ -5,7 +5,7 @@
   const native=!!api?.runtime?.id;
   const listeners=new Set();
   const key='purrple-local-preview-v1';
-  let queue=Promise.resolve();
+  let queue=Promise.resolve(),refreshing=false,refreshAgain=false;
   const emit=state=>listeners.forEach(fn=>fn(state));
   function readLocal(){
     const raw=localStorage.getItem(key);let state;
@@ -20,10 +20,17 @@
       return state;
     });
   }
-  if(native)api.runtime.onMessage.addListener(message=>{if(message?.type==='STATE_CHANGED'&&message.state)emit(message.state);});
+  async function refresh(){
+    if(refreshing){refreshAgain=true;return;}refreshing=true;
+    try{emit(await request({type:'GET_STATE'}));}catch(error){console.warn('Purrple refresh unavailable:',String(error?.message||error));}
+    finally{refreshing=false;if(refreshAgain){refreshAgain=false;refresh();}}
+  }
+  if(native)api.runtime.onMessage.addListener(message=>{if(message?.type==='STATE_CHANGED')refresh();});
   else addEventListener('storage',event=>{if(event.key===key)emit(readLocal());});
-  globalThis.PurrpleClient={native,get:()=>request({type:'GET_STATE'}),action:action=>request({type:'ACTION',action}),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},
-    openApp:()=>native?api.tabs.create({url:api.runtime.getURL('app.html')}):Promise.resolve(open('app.html','_blank')),
+  const action=action=>request({type:'ACTION',action,requestId:globalThis.crypto?.randomUUID?.()||('request_'+Date.now()+'_'+Math.random().toString(36).slice(2))});
+  globalThis.PurrpleClient={native,get:()=>request({type:'GET_STATE'}),compact:()=>request({type:'GET_STATE'}),action,subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},
+    talk:promptId=>action({type:'TALK_REPLY',promptId}),favorite:(promptId,favorite)=>action({type:'TALK_FAVORITE',promptId,...(favorite===undefined?{}:{favorite})}),saveQuickDraft:(text,effort)=>action({type:'QUICK_TASK_DRAFT',text,...(effort===undefined?{}:{effort})}),
+    openApp:async view=>{if(native){const result=await api.runtime.sendMessage({type:'OPEN_APP',...(view?{view}:{})});if(!result?.ok)throw Error(result?.error||'Purrple could not open that page.');return result;}return open('app.html'+(view?'#'+encodeURIComponent(view):''),'_blank');},
     openSidebar:()=>native&&api.sidebarAction?api.sidebarAction.open():Promise.resolve(open('app.html?sidebar=1','_blank')),
     websitePermission:()=>native&&api.permissions?api.permissions.contains({origins:['http://*/*','https://*/*']}):Promise.resolve(true),
     requestWebsitePermission:()=>native&&api.permissions?api.permissions.request({origins:['http://*/*','https://*/*']}):Promise.resolve(false)};

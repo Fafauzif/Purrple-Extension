@@ -1,0 +1,328 @@
+{
+  "version": "1.1.0",
+  "native_extension": true,
+  "mocked_apis": false,
+  "scope": "Native Firefox WebDriver user flows, privileged closed-shadow inspection, real 60-second alarm",
+  "checks": [
+    {
+      "check": "version-1-save-preserved-on-1-1-install",
+      "pass": true,
+      "detail": {
+        "balance": 15,
+        "equipped": {
+          "head": "moon-bow",
+          "neck": null
+        },
+        "focusHistory": 1
+      }
+    },
+    {
+      "check": "old-save-talk-defaults-migrate-without-data-loss",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-1-1-install",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "compact-native-not-preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "fresh-state-no-invented-tasks-or-coins",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-shared-renderer-forty-five-clips",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-talk-bank-eighty-with-three-to-five-replies",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-immediate-popup-close-keeps-draft",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-compact-form-task-created",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-committed-task-clears-draft",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-two-surface-task-edit-shared",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-compact-completion-earns-twenty",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-duplicate-request-no-reward-farming",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-invalid-import-preserves-save",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-fifteen-permanent-purchases",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-try-on-keeps-save-unequipped",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-head-neck-combined-outfit",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-immediate-draft-close-keeps-title-and-large-size",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-restored-large-draft-earns-thirty",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-talk-rotates-local-authored-replies",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-talk-history-and-favorite-survive-reopen",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-compact-paused-focus-persists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-compact-focus-resume-and-cancel",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-real-alarm-scheduled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-running-timer-survives-restart",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-roaming-closed-shadow-boundary",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-body-double-study",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-host-page-clickthrough",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-floating-panel-authorized-and-loaded",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-panel-ready-handshake-hides-loading-strip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-panel-stays-open-while-iframe-focused",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-iframe-escape-closes-panel",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-panel-close-restores-cat-focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-floating-immediate-close-keeps-draft",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-iframe-close-button-handshake",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-floating-talk-same-saved-history",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-outer-close-removes-private-frame",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-unapproved-frame-cannot-read-state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-unapproved-frame-cannot-mutate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-closed-panel-token-revoked",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-cat-real-pointer-held",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-strong-throw-dramatic-cry-and-recovery",
+      "pass": true,
+      "detail": [
+        "released",
+        "tumble",
+        "impact",
+        "cry",
+        "paw-wipe",
+        "study"
+      ]
+    },
+    {
+      "check": "native-throw-settles-and-host-still-works",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-tab-handoff-one-visible-cat",
+      "pass": true,
+      "detail": {
+        "a0": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "a1": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "a2": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "b0": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "b1": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "hidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        },
+        "visible": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 99.50898226848578,
+          "y": 670
+        }
+      }
+    },
+    {
+      "check": "native-hidden-host-and-unhide",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-real-minute-alarm-completes-without-ui-reconcile",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-bonus-remains-once",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-talk-outfit-draft-backup-roundtrip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-no-extension-script-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "browser_version": "160.0",
+  "script_errors": [],
+  "passed": 49,
+  "failed": 0
+}

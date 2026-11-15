@@ -1,0 +1,620 @@
+{
+  "walk": [
+    {
+      "paws": [
+        [
+          57.81,
+          240.11
+        ],
+        [
+          178.92,
+          240.05
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        130,
+        166
+      ]
+    },
+    {
+      "paws": [
+        [
+          62.11,
+          235.12
+        ],
+        [
+          165.54,
+          239.85
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        114,
+        140
+      ]
+    },
+    {
+      "paws": [
+        [
+          88.5,
+          238.0
+        ],
+        [
+          139.92,
+          240.17
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        12,
+        122
+      ]
+    },
+    {
+      "paws": [
+        [
+          129.96,
+          241.27
+        ],
+        [
+          135.73,
+          241.26
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        77,
+        85
+      ]
+    },
+    {
+      "paws": [
+        [
+          58.65,
+          231.43
+        ],
+        [
+          171.4,
+          241.17
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        23,
+        144
+      ]
+    },
+    {
+      "paws": [
+        [
+          134.32,
+          234.77
+        ],
+        [
+          153.85,
+          240.15
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        22,
+        164
+      ]
+    },
+    {
+      "paws": [
+        [
+          74.83,
+          236.83
+        ],
+        [
+          146.51,
+          240.09
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        36,
+        159
+      ]
+    },
+    {
+      "paws": [
+        [
+          130.87,
+          240.0
+        ],
+        [
+          139.56,
+          240.31
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        62,
+        126
+      ]
+    },
+    {
+      "paws": [
+        [
+          125.79,
+          240.09
+        ],
+        [
+          152.0,
+          239.29
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        106,
+        70
+      ]
+    },
+    {
+      "paws": [
+        [
+          57.26,
+          233.18
+        ],
+        [
+          168.6,
+          239.88
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        113,
+        144
+      ]
+    },
+    {
+      "paws": [
+        [
+          89.06,
+          240.03
+        ],
+        [
+          165.54,
+          235.28
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        126,
+        65
+      ]
+    },
+    {
+      "paws": [
+        [
+          55.87,
+          240.2
+        ],
+        [
+          180.63,
+          238.12
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        133,
+        147
+      ]
+    }
+  ],
+  "run": [
+    {
+      "paws": [
+        [
+          81.25,
+          240.01
+        ],
+        [
+          144.2,
+          238.77
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        156,
+        151
+      ]
+    },
+    {
+      "paws": [
+        [
+          70.2,
+          239.97
+        ],
+        [
+          138.26,
+          236.92
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        120,
+        96
+      ]
+    },
+    {
+      "paws": [
+        [
+          40.5,
+          240.0
+        ],
+        [
+          166.02,
+          236.66
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        104,
+        127
+      ]
+    },
+    {
+      "paws": [
+        [
+          89.03,
+          239.78
+        ],
+        [
+          143.39,
+          240.02
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        153,
+        118
+      ]
+    },
+    {
+      "paws": [
+        [
+          67.93,
+          239.84
+        ],
+        [
+          182.37,
+          238.79
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        122,
+        168
+      ]
+    },
+    {
+      "paws": [
+        [
+          84.54,
+          241.09
+        ],
+        [
+          161.89,
+          241.0
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        159,
+        180
+      ]
+    },
+    {
+      "paws": [
+        [
+          86.49,
+          240.07
+        ],
+        [
+          141.39,
+          239.44
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        145,
+        108
+      ]
+    },
+    {
+      "paws": [
+        [
+          65.94,
+          241.1
+        ],
+        [
+          134.32,
+          235.05
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        114,
+        65
+      ]
+    },
+    {
+      "paws": [
+        [
+          51.94,
+          239.2
+        ],
+        [
+          170.89,
+          240.09
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        123,
+        161
+      ]
+    },
+    {
+      "paws": [
+        [
+          78.14,
+          239.96
+        ],
+        [
+          146.83,
+          239.95
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        115,
+        189
+      ]
+    },
+    {
+      "paws": [
+        [
+          54.5,
+          228.0
+        ],
+        [
+          162.87,
+          240.1
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        12,
+        157
+      ]
+    },
+    {
+      "paws": [
+        [
+          85.43,
+          240.01
+        ],
+        [
+          148.57,
+          239.87
+        ]
+      ],
+      "pawAnchorMethod": "measured lower-silhouette support tips; rear/front groups",
+      "pawComponents": [
+        149,
+        204
+      ]
+    }
+  ],
+  "knead": [
+    {
+      "paws": [
+        [
+          94.48,
+          227.64
+        ],
+        [
+          159.91,
+          226.04
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        782,
+        845
+      ]
+    },
+    {
+      "paws": [
+        [
+          93.69,
+          227.59
+        ],
+        [
+          156.11,
+          219.11
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        799,
+        867
+      ]
+    },
+    {
+      "paws": [
+        [
+          93.68,
+          227.13
+        ],
+        [
+          156.88,
+          214.76
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        810,
+        842
+      ]
+    },
+    {
+      "paws": [
+        [
+          91.82,
+          227.03
+        ],
+        [
+          150.81,
+          218.27
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        779,
+        854
+      ]
+    },
+    {
+      "paws": [
+        [
+          90.1,
+          216.57
+        ],
+        [
+          149.96,
+          226.06
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        786,
+        835
+      ]
+    },
+    {
+      "paws": [
+        [
+          88.12,
+          209.6
+        ],
+        [
+          147.54,
+          226.85
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        763,
+        809
+      ]
+    },
+    {
+      "paws": [
+        [
+          90.46,
+          211.6
+        ],
+        [
+          146.05,
+          226.32
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        820,
+        825
+      ]
+    },
+    {
+      "paws": [
+        [
+          92.17,
+          220.2
+        ],
+        [
+          148.43,
+          227.16
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        801,
+        823
+      ]
+    },
+    {
+      "paws": [
+        [
+          92.91,
+          225.7
+        ],
+        [
+          152.02,
+          225.92
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        752,
+        887
+      ]
+    },
+    {
+      "paws": [
+        [
+          93.33,
+          227.94
+        ],
+        [
+          152.21,
+          222.93
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        760,
+        803
+      ]
+    },
+    {
+      "paws": [
+        [
+          92.97,
+          226.44
+        ],
+        [
+          154.75,
+          215.46
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        785,
+        838
+      ]
+    },
+    {
+      "paws": [
+        [
+          95.43,
+          226.58
+        ],
+        [
+          155.77,
+          216.1
+        ]
+      ],
+      "pawAnchorMethod": "cream paw-tip component centroids; left/right groups",
+      "pawComponents": [
+        772,
+        835
+      ]
+    }
+  ]
+}

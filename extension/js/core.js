@@ -1,9 +1,10 @@
 /* Purrple's local, deterministic domain model. No browser or network dependency. */
 (function (root, factory) {
-  const value = factory();
+  const talk = root.PurrpleTalk || (typeof module === 'object' && module.exports ? require('./talk.js') : null);
+  const value = factory(talk);
   if (typeof module === 'object' && module.exports) module.exports = value;
   root.PurrpleCore = value;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (Talk) {
   'use strict';
   const DAY = 86400000;
   const EFFORT = Object.freeze({ small: 10, medium: 20, large: 30 });
@@ -42,7 +43,7 @@
   function defaultSettings() {return {name:'',petEnabled:true,size:128,fps:30,reducedMotion:false,quietHours:{enabled:false,start:'22:00',end:'07:00'},chattiness:'balanced',sound:false,notifications:true,hiddenHosts:[]};}
   function defaultState(now=Date.now()) {
     validNow(now);
-    return {version:1,createdAt:now,updatedAt:now,tasks:[],wallet:{balance:0,totalEarned:0},ledger:[],owned:[],equipped:{head:null,neck:null},focus:null,focusHistory:[],settings:defaultSettings(),stats:{completedTasks:0,focusMinutes:0}};
+    return {version:1,createdAt:now,updatedAt:now,tasks:[],wallet:{balance:0,totalEarned:0},ledger:[],owned:[],equipped:{head:null,neck:null},focus:null,focusHistory:[],settings:defaultSettings(),stats:{completedTasks:0,focusMinutes:0},talk:Talk?Talk.empty():{counts:{},recent:[],history:[],favorites:[],last:null,total:0},drafts:{quickTask:'',quickEffort:'medium'}};
   }
   function normalizeSettings(patch,previous=defaultSettings()) {
     if(!patch||typeof patch!=='object'||Array.isArray(patch))throw Error('Settings must be an object.');
@@ -120,6 +121,8 @@
   }
   function reconcile(input,now=Date.now()) {
     validNow(now);const state=clone(input);
+    state.talk=Talk?Talk.normalize(state.talk):(state.talk||defaultState(now).talk);
+    state.drafts={quickTask:state.drafts?.quickTask===undefined?'':text(state.drafts.quickTask,'Quick task draft',200,true),quickEffort:state.drafts?.quickEffort===undefined?'medium':choose(state.drafts.quickEffort,Object.keys(EFFORT),'quick-task size')};
     if(state.focus?.status==='running'){
       state.focus.remainingMs=Math.max(0,Math.min(state.focus.durationMs,state.focus.endsAt-now));
       if(state.focus.remainingMs===0)completeSession(state,now);
@@ -133,7 +136,10 @@
     const state=reconcile(input,now);
     const task=key=>{const found=state.tasks.find(t=>t.id===key);if(!found)throw Error('That task could not be found.');return found;};
     switch(action.type){
-      case 'TASK_ADD':{const fresh=normalizeTask(action,now);if(state.tasks.some(t=>t.id===fresh.id))throw Error('That task identifier already exists.');state.tasks.push(fresh);break;}
+      case 'TASK_ADD':{const input=action.fromDraft===true&&!own(action,'effort')?{...action,effort:state.drafts.quickEffort}:action;const fresh=normalizeTask(input,now);if(state.tasks.some(t=>t.id===fresh.id))throw Error('That task identifier already exists.');state.tasks.push(fresh);if(action.fromDraft===true&&state.drafts.quickTask.trim()===fresh.title&&state.drafts.quickEffort===fresh.effort)state.drafts.quickTask='';break;}
+      case 'QUICK_TASK_DRAFT':state.drafts.quickTask=text(action.text,'Quick task draft',200,true);if(own(action,'effort'))state.drafts.quickEffort=choose(action.effort,Object.keys(EFFORT),'quick-task size');break;
+      case 'TALK_REPLY':if(!Talk)throw Error('Purrple’s local conversation library could not be loaded.');else state.talk=Talk.reply(action.promptId,state.talk,now);break;
+      case 'TALK_FAVORITE':if(!Talk)throw Error('Purrple’s local conversation library could not be loaded.');else state.talk=Talk.favorite(action.promptId,state.talk,action.favorite);break;
       case 'TASK_UPDATE':{
         const found=task(action.id);if(!action.patch||typeof action.patch!=='object')throw Error('The task update is missing.');
         const allowed=['title','dueAt','effort','priority','recurrence','subtasks'];
@@ -145,9 +151,12 @@
         if(!sub)throw Error('That subtask could not be found.');
         sub.done=own(action,'done')?boolean(action.done,'Subtask completion'):!sub.done;found.updatedAt=now;break;
       }
-      case 'TASK_TOGGLE':{
+      case 'TASK_TOGGLE':case 'TASK_SET_DONE':{
         const found=task(action.id);if(found.archived)throw Error('Restore this task before changing it.');
-        found.done=!found.done;found.updatedAt=now;
+        if(action.type==='TASK_SET_DONE'&&!own(action,'done'))throw Error('Choose whether the task is complete.');
+        const done=own(action,'done')?boolean(action.done,'Task completion'):!found.done;
+        if(done===found.done)break;
+        found.done=done;found.updatedAt=now;
         if(found.done){
           found.completedAt=now;
           if(grant(state,'task:'+found.id,'task',EFFORT[found.effort],found.id,now))state.stats.completedTasks++;
@@ -249,10 +258,13 @@
     if(input.focus){const f=input.focus;state.focus={id:text(f.id,'Session identifier',100),kind:choose(f.kind,['focus','break'],'session type'),status:choose(f.status,['running','paused'],'timer status'),durationMs:number(f.durationMs,'Session duration',60000,14400000),remainingMs:number(f.remainingMs,'Remaining time',0,f.durationMs),startedAt:timestamp(f.startedAt,'Session start')||now,endsAt:f.status==='running'?timestamp(f.endsAt,'Session end'):null,taskId:f.taskId===null?null:text(f.taskId,'Task identifier',100)};if(state.focus.status==='running'&&state.focus.endsAt===null)throw Error('The backup timer has no end time.');}
     state.stats={completedTasks:number(input.stats?.completedTasks,'Completed-task count',0,Number.MAX_SAFE_INTEGER),focusMinutes:number(input.stats?.focusMinutes,'Focus total',0,Number.MAX_SAFE_INTEGER)};
     state.updatedAt=timestamp(input.updatedAt,'Update time')||now;
+    state.talk=Talk?Talk.normalize(input.talk):(input.talk||defaultState(now).talk);
+    state.drafts={quickTask:input.drafts?.quickTask===undefined?'':text(input.drafts.quickTask,'Quick task draft',200,true),quickEffort:input.drafts?.quickEffort===undefined?'medium':choose(input.drafts.quickEffort,Object.keys(EFFORT),'quick-task size')};
     return reconcile(state,now);
   }
   function publicState(state) {
-    return {version:state.version,settings:clone(state.settings),equipped:clone(state.equipped),owned:[...state.owned],wallet:{balance:state.wallet.balance},focus:state.focus?{kind:state.focus.kind,status:state.focus.status,endsAt:state.focus.endsAt,remainingMs:state.focus.remainingMs}:null};
+    const last=state.talk?.last;
+    return {version:state.version,settings:clone(state.settings),equipped:clone(state.equipped),owned:[...state.owned],wallet:{balance:state.wallet.balance},focus:state.focus?{kind:state.focus.kind,status:state.focus.status,endsAt:state.focus.endsAt,remainingMs:state.focus.remainingMs}:null,talk:{last:last?{id:last.id,text:last.text,reaction:last.reaction,at:last.at}:null}};
   }
   return Object.freeze({CATALOG,EFFORT,defaultState,createState:defaultState,normalizeSettings,normalizeTask,reduce,reducer:reduce,reconcile,validateBackup,reminders,quietNow,publicState});
 });

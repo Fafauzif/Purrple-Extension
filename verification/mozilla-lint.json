@@ -1,0 +1,157 @@
+{
+  "count": 14,
+  "summary": {
+    "errors": 0,
+    "notices": 0,
+    "warnings": 14
+  },
+  "metadata": {
+    "id": "purrple-companion@purrple.local",
+    "manifestVersion": 3,
+    "name": "Purrple \u00b7 Your little study companion",
+    "type": 1,
+    "version": "1.1.0",
+    "firefoxMinVersion": "140.0",
+    "firefoxStrictMinVersion": 140,
+    "experimentApiPaths": {},
+    "totalScannedFileSize": 1053351,
+    "emptyFiles": [],
+    "jsLibs": {},
+    "unknownMinifiedFiles": [
+      "js/renderer-data.js"
+    ]
+  },
+  "errors": [],
+  "notices": [],
+  "warnings": [
+    {
+      "_type": "warning",
+      "code": "KEY_FIREFOX_ANDROID_UNSUPPORTED_BY_MIN_VERSION",
+      "message": "Manifest key not supported by the specified minimum Firefox for Android version",
+      "description": "\"strict_min_version\" requires Firefox for Android 140, which was released before version 142 introduced support for \"browser_specific_settings.gecko.data_collection_permissions\".",
+      "file": "manifest.json"
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 3,
+      "file": "js/compact.js",
+      "line": 50
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 3,
+      "file": "js/compact.js",
+      "line": 66
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 3,
+      "file": "js/compact.js",
+      "line": 79
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 5,
+      "file": "js/app.js",
+      "line": 53
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 24,
+      "file": "js/app.js",
+      "line": 59
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 5,
+      "file": "js/app.js",
+      "line": 73
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 5,
+      "file": "js/app.js",
+      "line": 77
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 5,
+      "file": "js/app.js",
+      "line": 87
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 5,
+      "file": "js/app.js",
+      "line": 109
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 3,
+      "file": "js/talk-ui.js",
+      "line": 10
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 54,
+      "file": "js/talk-ui.js",
+      "line": 16
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 6,
+      "file": "js/talk-ui.js",
+      "line": 23
+    },
+    {
+      "_type": "warning",
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "column": 4,
+      "file": "js/talk-ui.js",
+      "line": 32
+    }
+  ],
+  "verification_scope": {
+    "installed_from": "qa-runtime/install-copy",
+    "runtime_sha256": "76924955115350c43784848a131287ae845936f1e8b14bd9d9aa50763e7f79db",
+    "signing_performed": false
+  }
+}

@@ -20,6 +20,15 @@ test('completion grants10/20/30 and reopening cannot farm coins',()=>{
   assert.equal(s.wallet.balance,C.EFFORT[effort]);assert.equal(s.stats.completedTasks,1);assert.equal(s.ledger.length,1);
  }
 });
+test('absolute completion from two stale surfaces remains completed and rewards once',()=>{
+ let s=add(fresh()),id=s.tasks[0].id;
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW+1);
+ assert.equal(s.tasks[0].done,true);assert.equal(s.wallet.balance,10);assert.equal(s.ledger.length,1);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:false},NOW+2);s=C.reduce(s,{type:'TASK_SET_DONE',id,done:false},NOW+3);
+ assert.equal(s.tasks[0].done,false);assert.equal(s.wallet.balance,10);
+ assert.throws(()=>C.reduce(s,{type:'TASK_SET_DONE',id},NOW));
+});
 test('recurring occurrences get unique rewards, reset subtasks and skip stale backlog',()=>{
  let s=add(fresh(),{recurrence:'daily',dueAt:NOW-30*86400000,subtasks:[{title:'Prepare',done:true}]});
  const old=s.tasks[0].id;s=C.reduce(s,{type:'TASK_TOGGLE',id:old},NOW);

@@ -1,12 +1,13 @@
 {
+  "version": "1.1.0",
   "artifact": "Purrple_Firefox_Extension.zip",
-  "sha256": "a17208cecb25954f44891b4ae4058e166b0fc3584b67bae98993b633b49c6680",
+  "sha256": "76924955115350c43784848a131287ae845936f1e8b14bd9d9aa50763e7f79db",
   "native_extension": true,
   "checks": [
     {
       "check": "zip-integrity",
       "pass": true,
-      "detail": 56
+      "detail": 86
     },
     {
       "check": "root-manifest-present",
@@ -54,6 +55,26 @@
       "detail": null
     },
     {
+      "check": "packaged-compact-four-tabs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-talk-ninety-prompts-two-hundred-seventy-replies",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-forty-five-shared-movements",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-compact-task-html-payload-is-text",
+      "pass": true,
+      "detail": null
+    },
+    {
       "check": "packaged-roaming-content-visible",
       "pass": true,
       "detail": null
@@ -65,6 +86,6 @@
     }
   ],
   "browser_version": "160.0",
-  "passed": 12,
+  "passed": 16,
   "failed": 0
 }

@@ -5,13 +5,13 @@ const root=path.resolve(__dirname,'..');
  const browser=await chromium.launch({executablePath:require('../tests/browser_runtime.cjs').executable(),headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--no-zygote','--single-process','--disable-gpu','--allow-file-access-from-files']});
  const page=await browser.newPage();await page.goto('file://'+path.join(root,'art/fit-preview.html'));await page.waitForFunction(()=>window.PurrpleFit?.ready);
  const result=await page.evaluate(()=>{
-  const ids=Object.keys(PurrpleArt.items),poses=Object.keys(PurrpleArt.sprites).flatMap(clip=>Array.from({length:6},(_,key)=>({clip,key})));
+  const ids=Object.keys(PurrpleArt.items),poses=Object.keys(PurrpleArt.sprites).flatMap(clip=>Array.from({length:PurrpleArt.sprites[clip].frames.length},(_,key)=>({clip,key})));
   const contacts={},metrics=[];
   function painted(clip,key,equip){const c=document.createElement('canvas');c.width=c.height=320;const ctx=c.getContext('2d');ctx.translate(32,32);PurrpleRenderer.drawFrame(ctx,clip,key,equip);return c;}
   const all=document.createElement('canvas');all.width=1000;all.height=720;const allctx=all.getContext('2d');allctx.fillStyle='#f8f1fb';allctx.fillRect(0,0,1000,720);
   for(let index=0;index<ids.length;index++){
-   const id=ids[index],cfg=PurrpleArt.items[id],sheet=document.createElement('canvas');sheet.width=1200;sheet.height=1800;
-   const cx=sheet.getContext('2d');cx.fillStyle='#fbf6ff';cx.fillRect(0,0,1200,1800);cx.font='10px system-ui';cx.fillStyle='#624870';
+   const id=ids[index],cfg=PurrpleArt.items[id],sheet=document.createElement('canvas');sheet.width=1200;sheet.height=Math.ceil(poses.length/12)*120;
+   const cx=sheet.getContext('2d');cx.fillStyle='#fbf6ff';cx.fillRect(0,0,sheet.width,sheet.height);cx.font='10px system-ui';cx.fillStyle='#624870';
    for(let pi=0;pi<poses.length;pi++){
     const {clip,key}=poses[pi],equip={[cfg.slot]:id},base=painted(clip,key,{}),fit=painted(clip,key,equip);
     const ba=base.getContext('2d').getImageData(0,0,320,320).data,fa=fit.getContext('2d').getImageData(0,0,320,320).data;let diff=0;
@@ -31,7 +31,7 @@ const root=path.resolve(__dirname,'..');
     d.drawImage(painted(clip,key,{head:id}),0,0,320,320,col*128,row*156,128,128);d.fillStyle=theme==='dark'?'#e0c8ed':'#624870';d.fillText(id,col*128+3,row*156+137);d.fillText(clip+'/'+key,col*128+3,row*156+151);
    }));critical['hat-critical-'+theme]=c.toDataURL('image/png').split(',')[1];
    for(const [name,equip]of [['bow-bandana',{head:'moon-bow',neck:'star-bandana'}],['beanie-scarf',{head:'cozy-beanie',neck:'cozy-scarf'}]]){
-    const c=document.createElement('canvas');c.width=1200;c.height=1800;const d=c.getContext('2d');d.fillStyle=color;d.fillRect(0,0,1200,1800);d.font='10px system-ui';
+    const c=document.createElement('canvas');c.width=1200;c.height=Math.ceil(poses.length/12)*120;const d=c.getContext('2d');d.fillStyle=color;d.fillRect(0,0,c.width,c.height);d.font='10px system-ui';
     poses.forEach(({clip,key},i)=>{const x=i%12*100,y=Math.floor(i/12)*120;d.drawImage(painted(clip,key,equip),0,0,320,320,x,y,100,100);d.fillStyle=theme==='dark'?'#e0c8ed':'#624870';d.fillText(clip+'/'+key,x+3,y+112);});
     critical['combined-'+name+'-'+theme]=c.toDataURL('image/png').split(',')[1];
    }

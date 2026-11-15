@@ -1,0 +1,17 @@
+{
+  "errors": [],
+  "p50": 2,
+  "p95": 4.299999997019768,
+  "max": 50.1000000089407,
+  "diag": {
+    "actorBuilds": 217,
+    "actorHits": 1141,
+    "geometryBuilds": 1255,
+    "geometryHits": 103,
+    "draws": 1358,
+    "pixelReads": 0,
+    "actorCache": 110,
+    "motionCache": 64,
+    "geometryHz": 30
+  }
+}

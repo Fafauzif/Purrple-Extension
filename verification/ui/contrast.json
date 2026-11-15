@@ -1,6 +1,6 @@
 {
   "scope": "Computed foreground/background contrast of visible text; decorative aria-hidden glyphs and disabled controls excluded.",
-  "count": 205,
+  "count": 240,
   "failed": [],
   "results": [
     {
@@ -72,6 +72,14 @@
         },
         {
           "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Talk",
           "selector": "button",
           "ratio": 5.14,
           "required": 4.5,
@@ -199,7 +207,7 @@
           "color": "rgb(140, 88, 61)"
         },
         {
-          "text": "Due Nov 15, 2:01 AM",
+          "text": "Due Nov 15, 8:53 AM",
           "selector": "span.overdue",
           "ratio": 6.16,
           "required": 4.5,
@@ -247,7 +255,7 @@
           "color": "rgb(76, 52, 91)"
         },
         {
-          "text": "Due Nov 15, 2:01 AM",
+          "text": "Due Nov 15, 8:53 AM",
           "selector": "span.overdue",
           "ratio": 6.16,
           "required": 4.5,
@@ -445,6 +453,14 @@
         },
         {
           "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Talk",
           "selector": "button",
           "ratio": 5.14,
           "required": 4.5,
@@ -705,6 +721,14 @@
           "color": "rgb(103, 65, 125)"
         },
         {
+          "text": "Talk",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "Settings",
           "selector": "button",
           "ratio": 5.14,
@@ -737,7 +761,7 @@
           "color": "rgb(117, 96, 127)"
         },
         {
-          "text": "Her everyday look",
+          "text": "Wearing now",
           "selector": "h2#preview-name",
           "ratio": 8.86,
           "required": 4.5,
@@ -745,7 +769,7 @@
           "color": "rgb(76, 52, 91)"
         },
         {
-          "text": "Choose a little something to try on.",
+          "text": "Your saved outfit. Choose a little something to try on.",
           "selector": "p#preview-copy",
           "ratio": 4.62,
           "required": 4.5,
@@ -791,6 +815,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Find an accessory",
+          "selector": "label.sr-only",
+          "ratio": 9.85,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
         },
         {
           "text": "All",
@@ -849,6 +881,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 20 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -863,6 +903,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 20 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Cozy beanie",
@@ -881,6 +929,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 65 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -895,6 +951,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 65 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Star beret",
@@ -913,6 +977,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 90 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -927,6 +999,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 90 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Flower clip",
@@ -945,6 +1025,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 35 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -959,6 +1047,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 35 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Cloud cap",
@@ -977,6 +1073,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 80 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -991,6 +1095,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 80 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Crescent crown",
@@ -1009,6 +1121,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 150 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1023,6 +1143,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 150 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Heart bow",
@@ -1041,6 +1169,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 55 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1055,6 +1191,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 55 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Plum ribbon",
@@ -1073,6 +1217,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 45 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1087,6 +1239,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 45 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Stargazer hat",
@@ -1105,6 +1265,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 120 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1119,6 +1287,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 120 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Star bandana",
@@ -1137,6 +1313,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 20 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1151,6 +1335,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 20 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Moon collar",
@@ -1169,6 +1361,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 35 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1183,6 +1383,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 35 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Cozy scarf",
@@ -1201,6 +1409,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 65 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1215,6 +1431,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 65 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Petal collar",
@@ -1233,6 +1457,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 45 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1247,6 +1479,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 45 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Cloud bib",
@@ -1265,6 +1505,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 55 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1279,6 +1527,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 55 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Night bandana",
@@ -1297,6 +1553,14 @@
           "color": "rgb(121, 96, 131)"
         },
         {
+          "text": "Not owned",
+          "selector": "span.shop-state",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
           "text": "✧ 85 coins",
           "selector": "span.shop-price",
           "ratio": 5.53,
@@ -1311,6 +1575,14 @@
           "required": 4.5,
           "pass": true,
           "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Need 85 more coins",
+          "selector": "p.shop-needed",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
         },
         {
           "text": "Local, cozy, and all yours.",
@@ -1399,6 +1671,14 @@
         },
         {
           "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Talk",
           "selector": "button",
           "ratio": 5.14,
           "required": 4.5,

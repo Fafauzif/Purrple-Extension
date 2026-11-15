@@ -1,0 +1,304 @@
+{
+  "scope": "Independent production UI journeys in Chromium with clearly labeled local preview. Native Firefox checked separately.",
+  "passed": 61,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "preview-is-explicit",
+      "pass": true
+    },
+    {
+      "name": "new-save-has-no-invented-tasks",
+      "pass": true
+    },
+    {
+      "name": "task-draft-recovers-after-popup-reload",
+      "pass": true
+    },
+    {
+      "name": "quick-task-is-saved",
+      "pass": true
+    },
+    {
+      "name": "committed-task-clears-draft",
+      "pass": true
+    },
+    {
+      "name": "completion-earns-once",
+      "pass": true
+    },
+    {
+      "name": "focus-starts-in-popup",
+      "pass": true
+    },
+    {
+      "name": "paused-focus-survives-popup-close-reload",
+      "pass": true
+    },
+    {
+      "name": "focus-can-end-from-popup",
+      "pass": true
+    },
+    {
+      "name": "wardrobe-catalog-has-fifteen-items",
+      "pass": true
+    },
+    {
+      "name": "try-on-does-not-equip",
+      "pass": true
+    },
+    {
+      "name": "trying-on-status-is-visible",
+      "pass": true
+    },
+    {
+      "name": "wear-is-explicit-and-persists",
+      "pass": true
+    },
+    {
+      "name": "head-and-neck-outfit-combine",
+      "pass": true
+    },
+    {
+      "name": "wardrobe-search-has-empty-state",
+      "pass": true
+    },
+    {
+      "name": "wardrobe-clear-restores-results",
+      "pass": true
+    },
+    {
+      "name": "large-conversation-bank",
+      "pass": true
+    },
+    {
+      "name": "all-prompts-have-three-replies",
+      "pass": true
+    },
+    {
+      "name": "love-prompt-has-affectionate-response",
+      "pass": true
+    },
+    {
+      "name": "consecutive-replies-do-not-repeat",
+      "pass": true,
+      "detail": {
+        "first": "I love you too. Tiny forehead bump, enormous purr.",
+        "second": "Prrr. Sending all my little-cat affection straight back."
+      }
+    },
+    {
+      "name": "favorite-persists",
+      "pass": true
+    },
+    {
+      "name": "talk-search-has-useful-empty-state",
+      "pass": true
+    },
+    {
+      "name": "talk-clear-restores-prompts",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-today-420",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-focus-420",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-wardrobe-420",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-talk-420",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-today-390",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-focus-390",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-wardrobe-390",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-talk-390",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-today-320",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-focus-320",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-wardrobe-320",
+      "pass": true
+    },
+    {
+      "name": "compact-no-horizontal-overflow-talk-320",
+      "pass": true
+    },
+    {
+      "name": "full-home-shares-popup-outfit",
+      "pass": true
+    },
+    {
+      "name": "full-home-shares-conversation-history",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-today-1280",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-focus-1280",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-wardrobe-1280",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-talk-1280",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-settings-1280",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-today-390",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-focus-390",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-wardrobe-390",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-talk-390",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-settings-390",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-today-320",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-focus-320",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-wardrobe-320",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-talk-320",
+      "pass": true
+    },
+    {
+      "name": "full-no-horizontal-overflow-settings-320",
+      "pass": true
+    },
+    {
+      "name": "shared-renderer-covers-all-outfits",
+      "pass": true
+    },
+    {
+      "name": "movement-library-expanded",
+      "pass": true,
+      "detail": [
+        "idle",
+        "blink",
+        "look",
+        "ear",
+        "tail",
+        "tilt",
+        "walk",
+        "run",
+        "jump",
+        "land",
+        "sit",
+        "wake",
+        "held",
+        "wiggle",
+        "tumble",
+        "impact",
+        "shake",
+        "toy",
+        "sleep",
+        "stretch",
+        "yawn",
+        "groom",
+        "pat",
+        "study",
+        "think",
+        "read",
+        "reminder",
+        "heart",
+        "celebrate",
+        "brush",
+        "home",
+        "chase",
+        "cry",
+        "paw-wipe",
+        "soothe",
+        "turn",
+        "knead",
+        "loaf",
+        "wave",
+        "nuzzle",
+        "roll",
+        "peek",
+        "listen",
+        "doze",
+        "released"
+      ]
+    },
+    {
+      "name": "animation-explorer-loads-shared-renderer",
+      "pass": true
+    },
+    {
+      "name": "installation-guide-says-i-love-you",
+      "pass": true
+    },
+    {
+      "name": "installation-guide-distinguishes-signed-and-temporary",
+      "pass": true
+    },
+    {
+      "name": "guide-no-overflow-1100",
+      "pass": true
+    },
+    {
+      "name": "guide-no-overflow-390",
+      "pass": true
+    },
+    {
+      "name": "guide-no-overflow-320",
+      "pass": true
+    },
+    {
+      "name": "no-browser-page-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

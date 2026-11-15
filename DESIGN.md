@@ -55,10 +55,12 @@ browser controls, with platform-owned popup geometry and local timezone.
 
 ## Layout
 
-A four-tab shell holds Today, Study together, Little wardrobe and Settings.
+The full shell holds Today, Study together, Little wardrobe, Talk and Settings.
+The compact toolbar and floating panel share Today, Focus, Wardrobe and Talk.
 Desktop puts a compact companion beside the task list; narrow sidebars put
 her above the list. Wardrobe uses one saved/preview outfit and a bounded
-fifteen-item shop. Task history starts at 25 entries with Show more; focus
+fifteen-item shop. Compact Talk starts with four immediate choices, with a
+searchable bank of 90 authored prompts and 270 replies. Task history starts at 25 entries with Show more; focus
 history is recent twelve sessions. There are no invented completed tasks.
 
 ## Elevation & Depth
@@ -93,3 +95,19 @@ give a useful next step and do not invent product data.
   illustrated keys with procedural motion.
 - Honor reduced-motion preferences and visible keyboard focus.
 - Test the same saved outfit on dashboard, sidebar, popup and webpage pet.
+
+## Motion and persistence details
+
+The shared library contains 45 behaviors. This refinement adds 198 accepted
+unique illustrations; the earlier six-key sheets remain historical source
+material. Variable per-frame timing and registered 30 Hz geometry add breathing,
+paw movement and secondary motion without ghosted crossfades or a claim of
+30 independently drawn images each second. Keep all 15 cosmetics registered
+through every source pose.
+
+A quick task remembers both its title and effort size across popup closure.
+Completion sends an absolute TASK_SET_DONE action. The background uses a durable
+200-entry request journal and permanent reward IDs; UI feedback follows the
+committed result. Native toolbar popup sizing must be intrinsic, because capping
+its first layout to an initially tiny viewport can collapse the entire popup.
+The authorized iframe separately follows its actual viewport and scrolls inside.

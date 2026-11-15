@@ -1,0 +1,41 @@
+{
+  "scope": "Real content.js cooldowns exercised with controlled clock, stubbed API/renderer/visibility; not native integration",
+  "results": [
+    {
+      "id": "quiet-never-generates-ambient",
+      "pass": true
+    },
+    {
+      "id": "chatty-no-early-remark",
+      "pass": true
+    },
+    {
+      "id": "chatty-remarks-after-three-minutes",
+      "pass": true,
+      "detail": [
+        {
+          "text": "Tiny paws, keeping you company.",
+          "at": 1794744530100
+        }
+      ]
+    },
+    {
+      "id": "balanced-no-early-remark",
+      "pass": true
+    },
+    {
+      "id": "balanced-remarks-after-eight-minutes",
+      "pass": true
+    },
+    {
+      "id": "cross-midnight-quiet-hours-suppress-ambient",
+      "pass": true
+    },
+    {
+      "id": "focus-session-suppresses-ambient",
+      "pass": true
+    }
+  ],
+  "passed": 7,
+  "failed": 0
+}

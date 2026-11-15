@@ -199,7 +199,7 @@ def main():
         d.command('/window/rect',{'width':1280,'height':950})
 
         # Popup is a real moz-extension page with the same background state.
-        d.navigate(base+'popup.html');d.wait("return document.getElementById('popup-content') && !document.getElementById('popup-content').hidden")
+        d.navigate(base+'popup.html');d.wait("return document.getElementById('compact-main') && !document.getElementById('compact-main').hidden")
         check('popup-shares-native-state',d.js("return document.getElementById('coin-balance').textContent")=='10')
         d.screenshot('popup-native.png')
 
@@ -234,8 +234,7 @@ def main():
         check('native-focus-body-double',d.js("return document.querySelector('purrple-companion').dataset.clip==='study'"))
         d.click('#host-button');check('host-button-works',d.js("return document.getElementById('host-button').textContent")=='Still works')
         d.screenshot('roaming-native.png')
-        root_script="return document.querySelector('purrple-companion').shadowRoot"
-        actor=d.js("const r=document.querySelector('purrple-companion').shadowRoot.querySelector('.actor').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};")
+        actor=d.js("const h=document.querySelector('purrple-companion');return {x:Number(h.dataset.x),y:Number(h.dataset.y)-58};")
         d.command('/actions',{'actions':[{'type':'pointer','id':'mouse','parameters':{'pointerType':'mouse'},'actions':[
             {'type':'pointerMove','duration':0,'x':round(actor['x']),'y':round(actor['y'])},
             {'type':'pointerDown','button':0},

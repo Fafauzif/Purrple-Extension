@@ -1,0 +1,1877 @@
+[
+  {
+    "clip": "walk",
+    "key": 0,
+    "bbox": [
+      33,
+      48,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 1,
+    "bbox": [
+      33,
+      48,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 2,
+    "bbox": [
+      33,
+      49,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      123.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 3,
+    "bbox": [
+      32,
+      53,
+      231,
+      245
+    ],
+    "eye": [
+      154.9,
+      128.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 4,
+    "bbox": [
+      35,
+      55,
+      231,
+      245
+    ],
+    "eye": [
+      154.9,
+      130.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 5,
+    "bbox": [
+      36,
+      49,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      126.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 6,
+    "bbox": [
+      32,
+      49,
+      230,
+      244
+    ],
+    "eye": [
+      154.4,
+      124.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 7,
+    "bbox": [
+      32,
+      49,
+      230,
+      244
+    ],
+    "eye": [
+      154.9,
+      123.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 8,
+    "bbox": [
+      32,
+      50,
+      232,
+      244
+    ],
+    "eye": [
+      154.4,
+      125.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 9,
+    "bbox": [
+      33,
+      49,
+      230,
+      244
+    ],
+    "eye": [
+      154.9,
+      125.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 10,
+    "bbox": [
+      32,
+      49,
+      230,
+      244
+    ],
+    "eye": [
+      154.9,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "walk",
+    "key": 11,
+    "bbox": [
+      33,
+      51,
+      231,
+      244
+    ],
+    "eye": [
+      155.4,
+      127.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 0,
+    "bbox": [
+      22,
+      68,
+      230,
+      244
+    ],
+    "eye": [
+      154.4,
+      145.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 1,
+    "bbox": [
+      29,
+      61,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      136.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 2,
+    "bbox": [
+      26,
+      67,
+      232,
+      244
+    ],
+    "eye": [
+      154.4,
+      139.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 3,
+    "bbox": [
+      30,
+      72,
+      232,
+      244
+    ],
+    "eye": [
+      154.4,
+      143.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 4,
+    "bbox": [
+      31,
+      77,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      149.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 5,
+    "bbox": [
+      25,
+      59,
+      231,
+      245
+    ],
+    "eye": [
+      154.4,
+      135.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 6,
+    "bbox": [
+      24,
+      62,
+      230,
+      244
+    ],
+    "eye": [
+      154.4,
+      138.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 7,
+    "bbox": [
+      26,
+      60,
+      231,
+      245
+    ],
+    "eye": [
+      154.9,
+      134.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 8,
+    "bbox": [
+      24,
+      68,
+      230,
+      244
+    ],
+    "eye": [
+      154.9,
+      143.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 9,
+    "bbox": [
+      31,
+      78,
+      230,
+      244
+    ],
+    "eye": [
+      154.9,
+      152.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 10,
+    "bbox": [
+      21,
+      63,
+      231,
+      244
+    ],
+    "eye": [
+      154.9,
+      139.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "run",
+    "key": 11,
+    "bbox": [
+      22,
+      66,
+      231,
+      244
+    ],
+    "eye": [
+      154.4,
+      144.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "held",
+    "key": 0,
+    "bbox": [
+      52,
+      42,
+      206,
+      244
+    ],
+    "eye": [
+      128.25,
+      114.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 1,
+    "bbox": [
+      51,
+      41,
+      202,
+      246
+    ],
+    "eye": [
+      128.0,
+      114.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 2,
+    "bbox": [
+      49,
+      36,
+      204,
+      242
+    ],
+    "eye": [
+      127.5,
+      114.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 3,
+    "bbox": [
+      45,
+      31,
+      207,
+      241
+    ],
+    "eye": [
+      127.5,
+      113.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 4,
+    "bbox": [
+      42,
+      31,
+      212,
+      239
+    ],
+    "eye": [
+      128.25,
+      114.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 5,
+    "bbox": [
+      51,
+      34,
+      206,
+      245
+    ],
+    "eye": [
+      128.5,
+      114.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 6,
+    "bbox": [
+      50,
+      33,
+      205,
+      242
+    ],
+    "eye": [
+      127.75,
+      114.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 7,
+    "bbox": [
+      49,
+      38,
+      207,
+      241
+    ],
+    "eye": [
+      127.75,
+      114.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 8,
+    "bbox": [
+      48,
+      35,
+      207,
+      235
+    ],
+    "eye": [
+      128.25,
+      113.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 9,
+    "bbox": [
+      51,
+      29,
+      208,
+      225
+    ],
+    "eye": [
+      128.0,
+      113.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 10,
+    "bbox": [
+      52,
+      28,
+      207,
+      225
+    ],
+    "eye": [
+      127.75,
+      113.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "held",
+    "key": 11,
+    "bbox": [
+      50,
+      34,
+      207,
+      238
+    ],
+    "eye": [
+      128.0,
+      113.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 0,
+    "bbox": [
+      47,
+      50,
+      211,
+      244
+    ],
+    "eye": [
+      128.25,
+      125.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 1,
+    "bbox": [
+      46,
+      49,
+      212,
+      244
+    ],
+    "eye": [
+      128.5,
+      125.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 2,
+    "bbox": [
+      47,
+      50,
+      212,
+      244
+    ],
+    "eye": [
+      128.0,
+      127.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 3,
+    "bbox": [
+      47,
+      48,
+      210,
+      244
+    ],
+    "eye": [
+      128.25,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 4,
+    "bbox": [
+      48,
+      48,
+      213,
+      244
+    ],
+    "eye": [
+      127.5,
+      126.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 5,
+    "bbox": [
+      45,
+      47,
+      219,
+      244
+    ],
+    "eye": [
+      127.5,
+      131.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 6,
+    "bbox": [
+      48,
+      48,
+      221,
+      244
+    ],
+    "eye": [
+      128.0,
+      135.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 7,
+    "bbox": [
+      44,
+      48,
+      213,
+      244
+    ],
+    "eye": [
+      127.75,
+      129.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 8,
+    "bbox": [
+      44,
+      48,
+      212,
+      244
+    ],
+    "eye": [
+      127.75,
+      129.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 9,
+    "bbox": [
+      45,
+      49,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      129.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 10,
+    "bbox": [
+      45,
+      50,
+      212,
+      244
+    ],
+    "eye": [
+      128.0,
+      131.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "cry",
+    "key": 11,
+    "bbox": [
+      44,
+      51,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      135.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "paw-wipe",
+    "key": 0,
+    "bbox": [
+      45,
+      47,
+      219,
+      244
+    ],
+    "eye": [
+      127.5,
+      131.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "paw-wipe",
+    "key": 1,
+    "bbox": [
+      48,
+      48,
+      221,
+      244
+    ],
+    "eye": [
+      128.0,
+      135.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "paw-wipe",
+    "key": 2,
+    "bbox": [
+      44,
+      48,
+      213,
+      244
+    ],
+    "eye": [
+      127.75,
+      129.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "soothe",
+    "key": 0,
+    "bbox": [
+      44,
+      48,
+      212,
+      244
+    ],
+    "eye": [
+      127.75,
+      129.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "soothe",
+    "key": 1,
+    "bbox": [
+      45,
+      49,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      129.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "soothe",
+    "key": 2,
+    "bbox": [
+      45,
+      50,
+      212,
+      244
+    ],
+    "eye": [
+      128.0,
+      131.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "soothe",
+    "key": 3,
+    "bbox": [
+      44,
+      51,
+      213,
+      244
+    ],
+    "eye": [
+      128.0,
+      135.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "jump",
+    "key": 0,
+    "bbox": [
+      31,
+      45,
+      227,
+      244
+    ],
+    "eye": [
+      153.4,
+      116.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 1,
+    "bbox": [
+      25,
+      65,
+      227,
+      244
+    ],
+    "eye": [
+      152.9,
+      137.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 2,
+    "bbox": [
+      26,
+      81,
+      228,
+      244
+    ],
+    "eye": [
+      153.4,
+      153.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 3,
+    "bbox": [
+      36,
+      56,
+      229,
+      244
+    ],
+    "eye": [
+      153.4,
+      126.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 4,
+    "bbox": [
+      38,
+      45,
+      227,
+      244
+    ],
+    "eye": [
+      152.9,
+      114.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 5,
+    "bbox": [
+      45,
+      55,
+      227,
+      244
+    ],
+    "eye": [
+      152.9,
+      125.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 6,
+    "bbox": [
+      40,
+      60,
+      228,
+      244
+    ],
+    "eye": [
+      153.4,
+      128.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 7,
+    "bbox": [
+      42,
+      59,
+      228,
+      244
+    ],
+    "eye": [
+      153.4,
+      128.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 8,
+    "bbox": [
+      43,
+      58,
+      229,
+      244
+    ],
+    "eye": [
+      153.4,
+      129.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 9,
+    "bbox": [
+      35,
+      70,
+      229,
+      244
+    ],
+    "eye": [
+      153.4,
+      142.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 10,
+    "bbox": [
+      27,
+      82,
+      229,
+      244
+    ],
+    "eye": [
+      153.4,
+      153.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "jump",
+    "key": 11,
+    "bbox": [
+      30,
+      52,
+      229,
+      244
+    ],
+    "eye": [
+      153.4,
+      123.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "impact",
+    "key": 0,
+    "bbox": [
+      49,
+      46,
+      207,
+      244
+    ],
+    "eye": [
+      128.0,
+      126.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 1,
+    "bbox": [
+      50,
+      45,
+      207,
+      244
+    ],
+    "eye": [
+      128.25,
+      120.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 2,
+    "bbox": [
+      49,
+      56,
+      209,
+      244
+    ],
+    "eye": [
+      128.5,
+      138.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 3,
+    "bbox": [
+      47,
+      68,
+      212,
+      244
+    ],
+    "eye": [
+      128.5,
+      155.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 4,
+    "bbox": [
+      37,
+      90,
+      220,
+      244
+    ],
+    "eye": [
+      128.0,
+      168.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 5,
+    "bbox": [
+      49,
+      47,
+      210,
+      244
+    ],
+    "eye": [
+      127.75,
+      121.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 6,
+    "bbox": [
+      48,
+      45,
+      208,
+      244
+    ],
+    "eye": [
+      128.25,
+      127.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 7,
+    "bbox": [
+      47,
+      48,
+      208,
+      244
+    ],
+    "eye": [
+      127.75,
+      141.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 8,
+    "bbox": [
+      42,
+      38,
+      212,
+      244
+    ],
+    "eye": [
+      128.25,
+      127.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 9,
+    "bbox": [
+      47,
+      36,
+      212,
+      244
+    ],
+    "eye": [
+      128.25,
+      126.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 10,
+    "bbox": [
+      47,
+      45,
+      208,
+      244
+    ],
+    "eye": [
+      128.0,
+      127.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "impact",
+    "key": 11,
+    "bbox": [
+      46,
+      44,
+      209,
+      244
+    ],
+    "eye": [
+      127.5,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "land",
+    "key": 0,
+    "bbox": [
+      47,
+      36,
+      212,
+      244
+    ],
+    "eye": [
+      128.25,
+      126.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "land",
+    "key": 1,
+    "bbox": [
+      47,
+      45,
+      208,
+      244
+    ],
+    "eye": [
+      128.0,
+      127.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "land",
+    "key": 2,
+    "bbox": [
+      46,
+      44,
+      209,
+      244
+    ],
+    "eye": [
+      127.5,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "land",
+    "key": 3,
+    "bbox": [
+      49,
+      46,
+      207,
+      244
+    ],
+    "eye": [
+      128.0,
+      126.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 0,
+    "bbox": [
+      42,
+      37,
+      214,
+      244
+    ],
+    "eye": [
+      128.5,
+      118.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 1,
+    "bbox": [
+      41,
+      35,
+      214,
+      244
+    ],
+    "eye": [
+      127.75,
+      117.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 2,
+    "bbox": [
+      41,
+      34,
+      215,
+      244
+    ],
+    "eye": [
+      128.0,
+      118.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 3,
+    "bbox": [
+      42,
+      32,
+      216,
+      244
+    ],
+    "eye": [
+      128.5,
+      117.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 4,
+    "bbox": [
+      40,
+      33,
+      217,
+      244
+    ],
+    "eye": [
+      127.75,
+      121.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "wave",
+    "key": 5,
+    "bbox": [
+      42,
+      37,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      118.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 0,
+    "bbox": [
+      42,
+      38,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      119.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 1,
+    "bbox": [
+      40,
+      32,
+      211,
+      244
+    ],
+    "eye": [
+      128.0,
+      108.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 2,
+    "bbox": [
+      46,
+      29,
+      221,
+      244
+    ],
+    "eye": [
+      128.0,
+      120.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 3,
+    "bbox": [
+      43,
+      35,
+      222,
+      244
+    ],
+    "eye": [
+      127.75,
+      127.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 4,
+    "bbox": [
+      44,
+      36,
+      218,
+      244
+    ],
+    "eye": [
+      128.0,
+      119.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "nuzzle",
+    "key": 5,
+    "bbox": [
+      42,
+      38,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      119.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 0,
+    "bbox": [
+      42,
+      37,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      119.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 1,
+    "bbox": [
+      42,
+      45,
+      215,
+      244
+    ],
+    "eye": [
+      128.5,
+      128.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 2,
+    "bbox": [
+      42,
+      57,
+      218,
+      244
+    ],
+    "eye": [
+      127.75,
+      141.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 3,
+    "bbox": [
+      40,
+      71,
+      224,
+      244
+    ],
+    "eye": [
+      127.75,
+      157.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 4,
+    "bbox": [
+      40,
+      80,
+      231,
+      244
+    ],
+    "eye": [
+      128.25,
+      170.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "loaf",
+    "key": 5,
+    "bbox": [
+      39,
+      88,
+      231,
+      244
+    ],
+    "eye": [
+      128.25,
+      178.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 0,
+    "bbox": [
+      44,
+      44,
+      209,
+      243
+    ],
+    "eye": [
+      127.0,
+      124.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 1,
+    "bbox": [
+      30,
+      44,
+      195,
+      243
+    ],
+    "eye": [
+      128.0,
+      123.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 2,
+    "bbox": [
+      17,
+      45,
+      182,
+      244
+    ],
+    "eye": [
+      127.25,
+      121.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 3,
+    "bbox": [
+      77,
+      43,
+      235,
+      244
+    ],
+    "eye": [
+      149.4,
+      119.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 4,
+    "bbox": [
+      64,
+      44,
+      223,
+      244
+    ],
+    "eye": [
+      149.4,
+      120.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 5,
+    "bbox": [
+      47,
+      45,
+      212,
+      244
+    ],
+    "eye": [
+      149.4,
+      120.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 6,
+    "bbox": [
+      41,
+      43,
+      210,
+      243
+    ],
+    "eye": [
+      148.9,
+      121.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 7,
+    "bbox": [
+      65,
+      45,
+      230,
+      244
+    ],
+    "eye": [
+      149.9,
+      121.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 8,
+    "bbox": [
+      92,
+      48,
+      250,
+      244
+    ],
+    "eye": [
+      148.9,
+      125.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured profile eye"
+  },
+  {
+    "clip": "turn",
+    "key": 9,
+    "bbox": [
+      24,
+      46,
+      191,
+      243
+    ],
+    "eye": [
+      127.25,
+      122.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 10,
+    "bbox": [
+      36,
+      47,
+      204,
+      243
+    ],
+    "eye": [
+      128.0,
+      123.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "turn",
+    "key": 11,
+    "bbox": [
+      43,
+      47,
+      211,
+      243
+    ],
+    "eye": [
+      127.25,
+      123.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 0,
+    "bbox": [
+      49,
+      81,
+      235,
+      243
+    ],
+    "eye": [
+      128.25,
+      169.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 1,
+    "bbox": [
+      49,
+      81,
+      233,
+      243
+    ],
+    "eye": [
+      127.5,
+      168.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 2,
+    "bbox": [
+      51,
+      80,
+      235,
+      243
+    ],
+    "eye": [
+      128.0,
+      166.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 3,
+    "bbox": [
+      50,
+      83,
+      231,
+      244
+    ],
+    "eye": [
+      127.5,
+      168.5
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 4,
+    "bbox": [
+      50,
+      81,
+      232,
+      243
+    ],
+    "eye": [
+      128.0,
+      166.0
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 5,
+    "bbox": [
+      49,
+      80,
+      231,
+      243
+    ],
+    "eye": [
+      127.75,
+      163.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 6,
+    "bbox": [
+      49,
+      78,
+      231,
+      243
+    ],
+    "eye": [
+      128.0,
+      163.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 7,
+    "bbox": [
+      49,
+      81,
+      231,
+      243
+    ],
+    "eye": [
+      127.5,
+      166.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 8,
+    "bbox": [
+      50,
+      83,
+      233,
+      244
+    ],
+    "eye": [
+      127.75,
+      170.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 9,
+    "bbox": [
+      49,
+      83,
+      232,
+      244
+    ],
+    "eye": [
+      127.5,
+      171.25
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 10,
+    "bbox": [
+      49,
+      80,
+      233,
+      243
+    ],
+    "eye": [
+      127.75,
+      167.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  },
+  {
+    "clip": "knead",
+    "key": 11,
+    "bbox": [
+      50,
+      80,
+      235,
+      243
+    ],
+    "eye": [
+      127.75,
+      167.75
+    ],
+    "method": "measured illustration; shared-scale anatomical registration; measured paired eyes"
+  }
+]
