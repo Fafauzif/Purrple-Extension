@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Purrple pose fitting</title>
+<style>body{margin:24px;background:#f6f0fa;color:#51375f;font:16px system-ui}label{display:inline-block;margin:8px}select,button{font:inherit;padding:7px}canvas{display:block;background:#fff;border:1px solid #dbc8e9;max-width:100%;height:auto}#note{max-width:800px}</style>
+<h1>Purrple accessory fitting</h1><p id="note">Developer art viewer. Each source pose has independent head, neck and ear registration. Select a raw key to inspect the exact attachment.</p>
+<label>Pose <select id="clip"></select></label><label>Key <select id="key"></select></label>
+<label>Head <select id="head"></select></label><label>Neck <select id="neck"></select></label>
+<label><input id="debug" type="checkbox"> Registration markers</label><button id="theme">Dark background</button>
+<canvas id="view" width="800" height="600"></canvas><p id="info"></p>
+<script src="../extension/js/renderer-data.js"></script><script src="../extension/js/renderer.js"></script>
+<script>
+const $=id=>document.getElementById(id);let dark=false;
+for(const id of Object.keys(PurrpleArt.sprites))$('clip').add(new Option(id,id));
+for(let i=0;i<6;i++)$('key').add(new Option(i,i));
+for(const slot of ['head','neck']){ $(slot).add(new Option('None',''));for(const [id,p]of Object.entries(PurrpleArt.items))if(p.slot===slot)$(slot).add(new Option(id,id));}
+function render(o={}){
+ const clip=o.clip||$('clip').value,key=o.key??Number($('key').value),head=o.head??$('head').value,neck=o.neck??$('neck').value;
+ const c=$('view'),ctx=c.getContext('2d');ctx.fillStyle=dark?'#282034':'#fffafc';ctx.fillRect(0,0,c.width,c.height);ctx.save();ctx.translate(144,32);ctx.scale(2,2);ctx.imageSmoothingEnabled=false;
+ PurrpleRenderer.drawFrame(ctx,clip,key,{head,neck});const lm=PurrpleRenderer.landmarkFor(clip,key);
+ if(o.debug??$('debug').checked){ctx.fillStyle='#ea2868';for(const pt of [lm.eye,lm.neck]){ctx.beginPath();ctx.arc(...pt,3,0,Math.PI*2);ctx.fill();}ctx.strokeStyle='#ea2868';ctx.beginPath();ctx.moveTo(lm.eye[0]-lm.headWidth/2,lm.eye[1]);ctx.lineTo(lm.eye[0]+lm.headWidth/2,lm.eye[1]);ctx.stroke();}
+ ctx.restore();$('info').textContent=JSON.stringify(lm);return lm;
+}
+for(const id of ['clip','key','head','neck','debug'])$(id).onchange=()=>render();
+$('theme').onclick=()=>{dark=!dark;render();};
+PurrpleRenderer.preload().then(()=>{render();window.PurrpleFit={render,ready:true};});
+</script></html>

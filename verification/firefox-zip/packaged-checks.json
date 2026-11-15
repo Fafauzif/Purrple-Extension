@@ -1,0 +1,70 @@
+{
+  "artifact": "Purrple_Firefox_Extension.zip",
+  "sha256": "a17208cecb25954f44891b4ae4058e166b0fc3584b67bae98993b633b49c6680",
+  "native_extension": true,
+  "checks": [
+    {
+      "check": "zip-integrity",
+      "pass": true,
+      "detail": 56
+    },
+    {
+      "check": "root-manifest-present",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "extracted-runtime-matches-working-tree",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact-zip-native-install",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-renderer-ready",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-native-data-zero-balance",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-all-fifteen-shop-items-purchasable",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-all-fifteen-thumbnails-load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-combined-equipped-outfit",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-popup-shares-outfit",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-roaming-content-visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "packaged-no-extension-script-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "browser_version": "160.0",
+  "passed": 12,
+  "failed": 0
+}

@@ -1,0 +1,9 @@
+dist/
+qa-runtime/
+node_modules/
+__pycache__/
+*.pyc
+*.log
+.env
+profiles/
+verification/review/

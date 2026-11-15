@@ -1,0 +1,93 @@
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const C=require('../extension/js/core.js');
+const script=fs.readFileSync(require('node:path').join(__dirname,'../extension/js/background.js'),'utf8');
+const NOW=Date.parse('2026-11-15T09:00:00Z');
+const clone=o=>structuredClone(o);
+function event(){const listeners=[];return{addListener:fn=>listeners.push(fn),fire:(...args)=>Promise.all(listeners.map(fn=>fn(...args))),listeners};}
+function setup(initial){
+ let clock=NOW,failSave=false,failNotification=false,saveCount=0,alarmWrites=0;
+ const storage={purrpleState:clone(initial||C.defaultState(NOW))},alarms=new Map(),notices=[],notifications=[];
+ const tabs=[{id:1,active:true,windowId:1,url:'https://example.com/'},{id:2,active:false,windowId:1,url:'https://other.test/'}];
+ const browser={
+  storage:{local:{get:async key=>({[key]:clone(storage[key])}),set:async value=>{if(failSave){failSave=false;throw Error('Storage unavailable');}saveCount++;for(const[k,v]of Object.entries(value))storage[k]=clone(v);}}},
+  runtime:{getURL:p=>'moz-extension://purrple/'+p,onMessage:event(),onStartup:event(),onInstalled:event(),sendMessage:async()=>{}},
+  tabs:{query:async query=>query.active?tabs.filter(t=>t.active):tabs,get:async id=>tabs.find(t=>t.id===id),sendMessage:async(id,msg)=>{notices.push({id,msg:clone(msg)});},create:async()=>({id:3}),update:async()=>{},onActivated:event(),onRemoved:event()},
+  windows:{get:async()=>({focused:true}),update:async()=>{},onFocusChanged:event()},
+  alarms:{create:(name,config)=>{alarmWrites++;alarms.set(name,clone(config));},clear:async name=>alarms.delete(name),onAlarm:event()},
+  notifications:{create:async(id,config)=>{notifications.push({id,config});if(failNotification)throw Error('OS notifications denied');return id;},onClicked:event()}
+ };
+ const injected={...C,defaultState:()=>C.defaultState(clock),reduce:(s,a,n=clock)=>C.reduce(s,a,n),reconcile:(s,n=clock)=>C.reconcile(s,n)};
+ class MockDate extends Date{static now(){return clock;}}
+ const context={browser,PurrpleCore:injected,Date:MockDate,crypto:require('node:crypto').webcrypto,console:{warn:()=>{},error:()=>{}}};
+ vm.runInNewContext(script,context);
+ const ui={url:'moz-extension://purrple/app.html',tab:{id:3},frameId:0};
+ const content={url:'https://example.com/',tab:{id:1},frameId:0};
+ const request=(message,sender=ui)=>browser.runtime.onMessage.listeners[0](message,sender);
+ return{browser,storage,alarms,notices,notifications,tabs,request,ui,content,counts:()=>({saveCount,alarmWrites}),setClock:n=>clock=n,failNextSave:()=>failSave=true,failNotifications:()=>failNotification=true};
+}
+test('disabled notifications never schedule an overdue task alarm',async()=>{
+ let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW);
+ s=C.reduce(s,{type:'SETTINGS',patch:{notifications:false}},NOW);
+ const h=setup(s);const result=await h.request({type:'GET_STATE'});
+ assert.equal(result.ok,true);assert.equal(h.alarms.has('purrple-next'),false);assert.equal(h.notifications.length,0);
+});
+test('quiet hours do not spin task alarms but retain focus completion scheduling',async()=>{
+ let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW);
+ s=C.reduce(s,{type:'SETTINGS',patch:{quietHours:{enabled:true,start:'00:00',end:'00:00'}}},NOW);
+ s=C.reduce(s,{type:'FOCUS_START',minutes:25},NOW);
+ const h=setup(s);await h.request({type:'GET_STATE'});
+ assert.equal(h.alarms.get('purrple-next').when,NOW+25*60000);assert.equal(h.notifications.length,0);
+});
+test('failed OS delivery backs off for at least one minute despite repeated state reads',async()=>{
+ const s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW),h=setup(s);
+ h.failNotifications();
+ for(let i=0;i<8;i++)await h.request({type:'GET_STATE'});
+ assert.equal(h.notifications.length,1);assert.equal(h.notices.filter(n=>n.msg.type==='REMINDER_NOTICE').length,1);
+ assert.ok(h.alarms.get('purrple-next').when>=NOW+60000);
+ h.setClock(NOW+61000);await h.request({type:'GET_STATE'});assert.equal(h.notifications.length,2);
+});
+test('concurrent actions are serialized and one purchase debits once',async()=>{
+ const h=setup();let r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Large task',effort:'large'}}),id=r.state.tasks[0].id;
+ await h.request({type:'ACTION',action:{type:'TASK_TOGGLE',id}});
+ const responses=await Promise.all(Array.from({length:8},()=>h.request({type:'ACTION',action:{type:'SHOP_BUY',id:'moon-bow'}})));
+ assert.ok(responses.every(r=>r.ok));assert.equal(h.storage.purrpleState.wallet.balance,10);assert.deepEqual(h.storage.purrpleState.owned,['moon-bow']);
+});
+test('a repeated request token cannot repeat a task toggle',async()=>{
+ const h=setup();let r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Small task'}}),id=r.state.tasks[0].id;
+ await Promise.all(Array.from({length:5},()=>h.request({type:'ACTION',requestId:'same-toggle',action:{type:'TASK_TOGGLE',id}})));
+ assert.equal(h.storage.purrpleState.tasks[0].done,true);assert.equal(h.storage.purrpleState.wallet.balance,10);
+});
+test('content surfaces receive public state and cannot mutate tasks or export backups',async()=>{
+ let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Private title'},NOW),h=setup(s);
+ const p=await h.request({type:'GET_STATE'},h.content);assert.equal(p.state.tasks,undefined);assert.equal(p.state.ledger,undefined);
+ const action=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Injected'}},h.content);assert.equal(action.ok,false);
+ const backup=await h.request({type:'BACKUP_EXPORT'},h.content);assert.equal(backup.ok,false);assert.equal(h.storage.purrpleState.tasks.length,1);
+ const messages=h.notices.filter(n=>n.msg.type==='STATE_CHANGED');assert.ok(messages.every(n=>!n.msg.state.tasks));
+});
+test('lease ownership rejects stale saves and normalizes active-tab positions',async()=>{
+ const h=setup();await h.request({type:'GET_STATE'});
+ let lease=await h.request({type:'PET_CLAIM'},h.content);assert.equal(lease.active,true);
+ await h.request({type:'PET_SAVE',leaseId:lease.leaseId,position:{x:2,y:-1}},h.content);
+ assert.deepEqual(h.storage.purrplePosition,{x:1,y:0});
+ h.tabs[0].active=false;h.tabs[1].active=true;
+ const second={url:'https://other.test/',tab:{id:2},frameId:0};const next=await h.request({type:'PET_CLAIM'},second);assert.equal(next.active,true);
+ const stale=await h.request({type:'PET_SAVE',leaseId:lease.leaseId,position:{x:.2,y:.2}},h.content);assert.equal(stale.saved,false);
+ assert.deepEqual(h.storage.purrplePosition,{x:1,y:0});assert.ok(h.notices.some(n=>n.id===1&&n.msg.type==='PET_REVOKED'));
+});
+test('a storage failure cannot claim a committed task or corrupt progress',async()=>{
+ const h=setup();await h.request({type:'GET_STATE'});h.failNextSave();
+ const r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Unsaved'}});
+ assert.equal(r.ok,false);assert.equal(h.storage.purrpleState.tasks.length,0);assert.match(r.error,/Storage/);
+});
+test('countdown polling returns current time without rewriting history or recreating an unchanged alarm',async()=>{
+ const s=C.reduce(C.defaultState(NOW),{type:'FOCUS_START',minutes:25},NOW),h=setup(s);
+ await h.request({type:'GET_STATE'});const initial=h.counts();
+ for(let i=1;i<=10;i++){
+  h.setClock(NOW+i*1000);const r=await h.request({type:'GET_STATE'});assert.equal(r.state.focus.remainingMs,1500000-i*1000);
+ }
+ assert.deepEqual(h.counts(),initial);
+ h.setClock(NOW+1500001);const result=await h.request({type:'GET_STATE'});assert.equal(result.state.wallet.balance,5);assert.ok(h.counts().saveCount>initial.saveCount);
+});

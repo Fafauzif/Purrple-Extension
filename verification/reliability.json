@@ -1,0 +1,40 @@
+{
+  "scope": "Independent pure-domain stress scenarios and static local-runtime audit; not a native browser test.",
+  "passed": 11,
+  "failed": 0,
+  "exitCode": 0,
+  "largeHistory": {
+    "tasks": 6001,
+    "ledgerEntries": 6001,
+    "roundTrip": true,
+    "reopenDoesNotAwardAgain": true
+  },
+  "focusHistory": {
+    "completedSessions": 370,
+    "recentEntriesRetained": 365,
+    "lifetimeBonusRetained": true
+  },
+  "regressionFoundAndFixed": [
+    "Canonical task IDs were checked before normalization, allowing raw a and whitespace-padded a to normalize to duplicate IDs.",
+    "Canonical ledger IDs were checked before normalization, allowing duplicate canonical reward identifiers with an arithmetically matching wallet."
+  ],
+  "privacy": {
+    "taskTextExcludedFromPublicProjection": true,
+    "noRemoteClientOrInferenceDependencyInRuntime": true,
+    "manifestConnectSelfOnly": true
+  },
+  "checks": [
+    "✔ more than 5000 completed tasks and rewards survive a JSON backup roundtrip",
+    "✔ canonical task ID collisions in backups are rejected",
+    "✔ canonical ledger ID collisions in backups are rejected",
+    "✔ prototype-like shop IDs never mutate or corrupt a funded wallet",
+    "✔ changing effort then reopening a rewarded task cannot farm a larger reward",
+    "✔ recurring occurrences earn separately while parent reopening cannot duplicate children",
+    "✔ focus history retention does not drop lifetime bonuses or award twice on reload",
+    "✔ backward local clocks produce restorable paused timers and only one eventual bonus",
+    "✔ a failed import leaves the previously saved data and input object unchanged",
+    "✔ public content projection excludes task names, ledger references and private task lists",
+    "✔ runtime source has no remote network client or external inference dependency"
+  ],
+  "output": "✔ more than 5000 completed tasks and rewards survive a JSON backup roundtrip (91.808688ms)\n✔ canonical task ID collisions in backups are rejected (0.565351ms)\n✔ canonical ledger ID collisions in backups are rejected (0.223553ms)\n✔ prototype-like shop IDs never mutate or corrupt a funded wallet (0.343942ms)\n✔ changing effort then reopening a rewarded task cannot farm a larger reward (0.531551ms)\n✔ recurring occurrences earn separately while parent reopening cannot duplicate children (1.123031ms)\n✔ focus history retention does not drop lifetime bonuses or award twice on reload (146.709253ms)\n✔ backward local clocks produce restorable paused timers and only one eventual bonus (0.345505ms)\n✔ a failed import leaves the previously saved data and input object unchanged (0.265215ms)\n✔ public content projection excludes task names, ledger references and private task lists (0.347527ms)\n✔ runtime source has no remote network client or external inference dependency (1.127688ms)\nℹ tests 11\nℹ suites 0\nℹ pass 11\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 314.060052\n"
+}

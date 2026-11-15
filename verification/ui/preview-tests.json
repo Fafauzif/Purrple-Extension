@@ -1,0 +1,214 @@
+{
+  "browser": "Chromium headless shell",
+  "scope": "Production UI with clearly labeled local preview adapter; native Firefox tested separately",
+  "passed": 51,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "preview-is-explicit",
+      "pass": true
+    },
+    {
+      "name": "no-fake-starter-tasks",
+      "pass": true
+    },
+    {
+      "name": "empty-task-validation",
+      "pass": true
+    },
+    {
+      "name": "quick-add-saved",
+      "pass": true
+    },
+    {
+      "name": "title-escaped",
+      "pass": true
+    },
+    {
+      "name": "no-title-html-injection",
+      "pass": true
+    },
+    {
+      "name": "duplicate-subtask-titles-have-unique-ids",
+      "pass": true
+    },
+    {
+      "name": "duplicate-subtask-edit-roundtrip",
+      "pass": true
+    },
+    {
+      "name": "subtask-persists",
+      "pass": true
+    },
+    {
+      "name": "completion-awards-coins",
+      "pass": true
+    },
+    {
+      "name": "reopen-cannot-farm-coins",
+      "pass": true
+    },
+    {
+      "name": "effort-rewards-correct",
+      "pass": true
+    },
+    {
+      "name": "fifteen-items",
+      "pass": true
+    },
+    {
+      "name": "try-on-is-preview-only",
+      "pass": true
+    },
+    {
+      "name": "try-on-keeps-keyboard-focus",
+      "pass": true
+    },
+    {
+      "name": "purchase-spends-once",
+      "pass": true
+    },
+    {
+      "name": "head-item-equipped",
+      "pass": true
+    },
+    {
+      "name": "head-and-neck-combine",
+      "pass": true
+    },
+    {
+      "name": "discard-preview-preserves-outfit",
+      "pass": true
+    },
+    {
+      "name": "unaffordable-items-disabled",
+      "pass": true
+    },
+    {
+      "name": "session-starts",
+      "pass": true
+    },
+    {
+      "name": "session-pauses",
+      "pass": true
+    },
+    {
+      "name": "paused-session-survives-reload",
+      "pass": true
+    },
+    {
+      "name": "session-resumes",
+      "pass": true
+    },
+    {
+      "name": "session-cancels-without-coins",
+      "pass": true
+    },
+    {
+      "name": "break-is-free",
+      "pass": true
+    },
+    {
+      "name": "settings-save",
+      "pass": true
+    },
+    {
+      "name": "backup-contains-progress",
+      "pass": true
+    },
+    {
+      "name": "bad-backup-preserves-state",
+      "pass": true
+    },
+    {
+      "name": "import-requires-confirmation",
+      "pass": true
+    },
+    {
+      "name": "restore-initially-focuses-cancel",
+      "pass": true
+    },
+    {
+      "name": "cancel-restore-preserves-data",
+      "pass": true
+    },
+    {
+      "name": "backup-roundtrip",
+      "pass": true
+    },
+    {
+      "name": "archive-visible",
+      "pass": true
+    },
+    {
+      "name": "archive-restores",
+      "pass": true
+    },
+    {
+      "name": "search-empty-feedback",
+      "pass": true
+    },
+    {
+      "name": "clear-search-refocuses",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-today-1280",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-focus-1280",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-wardrobe-1280",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-settings-1280",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-today-390",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-focus-390",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-wardrobe-390",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-settings-390",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-today-320",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-focus-320",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-wardrobe-320",
+      "pass": true
+    },
+    {
+      "name": "no-overflow-settings-320",
+      "pass": true
+    },
+    {
+      "name": "popup-loads",
+      "pass": true
+    },
+    {
+      "name": "no-page-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

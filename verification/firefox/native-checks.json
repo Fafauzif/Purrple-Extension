@@ -1,0 +1,558 @@
+{
+  "browser": "Native Firefox",
+  "native_extension": true,
+  "mocked_apis": false,
+  "checks": [
+    {
+      "check": "native-temporary-addon-install",
+      "pass": true,
+      "detail": "purrple-companion@purrple.local"
+    },
+    {
+      "check": "native-extension-uuid",
+      "pass": true,
+      "detail": "72e0379a-572e-447c-b039-3ae027821f33"
+    },
+    {
+      "check": "native-sidebar-open",
+      "pass": true,
+      "detail": {
+        "open": true,
+        "width": 340
+      }
+    },
+    {
+      "check": "dashboard-native-load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "fresh-state-zero-coins",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "catalog-fifteen-items",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "real-ui-task-create",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "real-ui-task-edit",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-task-add",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "concurrent-toggle-reward-once",
+      "pass": true,
+      "detail": {
+        "rewards": 1,
+        "balance": 30
+      }
+    },
+    {
+      "check": "concurrent-purchase-once",
+      "pass": true,
+      "detail": {
+        "balance": 10,
+        "totalEarned": 30
+      }
+    },
+    {
+      "check": "equip-owned-item",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "reject-unowned-item",
+      "pass": true,
+      "detail": "Unlock this accessory in the shop first."
+    },
+    {
+      "check": "invalid-backup-rejected",
+      "pass": true,
+      "detail": "The backup is missing its task or progress lists."
+    },
+    {
+      "check": "invalid-import-preserves-data",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "task-text-payload-stored-as-text",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "no-task-html-execution",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-start",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-pause",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "paused-time-stays-fixed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-resume",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "cancel-focus-no-bonus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-alarm-scheduled",
+      "pass": true,
+      "detail": [
+        {
+          "name": "purrple-heartbeat",
+          "periodInMinutes": 1,
+          "scheduledTime": 1794682886945
+        },
+        {
+          "name": "purrple-next",
+          "periodInMinutes": null,
+          "scheduledTime": 1794682890563
+        }
+      ]
+    },
+    {
+      "check": "running-focus-survives-native-browser-restart",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "narrow-no-horizontal-overflow",
+      "pass": true,
+      "detail": {
+        "scroll": 494,
+        "width": 500
+      }
+    },
+    {
+      "check": "popup-shares-native-state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-first-tab-cat-active",
+      "pass": true,
+      "detail": {
+        "aAgain": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aFirst": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bActive": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteRestored": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        }
+      }
+    },
+    {
+      "check": "native-tab-handoff-single-owner",
+      "pass": true,
+      "detail": {
+        "aAgain": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aFirst": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bActive": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteRestored": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        }
+      }
+    },
+    {
+      "check": "native-tab-return-handoff",
+      "pass": true,
+      "detail": {
+        "aAgain": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aFirst": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bActive": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteRestored": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        }
+      }
+    },
+    {
+      "check": "native-hidden-host-hides-cat",
+      "pass": true,
+      "detail": {
+        "aAgain": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aFirst": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bActive": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteRestored": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        }
+      }
+    },
+    {
+      "check": "native-unhide-host-restores-cat",
+      "pass": true,
+      "detail": {
+        "aAgain": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aFirst": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "aHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bActive": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "bHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteHidden": {
+          "active": false,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        },
+        "siteRestored": {
+          "active": true,
+          "atHome": false,
+          "clip": "study",
+          "state": "rest",
+          "x": 1008.7167999999998,
+          "y": 852
+        }
+      }
+    },
+    {
+      "check": "roaming-cat-native-visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-focus-body-double",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "host-button-works",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-pointer-pickup-held",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-pointer-release-airborne",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-pointer-drag-no-page-break",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-throw-settles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-reminder-snooze",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-backup-export",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-backup-roundtrip",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-alarm-completed-without-get-state",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "real-one-minute-focus-completes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "real-focus-bonus-once",
+      "pass": true,
+      "detail": {
+        "balance": 15,
+        "totalEarned": 35
+      }
+    },
+    {
+      "check": "focus-repeat-finish-no-extra-coins",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-browser-restart-keeps-progress",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native-extension-no-script-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "browser_version": "160.0",
+  "extension_base": "moz-extension://72e0379a-572e-447c-b039-3ae027821f33/",
+  "extension_script_errors": [],
+  "passed": 47,
+  "failed": 0
+}

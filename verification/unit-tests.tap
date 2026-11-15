@@ -1,0 +1,46 @@
+✔ disabled notifications never schedule an overdue task alarm (3.163549ms)
+✔ quiet hours do not spin task alarms but retain focus completion scheduling (1.102851ms)
+✔ failed OS delivery backs off for at least one minute despite repeated state reads (2.541142ms)
+✔ concurrent actions are serialized and one purchase debits once (2.550396ms)
+✔ a repeated request token cannot repeat a task toggle (0.854452ms)
+✔ content surfaces receive public state and cannot mutate tasks or export backups (0.72536ms)
+✔ lease ownership rejects stale saves and normalizes active-tab positions (0.820942ms)
+✔ a storage failure cannot claim a committed task or corrupt progress (0.691349ms)
+✔ countdown polling returns current time without rewriting history or recreating an unchanged alarm (2.682433ms)
+✔ catalog has fifteen distinct correctly slotted permanent items (0.681624ms)
+✔ task mutation is immutable and validated (1.031115ms)
+✔ completion grants10/20/30 and reopening cannot farm coins (0.452985ms)
+✔ recurring occurrences get unique rewards, reset subtasks and skip stale backlog (0.530169ms)
+✔ archive can be restored without data loss or an extra reward (0.170895ms)
+✔ purchase is idempotent, debit is atomic and outfits require ownership (0.238856ms)
+✔ prototype property names cannot masquerade as catalog accessories (0.246077ms)
+✔ focus completion is clock-based and grants once after restart catchup (0.246006ms)
+✔ paused timers do not elapse and resume excludes paused time (0.19496ms)
+✔ backward clock movement cannot extend a paused session beyond its configured duration (1.403009ms)
+✔ cancel and breaks do not grant focus rewards (0.244935ms)
+✔ due reminders respect snooze, acknowledgment, archive and quiet hours (0.202731ms)
+✔ quiet hours cross midnight correctly and support an all-day quiet setting (0.129323ms)
+✔ settings validation protects nested fields and normalizes hidden sites (0.642937ms)
+✔ backup roundtrip preserves progress, ownership, subtasks and timer (0.32907ms)
+✔ invalid and inconsistent backups fail without modifying existing data (0.32956ms)
+✔ backup rejects canonical ID collisions after whitespace normalization (0.227008ms)
+✔ public state does not expose tasks, ledger, history or full focus task references (0.132438ms)
+✔ more than 5000 completed tasks and rewards survive a JSON backup roundtrip (86.952608ms)
+✔ canonical task ID collisions in backups are rejected (0.891457ms)
+✔ canonical ledger ID collisions in backups are rejected (0.419535ms)
+✔ prototype-like shop IDs never mutate or corrupt a funded wallet (0.370051ms)
+✔ changing effort then reopening a rewarded task cannot farm a larger reward (1.04803ms)
+✔ recurring occurrences earn separately while parent reopening cannot duplicate children (1.478971ms)
+✔ focus history retention does not drop lifetime bonuses or award twice on reload (151.272546ms)
+✔ backward local clocks produce restorable paused timers and only one eventual bonus (0.277293ms)
+✔ a failed import leaves the previously saved data and input object unchanged (0.290292ms)
+✔ public content projection excludes task names, ledger references and private task lists (0.289271ms)
+✔ runtime source has no remote network client or external inference dependency (1.094209ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 354.165381

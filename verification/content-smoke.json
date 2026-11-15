@@ -1,0 +1,92 @@
+{
+  "scope": "Chromium DOM smoke test with stubbed browser API, renderer and deterministic document-visibility state; not native extension proof",
+  "results": [
+    {
+      "id": "inactive-tab-defers-art-preload",
+      "pass": true
+    },
+    {
+      "id": "inactive-tab-has-tiny-canvas",
+      "pass": true
+    },
+    {
+      "id": "mounted-with-active-lease",
+      "pass": true
+    },
+    {
+      "id": "equipped-passed-to-renderer",
+      "pass": true
+    },
+    {
+      "id": "host-page-button-clicks-through",
+      "pass": true
+    },
+    {
+      "id": "play-menu-visible",
+      "pass": true
+    },
+    {
+      "id": "pat-state",
+      "pass": true
+    },
+    {
+      "id": "brush-state",
+      "pass": true
+    },
+    {
+      "id": "home-nap-hidden",
+      "pass": true
+    },
+    {
+      "id": "wake-restores-visible",
+      "pass": true
+    },
+    {
+      "id": "drag-held-state",
+      "pass": true
+    },
+    {
+      "id": "release-enters-air",
+      "pass": true
+    },
+    {
+      "id": "throw-settles-in-bounds",
+      "pass": true,
+      "detail": {
+        "mounted": true,
+        "ready": true,
+        "active": true,
+        "lease": true,
+        "state": "action",
+        "clip": "impact",
+        "x": 668.7760955150434,
+        "y": 688,
+        "atHome": false,
+        "size": 128
+      }
+    },
+    {
+      "id": "setting-hide-removes-companion",
+      "pass": true
+    },
+    {
+      "id": "hide-clears-actor-cache",
+      "pass": true
+    },
+    {
+      "id": "hide-releases-canvas-buffer",
+      "pass": true
+    },
+    {
+      "id": "lease-release-sent",
+      "pass": true
+    },
+    {
+      "id": "no-page-errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "passed": 18,
+  "failed": 0
+}

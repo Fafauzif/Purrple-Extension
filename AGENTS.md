@@ -1,0 +1,21 @@
+# Working on Purrple
+
+Read CONTEXT.md, PRODUCT.md, ARCHITECTURE.md, DESIGN.md and UX-CONTRACT.md first.
+Keep the approved purple Plush Chibi identity and its fixed local artwork.
+
+- Runtime stays offline and AI-free. Do not add analytics, remote assets,
+  providers, accounts, API keys or new service dependencies.
+- Keep persistence and reward invariants in PurrpleCore; serialize background
+  commits. Never award coins from UI animation callbacks.
+- Use the same renderer in every surface. Fit every equipped item to all source
+  poses. Do not hide an item in difficult poses to conceal a rendering defect.
+- Keep content-page state minimal. Never expose task text, wallet history or
+  backups to an ordinary webpage or scrape the page's contents.
+- Preserve backup compatibility and existing ownership. Rejected imports must
+  leave the current save untouched.
+- Run meaningful unit and actual-browser tests after related changes. Clearly
+  distinguish native Firefox tests from preview adapters and mocked tests.
+- Rebuild with scripts/build_release.py. Exclude browser runtimes, test profiles,
+  credentials and private evaluation exchanges from the release archives.
+- Signing is a separate release step. Never describe an unsigned development
+  ZIP as permanently installable in standard Firefox.

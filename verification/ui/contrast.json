@@ -1,0 +1,1667 @@
+{
+  "scope": "Computed foreground/background contrast of visible text; decorative aria-hidden glyphs and disabled controls excluded.",
+  "count": 205,
+  "failed": [],
+  "results": [
+    {
+      "view": "today",
+      "checks": [
+        {
+          "text": "Skip to your day",
+          "selector": "a.skip-link",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Purrple",
+          "selector": "span",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little company, every day.",
+          "selector": "small",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local preview",
+          "selector": "span#preview-label",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 141)"
+        },
+        {
+          "text": "0",
+          "selector": "strong#coin-balance",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "coins",
+          "selector": "span",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "Today",
+          "selector": "button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(103, 65, 125)"
+        },
+        {
+          "text": "Study together",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Settings",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Sunday, November 15",
+          "selector": "p#today-date",
+          "ratio": 5.24,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "A little at a time.",
+          "selector": "h1#today-heading",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Make a small plan. Purrple will keep you company.",
+          "selector": "p#welcome-copy",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "＋ New task",
+          "selector": "button#new-task",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "A task to do",
+          "selector": "label.sr-only",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Add",
+          "selector": "button.button.primary",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "To do",
+          "selector": "button",
+          "ratio": 4.8,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "2",
+          "selector": "span#open-count",
+          "ratio": 4.8,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Done",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Archive",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "2 to do",
+          "selector": "span#task-summary",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Find a task",
+          "selector": "label.sr-only",
+          "ratio": 9.85,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "An important task",
+          "selector": "div.task-title",
+          "ratio": 10.63,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Important",
+          "selector": "span.important",
+          "ratio": 5.24,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(140, 88, 61)"
+        },
+        {
+          "text": "Due Nov 15, 2:01 AM",
+          "selector": "span.overdue",
+          "ratio": 6.16,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(157, 66, 91)"
+        },
+        {
+          "text": "+20 coins",
+          "selector": "span.reward",
+          "ratio": 4.92,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 96, 46)"
+        },
+        {
+          "text": "Edit",
+          "selector": "button.text-button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Archive",
+          "selector": "button.text-button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "A little step",
+          "selector": "span",
+          "ratio": 5.64,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 92, 134)"
+        },
+        {
+          "text": "A little normal task",
+          "selector": "div.task-title",
+          "ratio": 10.63,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Due Nov 15, 2:01 AM",
+          "selector": "span.overdue",
+          "ratio": 6.16,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(157, 66, 91)"
+        },
+        {
+          "text": "+20 coins",
+          "selector": "span.reward",
+          "ratio": 4.92,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 96, 46)"
+        },
+        {
+          "text": "Edit",
+          "selector": "button.text-button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Archive",
+          "selector": "button.text-button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "A little step",
+          "selector": "span",
+          "ratio": 5.64,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 92, 134)"
+        },
+        {
+          "text": "Your little companion",
+          "selector": "span.eyebrow",
+          "ratio": 4.94,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "Keeping company",
+          "selector": "span#companion-state",
+          "ratio": 5.08,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 81, 131)"
+        },
+        {
+          "text": "One small thing is a perfectly good start.",
+          "selector": "p#cat-line",
+          "ratio": 5.19,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(119, 87, 134)"
+        },
+        {
+          "text": "♡ Pet",
+          "selector": "button",
+          "ratio": 6.05,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 81, 136)"
+        },
+        {
+          "text": "Brush",
+          "selector": "button",
+          "ratio": 6.05,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 81, 136)"
+        },
+        {
+          "text": "Play",
+          "selector": "button",
+          "ratio": 6.05,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 81, 136)"
+        },
+        {
+          "text": "Nap",
+          "selector": "button",
+          "ratio": 6.05,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 81, 136)"
+        },
+        {
+          "text": "0 little wins today",
+          "selector": "span#today-done",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(115, 85, 128)"
+        },
+        {
+          "text": "Study together →",
+          "selector": "button.text-button",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Local, cozy, and all yours.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        },
+        {
+          "text": "No account. No subscription. Just Purrple.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        }
+      ]
+    },
+    {
+      "view": "focus",
+      "checks": [
+        {
+          "text": "Skip to your day",
+          "selector": "a.skip-link",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Purrple",
+          "selector": "span",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little company, every day.",
+          "selector": "small",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local preview",
+          "selector": "span#preview-label",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 141)"
+        },
+        {
+          "text": "0",
+          "selector": "strong#coin-balance",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "coins",
+          "selector": "span",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "Today",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Study together",
+          "selector": "button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(103, 65, 125)"
+        },
+        {
+          "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Settings",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "A quiet bit of company",
+          "selector": "p.eyebrow",
+          "ratio": 5.24,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "Let’s work on it together.",
+          "selector": "h1#focus-heading",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A session can be short. Starting still counts.",
+          "selector": "p",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Focus session",
+          "selector": "p#timer-kind",
+          "ratio": 5.73,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "25:00",
+          "selector": "div#timer-display",
+          "ratio": 6.34,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(118, 81, 138)"
+        },
+        {
+          "text": "Pick a little window of time.",
+          "selector": "p#timer-caption",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Session length",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Work on a task",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "(optional)",
+          "selector": "span.muted",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Start together",
+          "selector": "button#focus-start",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "Time for a breather?",
+          "selector": "span.muted",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "5-minute break",
+          "selector": "button.text-button",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "10-minute break",
+          "selector": "button.text-button",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Finished focus sessions earn 5 coins. Pauses are always welcome.",
+          "selector": "p.reward-note",
+          "ratio": 5.54,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 95, 133)"
+        },
+        {
+          "text": "Notebook ready. Tiny paws, big plans.",
+          "selector": "p#focus-cat-line",
+          "ratio": 5.36,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(123, 87, 140)"
+        },
+        {
+          "text": "Your recent sessions",
+          "selector": "h2",
+          "ratio": 9.85,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "0 minutes together",
+          "selector": "span#focus-total",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "A fresh notebook.",
+          "selector": "strong",
+          "ratio": 4.78,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(132, 98, 146)"
+        },
+        {
+          "text": "Your completed sessions will appear here.",
+          "selector": "p",
+          "ratio": 5.31,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local, cozy, and all yours.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        },
+        {
+          "text": "No account. No subscription. Just Purrple.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        }
+      ]
+    },
+    {
+      "view": "wardrobe",
+      "checks": [
+        {
+          "text": "Skip to your day",
+          "selector": "a.skip-link",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Purrple",
+          "selector": "span",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little company, every day.",
+          "selector": "small",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local preview",
+          "selector": "span#preview-label",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 141)"
+        },
+        {
+          "text": "0",
+          "selector": "strong#coin-balance",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "coins",
+          "selector": "span",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "Today",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Study together",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(103, 65, 125)"
+        },
+        {
+          "text": "Settings",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Little rewards, all yours",
+          "selector": "p.eyebrow",
+          "ratio": 5.24,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "Purrple’s wardrobe.",
+          "selector": "h1#wardrobe-heading",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Try things on. Save up for a favorite. Keep it forever.",
+          "selector": "p",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Her everyday look",
+          "selector": "h2#preview-name",
+          "ratio": 8.86,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Choose a little something to try on.",
+          "selector": "p#preview-copy",
+          "ratio": 4.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Head",
+          "selector": "span",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 95, 133)"
+        },
+        {
+          "text": "Nothing yet",
+          "selector": "strong#head-name",
+          "ratio": 8.86,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Neck",
+          "selector": "span",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 95, 133)"
+        },
+        {
+          "text": "Nothing yet",
+          "selector": "strong#neck-name",
+          "ratio": 8.86,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Show saved outfit",
+          "selector": "button#reset-preview",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "All",
+          "selector": "button",
+          "ratio": 4.8,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Yours",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Head",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Neck",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "15 little things",
+          "selector": "span#shop-count",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Moon bow",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A plum ribbon with a little crescent charm.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 20 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Cozy beanie",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A lavender knit hat, with room for both ears.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 65 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Star beret",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A soft beret for important little thoughts.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 90 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Flower clip",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A small lilac blossom beside her ear.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 35 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Cloud cap",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little cloud to wear on a quiet day.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 80 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Crescent crown",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A tiny crown for a very small queen.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 150 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Heart bow",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A pink-lilac ribbon with a heart at its center.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 55 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Plum ribbon",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A simple folded ribbon in deep purple.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 45 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Stargazer hat",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little pointed hat with a starry detail.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 120 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Star bandana",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A violet neckerchief with an embroidered star.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 20 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Moon collar",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A soft collar with a little moon charm.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 35 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Cozy scarf",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A snug scarf for a cozy study session.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 65 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Petal collar",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A small ring of lavender petals.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 45 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Cloud bib",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A soft cloud-shaped little bib.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 55 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Night bandana",
+          "selector": "h3",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A dark violet bandana for late-night company.",
+          "selector": "p.shop-description",
+          "ratio": 5.51,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 96, 131)"
+        },
+        {
+          "text": "✧ 85 coins",
+          "selector": "span.shop-price",
+          "ratio": 5.53,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(134, 98, 45)"
+        },
+        {
+          "text": "Try on",
+          "selector": "button.button.subtle",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Local, cozy, and all yours.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        },
+        {
+          "text": "No account. No subscription. Just Purrple.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        }
+      ]
+    },
+    {
+      "view": "settings",
+      "checks": [
+        {
+          "text": "Skip to your day",
+          "selector": "a.skip-link",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Purrple",
+          "selector": "span",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "A little company, every day.",
+          "selector": "small",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local preview",
+          "selector": "span#preview-label",
+          "ratio": 4.56,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 141)"
+        },
+        {
+          "text": "0",
+          "selector": "strong#coin-balance",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "coins",
+          "selector": "span",
+          "ratio": 4.79,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(128, 95, 54)"
+        },
+        {
+          "text": "Today",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Study together",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Little wardrobe",
+          "selector": "button",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Settings",
+          "selector": "button",
+          "ratio": 6.2,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(103, 65, 125)"
+        },
+        {
+          "text": "Make yourself comfortable",
+          "selector": "p.eyebrow",
+          "ratio": 5.24,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 91, 136)"
+        },
+        {
+          "text": "A home that suits you.",
+          "selector": "h1#settings-heading",
+          "ratio": 9.85,
+          "required": 3,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Your preferences stay in this browser.",
+          "selector": "p",
+          "ratio": 5.14,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Keeping company",
+          "selector": "h2",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "What should Purrple call you?",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Roam on websites",
+          "selector": "strong",
+          "ratio": 5.18,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(130, 97, 143)"
+        },
+        {
+          "text": "Let Purrple sit beside you while you browse.",
+          "selector": "small",
+          "ratio": 5.6,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 94, 133)"
+        },
+        {
+          "text": "Companion size",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "128 px",
+          "selector": "output#setting-size-label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Animation playback",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Gentle motion",
+          "selector": "strong",
+          "ratio": 5.18,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(130, 97, 143)"
+        },
+        {
+          "text": "Keep her calmer, with less movement.",
+          "selector": "small",
+          "ratio": 5.6,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 94, 133)"
+        },
+        {
+          "text": "Little remarks",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Reminders & quiet time",
+          "selector": "h2",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Task reminders",
+          "selector": "strong",
+          "ratio": 5.18,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(130, 97, 143)"
+        },
+        {
+          "text": "A little nudge when something is due.",
+          "selector": "small",
+          "ratio": 5.6,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 94, 133)"
+        },
+        {
+          "text": "Quiet hours",
+          "selector": "strong",
+          "ratio": 5.18,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(130, 97, 143)"
+        },
+        {
+          "text": "Keep reminders and remarks quiet overnight.",
+          "selector": "small",
+          "ratio": 5.6,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 94, 133)"
+        },
+        {
+          "text": "From",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Until",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "Websites where Purrple stays hidden",
+          "selector": "label",
+          "ratio": 5.25,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(129, 96, 142)"
+        },
+        {
+          "text": "One hostname per line. You can also hide her from a webpage.",
+          "selector": "small",
+          "ratio": 5.6,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 94, 133)"
+        },
+        {
+          "text": "Reminders run while Firefox is open. If a deadline passes while it is closed, Purrple",
+          "selector": "p.muted.small-copy",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Save preferences",
+          "selector": "button.button.primary",
+          "ratio": 6.28,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "text": "Keep your little world safe.",
+          "selector": "h2",
+          "ratio": 10.77,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(76, 52, 91)"
+        },
+        {
+          "text": "Back up tasks, coins, outfits, and preferences in one file.",
+          "selector": "p",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Download backup",
+          "selector": "button#backup-export",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Restore a backup",
+          "selector": "button#backup-import",
+          "ratio": 6.09,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(120, 80, 143)"
+        },
+        {
+          "text": "Restoring replaces your current Purrple data. You will be asked before anything chang",
+          "selector": "p.small-copy.muted",
+          "ratio": 5.62,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(117, 96, 127)"
+        },
+        {
+          "text": "Local, cozy, and all yours.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        },
+        {
+          "text": "No account. No subscription. Just Purrple.",
+          "selector": "span",
+          "ratio": 4.97,
+          "required": 4.5,
+          "pass": true,
+          "color": "rgb(121, 97, 133)"
+        }
+      ]
+    }
+  ]
+}
