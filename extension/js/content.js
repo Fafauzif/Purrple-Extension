@@ -22,7 +22,8 @@
     .actor{position:absolute;background:transparent!important;border:0;padding:0;pointer-events:auto;touch-action:none;user-select:none;cursor:grab;border-radius:44%;-webkit-tap-highlight-color:transparent}
     .actor.held{cursor:grabbing}.actor:focus-visible{outline:2px dashed #9b70b4;outline-offset:1px}
     .paw{position:absolute;pointer-events:auto;width:29px;height:29px;padding:0;border-radius:50%;font-size:16px;background:#fff8fd;box-shadow:0 3px 14px #65457620}
-    .house{position:absolute;right:13px;bottom:8px;pointer-events:auto;width:55px;height:54px;border:0;background:transparent!important;padding:0;color:#78538c;font-size:11px}
+    .house{position:absolute;right:13px;bottom:8px;pointer-events:auto;width:55px;height:54px;touch-action:none;user-select:none;cursor:grab;border:0;background:transparent!important;padding:0;color:#78538c;font-size:11px}
+    .house.moving{cursor:grabbing}.house::after{content:"⋯";position:absolute;right:0;bottom:2px;background:#fffafd;border:1px solid #cdb6dd;border-radius:8px;line-height:12px;padding:0 4px}
     .house svg{display:block;width:55px;height:48px}.house .zz{position:absolute;right:1px;top:-12px;font-weight:700}
     .menu,.speech{position:absolute;pointer-events:auto;font:13px/1.5 system-ui,sans-serif;color:#50365e;background:#fffafd;border:1px solid #decbe8;border-radius:17px;box-shadow:0 7px 26px #49305225;max-width:calc(100vw - 24px)}
     .menu{width:240px;padding:10px;max-height:calc(100vh - 24px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#bca0ce #f8effb}
@@ -38,22 +39,22 @@
   const ctx=canvas.getContext('2d');
   const actor=document.createElement('button');actor.type='button';actor.className='actor';actor.setAttribute('aria-label','Purrple. Drag to pick her up, or open her play menu.');actor.title='Purrple · drag to pick up, click to play';
   const paw=document.createElement('button');paw.type='button';paw.className='paw';paw.textContent='✧';paw.setAttribute('aria-label','Open Purrple play menu');paw.title='Play with Purrple';
-  const house=document.createElement('button');house.type='button';house.className='house';house.setAttribute('aria-label','Send Purrple home');house.title='Purrple’s little home';
+  const house=document.createElement('button');house.type='button';house.className='house';house.setAttribute('aria-label','Send Purrple home');house.title='Click to send Purrple home or wake her. Drag or use the arrow keys to move the house.';house.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown Home');
   house.innerHTML='<svg viewBox="0 0 60 54" aria-hidden="true"><path d="M5 25 30 3l25 22" fill="#c1a4d6" stroke="#79598b" stroke-width="2" stroke-linejoin="round"/><path d="M11 24h38v28H11z" fill="#f2dfef" stroke="#9576a5" stroke-width="2"/><path d="M21 52V37a9 9 0 0 1 18 0v15" fill="#8a689f"/><circle cx="30" cy="18" r="4" fill="#fff1dc"/></svg><span class="zz" hidden>z z</span>';
   const menu=document.createElement('div');menu.className='menu';menu.hidden=true;menu.setAttribute('role','group');menu.setAttribute('aria-label','Play with Purrple');
-  menu.innerHTML='<header><span>A little company</span><button type="button" data-action="close" aria-label="Close play menu">×</button></header><div class="actions"><button type="button" data-action="pat">♡ Pet</button><button type="button" data-action="talk">Talk</button><button type="button" data-action="play" aria-expanded="false">Play</button><button type="button" data-action="dashboard">Dashboard</button></div><div class="play-actions" hidden><button type="button" data-action="toy">Yarn</button><button type="button" data-action="jump">Little hop</button><button type="button" data-action="roll">Roll</button><button type="button" data-action="knead">Knead</button><button type="button" data-action="wave">Wave</button><button type="button" data-action="nuzzle">Nuzzle</button><button type="button" data-action="stretch">Stretch</button><button type="button" data-action="loaf">Loaf</button></div><button type="button" class="more-toggle" data-action="more" aria-expanded="false">More ▾</button><div class="more-actions" hidden><button type="button" data-action="brush">Brush</button><button type="button" data-action="nap">Take a nap</button><button type="button" data-action="home">Go home</button><button type="button" data-action="jump">Little jump</button><button type="button" data-action="settings">Settings</button><button type="button" data-action="hide">Hide here</button></div><footer>Drag to pick her up.</footer>';
+  menu.innerHTML='<header><span>A little company</span><button type="button" data-action="close" aria-label="Close play menu">×</button></header><div class="actions"><button type="button" data-action="pat">♡ Pet</button><button type="button" data-action="talk">Talk</button><button type="button" data-action="play" aria-expanded="false">Play</button><button type="button" data-action="dashboard">Dashboard</button></div><div class="play-actions" hidden><button type="button" data-action="toy">Yarn</button><button type="button" data-action="jump">Little hop</button><button type="button" data-action="roll">Roll</button><button type="button" data-action="knead">Knead</button><button type="button" data-action="wave">Wave</button><button type="button" data-action="nuzzle">Nuzzle</button><button type="button" data-action="stretch">Stretch</button><button type="button" data-action="loaf">Loaf</button></div><button type="button" class="more-toggle" data-action="more" aria-expanded="false">More ▾</button><div class="more-actions" hidden><button type="button" data-action="brush">Brush</button><button type="button" data-action="nap">Take a nap</button><button type="button" data-action="home">Go home</button><button type="button" data-action="jump">Little jump</button><button type="button" data-action="settings">Settings</button><button type="button" data-action="hide">Hide here</button><button type="button" data-action="move-house">Move house</button><button type="button" data-action="reset-house">Reset house</button></div><footer>Drag the house to move it. Use arrow keys when focused.</footer>';
   const speech=document.createElement('div');speech.className='speech';speech.hidden=true;speech.setAttribute('role','status');speech.setAttribute('aria-live','polite');
   speech.innerHTML='<button type="button" class="dismiss" aria-label="Dismiss Purrple message">×</button><p></p><button type="button" class="open" hidden>Open Purrple</button>';
   const panel=document.createElement('section');panel.className='panel';panel.hidden=true;panel.setAttribute('aria-label','Purrple dashboard');
-  panel.innerHTML='<div class="panel-bar"><strong>Purrple</strong><button type="button" class="pin" aria-label="Pin dashboard" aria-pressed="false" title="Keep open when clicking the page">⌖</button><button type="button" class="panel-close" aria-label="Close dashboard">×</button></div><div class="panel-status" hidden><span></span><button type="button">Open full Purrple</button></div>';
+  panel.innerHTML='<div class="panel-bar" tabindex="0" aria-label="Move dashboard with the arrow keys; press Home to reset"><strong>Purrple</strong><button type="button" class="pin" aria-label="Pin dashboard" aria-pressed="false" title="Keep open when clicking the page">⌖</button><button type="button" class="panel-close" aria-label="Close dashboard">×</button></div><div class="panel-status" hidden><span></span><button type="button">Open full Purrple</button></div>';
   root.append(style,canvas,actor,paw,house,menu,speech,panel);document.documentElement.append(host);
 
   let state={settings:{petEnabled:true,size:128,fps:30,reducedMotion:false,hiddenHosts:[],chattiness:'balanced'},equipped:{head:null,neck:null},focus:null};
   let ready=false,loadPromise=null,lease='',claimPromise=null,claimVersion=0,raf=0,last=0,lastPaint=0,lastSaved=0,bubbleUntil=0,dpr=1,width=1,height=1,input=null,ignoreClickUntil=0;
   let mediaReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let panelFrame=null,panelToken=null,panelPinned=false,panelDrag=null,panelX=20,panelY=20,panelOpened=0,panelReady=false,lastTalkId=null,pendingNotice=null,returnFocus=actor;
-  let ambientElapsed=0,ambientLine=0,ambientMode='balanced';
-  const ambientLines=['Tiny paws, keeping you company.','A little stretch sounds nice.','I am supervising this very small corner.','Prrr. Still here beside you.','My ears are on important listening duty.','One small cat, quietly cheering you on.','This looks like a good spot for a little company.','A soft little hello from down here.'];
+  const ambientClock=globalThis.PurrpleAmbient?.createClock();
+  let layout={version:1,dock:null,panel:null},dockDrag=null,dockClickUntil=0,layoutWrite=0,askingAmbient=false;
   const model={x:100,y:100,vx:0,vy:0,clip:'idle',state:'rest',time:0,remaining:0,rotation:0,facing:1,pendingFacing:1,nap:false,atHome:false,target:null,toy:null,ambient:0,ambientPlaying:false,idle:0,bounces:0,strongThrow:false,recovery:null};
   const durations={idle:3.6,blink:1.8,look:3.2,ear:2.2,tail:2.4,tilt:3,walk:1,run:.72,jump:1.65,land:1.25,sit:1.8,wake:2.8,held:2.4,wiggle:1.6,tumble:1.6,impact:1.35,shake:1.6,toy:1.8,sleep:4.2,stretch:3.2,yawn:2.8,groom:3,pat:3,study:3.6,think:3,read:4.2,reminder:2.8,heart:3.4,celebrate:1.8,brush:3};
   const reduced=()=>mediaReduced||!!state.settings.reducedMotion;
@@ -76,7 +77,7 @@
   function stop(){cancelAnimationFrame(raf);raf=0;last=0;lastPaint=0;}
   function ensureCanvas(){const w=Math.ceil(width*dpr),h=Math.ceil(height*dpr);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}}
   function show(){const visible=active();host.dataset.active=String(visible);host.style.setProperty('display',visible?'block':'none','important');if(visible){ensureCanvas();draw();if(!raf)raf=requestAnimationFrame(tick);}else stop();}
-  function releasePresence(){claimVersion++;const old=lease,position=normalized();if(['held','air'].includes(model.state))position.y=1;lease='';if(old)send({type:'PET_RELEASE',leaseId:old,position});cancelDrag();closePanel(false);menu.hidden=true;speech.hidden=true;stop();renderer.releaseAssets?.();renderer.clearCache?.();canvas.width=canvas.height=1;host.dataset.active='false';host.style.setProperty('display','none','important');}
+  function releasePresence(){ambientClock?.pause();cancelDockDrag();claimVersion++;const old=lease,position=normalized();if(['held','air'].includes(model.state))position.y=1;lease='';if(old)send({type:'PET_RELEASE',leaseId:old,position});cancelDrag();closePanel(false);menu.hidden=true;speech.hidden=true;stop();renderer.releaseAssets?.();renderer.clearCache?.();canvas.width=canvas.height=1;host.dataset.active='false';host.style.setProperty('display','none','important');}
   async function claim(){
     if(claimPromise||lease||!enabled()||document.hidden||!document.hasFocus())return claimPromise;
     if(!ready&&!await ensureReady())return;
@@ -84,7 +85,7 @@
     const version=claimVersion;
     claimPromise=(async()=>{const result=await send({type:'PET_CLAIM'});if(!result?.ok||!result.leaseId)return;
       if(version!==claimVersion||document.hidden||!document.hasFocus()||!enabled()){send({type:'PET_RELEASE',leaseId:result.leaseId,position:normalized()});return;}
-      lease=result.leaseId;if(result.position)place(result.position);if(!['air','held'].includes(model.state))model.y=limits().floor;show();flushNotice();
+      lease=result.leaseId;if(result.layout)layout=result.layout;if(result.position)place(result.position);if(!['air','held'].includes(model.state))model.y=limits().floor;show();flushNotice();
     })().finally(()=>{claimPromise=null;if(version!==claimVersion&&!lease&&enabled()&&ready&&!document.hidden&&document.hasFocus())setTimeout(claim,120);});return claimPromise;
   }
   function settle(){model.vx=model.vy=model.rotation=0;model.facing=1;model.ambientPlaying=false;model.target=null;model.remaining=0;model.recovery=null;model.strongThrow=false;model.idle=0;model.time=0;model.state=model.nap?'nap':'rest';model.clip=model.nap?'sleep':focusWorking()?'study':'idle';model.y=limits().floor;save(true);flushNotice();}
@@ -96,12 +97,17 @@
   function flushNotice(){if(!pendingNotice)return;if(pendingNotice.expiresAt<Date.now()){pendingNotice=null;return;}if(!safeForNotice()||!active())return;const next=pendingNotice;pendingNotice=null;action(next.clip);say(next.text,next.open);}
   function say(text,open=false){if(!active())return;speech.querySelector('p').textContent=text;speech.querySelector('.open').hidden=!open;speech.hidden=false;bubbleUntil=Date.now()+8000;positionUI();}
   function quietHoursNow(){const q=state.settings.quietHours;if(!q?.enabled)return false;const parse=value=>{const [h,m]=String(value||'00:00').split(':').map(Number);return h*60+m;},a=parse(q.start),b=parse(q.end),now=new Date(),n=now.getHours()*60+now.getMinutes();return a===b||(a<b?n>=a&&n<b:n>=a||n<b);}
-  function ambientRemark(dt){
-    const mode=['quiet','balanced','chatty'].includes(state.settings.chattiness)?state.settings.chattiness:'balanced';
-    if(mode!==ambientMode){ambientMode=mode;ambientElapsed=0;}
-    if(mode==='quiet'||!active()||quietHoursNow()||focusWorking()||model.nap||['held','air'].includes(model.state)||model.recovery||!menu.hidden||!panel.hidden||!speech.hidden){ambientElapsed=0;return;}
-    ambientElapsed+=dt;const delay=mode==='chatty'?180:480;
-    if(ambientElapsed>=delay&&model.state==='rest'){ambientElapsed=0;say(ambientLines[ambientLine++%ambientLines.length]);}
+  function ambientEligible(){
+    return active()&&!quietHoursNow()&&!focusWorking()&&!model.nap&&!model.atHome&&
+      !['held','air'].includes(model.state)&&!model.recovery&&!dockDrag&&!pendingNotice&&
+      menu.hidden&&panel.hidden&&speech.hidden;
+  }
+  function ambientRemark(now){
+    if(!ambientClock?.update(state.settings.chattiness,now,ambientEligible(),model.state==='rest')||askingAmbient)return;
+    const current=lease;askingAmbient=true;
+    send({type:'PET_AMBIENT',leaseId:current}).then(result=>{
+      if(result?.text&&lease===current&&ambientEligible())say(result.text);
+    }).finally(()=>{askingAmbient=false;});
   }
   async function openApp(){const result=await send({type:'OPEN_APP'});if(result?.ok===false)say('Open Purrple using her toolbar button.');}
   function closePanel(restore=true){panel.hidden=true;panelDrag=null;if(panelToken)send({type:'PET_PANEL_CLOSE',token:panelToken});panelToken=null;panelFrame?.remove();panelFrame=null;panelReady=false;if(restore&&active())returnFocus?.focus({preventScroll:true});}
@@ -109,7 +115,7 @@
     menu.hidden=true;speech.hidden=true;returnFocus=actor;const attempt=++panelOpened;
     if(panelFrame)closePanel(false);
     panel.hidden=false;panelReady=false;panel.querySelector('.panel-status').hidden=false;panel.querySelector('.panel-status span').textContent='Opening Purrple…';
-    panelX=clamp(model.x-175,12,Math.max(12,width-362));panelY=clamp(model.y-size()*.85-520,12,Math.max(12,height-532));positionPanel();
+    restorePanel();
     const result=await send({type:'PET_PANEL_OPEN',leaseId:lease});
     if(attempt!==panelOpened||panel.hidden){if(result?.token)send({type:'PET_PANEL_CLOSE',token:result.token});return;}
     if(!result?.ok||!result.url){panel.querySelector('.panel-status span').textContent='This page cannot open the floating dashboard. Use the full view.';return;}
@@ -117,11 +123,64 @@
     panelFrame=document.createElement('iframe');panelFrame.title=view==='talk'?'Talk with Purrple':'Purrple dashboard';panelFrame.src=url.href;panelFrame.referrerPolicy='no-referrer';panel.append(panelFrame);
     setTimeout(()=>{if(attempt===panelOpened&&!panel.hidden&&!panelReady)panel.querySelector('.panel-status span').textContent='Still opening? This website may restrict embedded panels.';},4500);
   }
-  function positionPanel(){const w=Math.min(350,width-24),h=Math.min(520,height-24);panelX=clamp(panelX,12,Math.max(12,width-w-12));panelY=clamp(panelY,12,Math.max(12,height-h-12));panel.style.left=panelX+'px';panel.style.top=panelY+'px';}
+  function bounds(part){
+    if(part==='dock')return{left:Math.min(13,Math.max(0,width-55)),top:Math.min(14,Math.max(0,height-54)),right:Math.max(0,width-68),bottom:Math.max(0,height-62)};
+    return{left:12,top:12,right:Math.max(12,width-(panel.offsetWidth||Math.min(350,width-24))-12),bottom:Math.max(12,height-(panel.offsetHeight||Math.min(520,height-24))-12)};
+  }
+  function point(part,normalized){
+    const box=bounds(part);
+    return{x:box.left+(Math.max(box.left,box.right)-box.left)*normalized.x,y:box.top+(Math.max(box.top,box.bottom)-box.top)*normalized.y};
+  }
+  function normalizePart(part,x,y){
+    const box=bounds(part);
+    return{x:box.right>box.left?clamp((x-box.left)/(box.right-box.left),0,1):1,y:box.bottom>box.top?clamp((y-box.top)/(box.bottom-box.top),0,1):1};
+  }
+  function dockPoint(){
+    return dockDrag?.preview||point('dock',layout.dock||{x:1,y:1});
+  }
+  function dockTarget(){
+    const b=limits();
+    return clamp(dockPoint().x+27.5,b.left,b.right);
+  }
+  function placedDock(){
+    if(model.target?.home){model.target.x=dockTarget();model.pendingFacing=model.target.x<model.x?-1:1;}
+    if(model.atHome)model.x=dockTarget();
+    positionUI();
+  }
+  function restorePanel(){
+    const p=layout.panel?point('panel',layout.panel):{x:model.x-175,y:model.y-size()*.85-520};
+    panelX=p.x;panelY=p.y;positionPanel();
+  }
+  function positionPanel(){
+    if(panel.hidden)return;
+    const b=bounds('panel');
+    panelX=clamp(panelX,b.left,b.right);panelY=clamp(panelY,b.top,b.bottom);
+    panel.style.left=panelX+'px';panel.style.top=panelY+'px';
+  }
+  function commitLayout(part,position,reset=false){
+    const old=layout,write=++layoutWrite,current=lease;
+    layout={...layout,[part]:reset?null:position};
+    if(part==='dock')placedDock();else restorePanel();
+    send({type:'PET_LAYOUT',leaseId:current,part,position,reset}).then(result=>{
+      if(write!==layoutWrite||lease!==current)return;
+      if(result?.ok)return;
+      layout=old;if(part==='dock')placedDock();else restorePanel();
+      say('That position could not be saved. Try moving it again.');
+    });
+  }
+  function snapDock(x,y){
+    const b=bounds('dock'),p=normalizePart('dock',x,y);
+    const nearest=Math.min(Math.abs(y-b.bottom),Math.abs(x-b.left),Math.abs(x-b.right));
+    if(nearest===Math.abs(y-b.bottom))p.y=1;
+    else p.x=Math.abs(x-b.left)<=Math.abs(x-b.right)?0:1;
+    return p;
+  }
   function play(name){
     if(name==='talk'||name==='dashboard'){openPanel(name==='talk'?'talk':'dashboard');return;}
     if(name==='play'){const box=menu.querySelector('.play-actions');box.hidden=!box.hidden;menu.querySelector('[data-action="play"]').setAttribute('aria-expanded',String(!box.hidden));menu.querySelector('.more-actions').hidden=true;menu.querySelector('.more-toggle').setAttribute('aria-expanded','false');positionUI();return;}
     if(name==='more'){const box=menu.querySelector('.more-actions');box.hidden=!box.hidden;menu.querySelector('.more-toggle').setAttribute('aria-expanded',String(!box.hidden));menu.querySelector('.play-actions').hidden=true;menu.querySelector('[data-action="play"]').setAttribute('aria-expanded','false');positionUI();return;}
+    if(name==='move-house'){menu.hidden=true;house.focus({preventScroll:true});return;}
+    if(name==='reset-house'){menu.hidden=true;commitLayout('dock',null,true);house.focus({preventScroll:true});return;}
     if(name==='settings'){menu.hidden=true;send({type:'OPEN_APP',view:'settings'});return;}
     if(name==='open'){menu.hidden=true;openApp();return;}
     if(name==='hide'){menu.hidden=true;send({type:'PET_HIDE_HOST',hidden:true}).then(r=>{if(r?.ok)releasePresence();else say('Open Settings to hide Purrple on this website.');});return;}
@@ -137,11 +196,12 @@
       if(reduced()){action('celebrate');return;}
       model.state='air';model.clip='jump';model.time=0;model.vx=0;model.vy=-Math.min(540,height*1.25);model.bounces=0;model.rotation=0;model.strongThrow=false;
     }else if(name==='home'){
-      const b=limits(),target=clamp(width-41,b.left,b.right);
+      const target=dockTarget();
       if(reduced()){model.x=target;model.nap=true;model.atHome=true;settle();}
       else travel({x:target,home:true});
+      house.focus({preventScroll:true});
     }else if(name==='nap'){model.nap=true;model.atHome=false;if(reduced())settle();else action('doze');say('Just resting the tiny paws.');}
-    else if(name==='wake'){model.nap=false;model.atHome=false;if(wasAtHome){const b=limits();model.x=clamp(width-size()*.85-70,b.left,b.right);}action('wake');}
+    else if(name==='wake'){model.nap=false;model.atHome=false;if(wasAtHome){const b=limits(),x=dockTarget();model.x=clamp(x+(x>width/2?-1:1)*(size()*.55+27),b.left,b.right);}action('wake');if(wasAtHome)actor.focus({preventScroll:true});}
     else if(['roll','knead','wave','nuzzle','stretch','loaf','peek','listen'].includes(name)){action(name);}
     draw();
   }
@@ -198,6 +258,7 @@
     const s=size();actor.style.left=(model.x-s*.43)+'px';actor.style.top=(model.y-s*.91)+'px';actor.style.width=(s*.86)+'px';actor.style.height=(s*.91)+'px';actor.hidden=model.atHome;
     const pawX=model.x+s*.30>width-82?model.x-s*.45-31:model.x+s*.30;
     paw.style.left=clamp(pawX,7,width-35)+'px';paw.style.top=clamp(model.y-s*.30,7,height-35)+'px';paw.hidden=model.atHome||!menu.hidden||model.state==='held';
+    const dock=dockPoint();house.style.right='auto';house.style.bottom='auto';house.style.left=dock.x+'px';house.style.top=dock.y+'px';
     house.querySelector('.zz').hidden=!model.atHome;house.setAttribute('aria-label',model.atHome?'Wake Purrple from her house':'Send Purrple home');
     menu.querySelector('[data-action="nap"]').textContent=model.nap?'Wake up':'Take a nap';
     const mwidth=Math.min(240,width-24),mheight=menu.offsetHeight||178;
@@ -208,11 +269,15 @@
   }
   function drawYarn(toy){ctx.save();ctx.translate(toy.x,toy.y);ctx.fillStyle='#d8bee9';ctx.strokeStyle='#9e7bb6';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,0,9,8,0,0,Math.PI*2);ctx.fill();ctx.stroke();for(let x=-4;x<=4;x+=4){ctx.beginPath();ctx.ellipse(x,0,3,7,.45,0,Math.PI*2);ctx.stroke();}ctx.beginPath();ctx.moveTo(8,5);ctx.bezierCurveTo(20,14,20,-1,28,5);ctx.stroke();ctx.restore();}
   function draw(){
-    if(!ready||!active())return;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
+    if(!ready||!active())return;
+    const pose={clip:model.clip,time:reduced()?0:model.time,size:size(),x:0,y:size()*.42,
+      facing:model.facing,equipped:state.equipped||{head:null,neck:null},rootMotion:false,reducedMotion:reduced()};
+    if(!model.atHome&&renderer.isDrawReady&&!renderer.isDrawReady(pose)){positionUI();return;}
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
     if(!model.atHome){
       const shadow=clamp(1-(limits().floor-model.y)/400,.15,1);ctx.save();ctx.globalAlpha=.10*shadow;ctx.fillStyle='#60416f';ctx.beginPath();ctx.ellipse(model.x,limits().floor+2,size()*.22*shadow,4,0,0,Math.PI*2);ctx.fill();ctx.restore();
       ctx.save();ctx.translate(model.x,model.y-size()*.42);ctx.rotate(model.rotation);
-      renderer.draw(ctx,{clip:model.clip,time:reduced()?0:model.time,size:size(),x:0,y:size()*.42,facing:model.facing,equipped:state.equipped||{head:null,neck:null},rootMotion:false,reducedMotion:reduced()});ctx.restore();
+      renderer.draw(ctx,pose);ctx.restore();
       if(model.clip==='brush'){
         const x=model.x+size()*.30,y=model.y-size()*.58+Math.sin(model.time*2)*4;ctx.save();ctx.translate(x,y);ctx.rotate(-.4);ctx.fillStyle='#a97ebf';ctx.fillRect(-6,-4,12,8);ctx.fillStyle='#d7b7e5';ctx.fillRect(5,-2,12,4);ctx.restore();
       }
@@ -223,12 +288,12 @@
   }
   function tick(now){
     raf=0;if(!active()){show();return;}
-    const dt=last?Math.min(.05,(now-last)/1000):0;last=now;advance(dt);ambientRemark(dt);
+    const dt=last?Math.min(.05,(now-last)/1000):0;last=now;advance(dt);ambientRemark(now);
     const fps=reduced()?8:clamp(finite(Number(state.settings.fps),30),24,60),interval=1000/fps;
     if(now-lastPaint>=interval-.25){draw();lastPaint=now-((now-lastPaint)%interval);}
     raf=requestAnimationFrame(tick);
   }
-  function resize(){const p=normalized();width=Math.max(1,innerWidth);height=Math.max(1,innerHeight);dpr=Math.min(devicePixelRatio||1,2);if(active())ensureCanvas();else canvas.width=canvas.height=1;place(p);if(active())draw();}
+  function resize(){const p=normalized();width=Math.max(1,innerWidth);height=Math.max(1,innerHeight);dpr=Math.min(devicePixelRatio||1,2);if(active())ensureCanvas();else canvas.width=canvas.height=1;place(p);if(layout.panel&&!panelDrag)restorePanel();if(model.atHome||model.target?.home)placedDock();if(active())draw();}
   function pointerPoint(e){return{x:e.clientX,y:e.clientY};}
   actor.addEventListener('pointerdown',e=>{
     if(e.button!==0||!active())return;const p=pointerPoint(e);input={id:e.pointerId,start:p,last:p,stamp:e.timeStamp,dx:model.x-p.x,dy:model.y-p.y,vx:0,vy:0,moved:0};
@@ -252,10 +317,49 @@
   actor.addEventListener('pointercancel',cancelDrag);actor.addEventListener('lostpointercapture',()=>{if(input)cancelDrag();});
   actor.addEventListener('click',e=>{if(Date.now()<ignoreClickUntil||e.detail>0)return;toggleMenu();});
   function toggleMenu(){speech.hidden=true;menu.hidden=!menu.hidden;menu.querySelector('.more-actions').hidden=true;menu.querySelector('.play-actions').hidden=true;menu.querySelector('[data-action="play"]').setAttribute('aria-expanded','false');menu.querySelector('.more-toggle').setAttribute('aria-expanded','false');positionUI();if(!menu.hidden){returnFocus=actor;menu.querySelector('[data-action="pat"]').focus();}else actor.focus({preventScroll:true});}
-  paw.addEventListener('click',toggleMenu);house.addEventListener('click',()=>play(model.atHome?'wake':'home'));
+  paw.addEventListener('click',toggleMenu);
+  house.addEventListener('click',event=>{if(event.detail&&Date.now()<dockClickUntil)return;play(model.atHome?'wake':'home');});
+  house.addEventListener('pointerdown',event=>{
+    if(event.button!==0||!active())return;
+    const start=dockPoint();
+    dockDrag={id:event.pointerId,x:event.clientX,y:event.clientY,start};
+    house.setPointerCapture(event.pointerId);
+  });
+  house.addEventListener('pointermove',event=>{
+    if(dockDrag?.id!==event.pointerId)return;
+    const dx=event.clientX-dockDrag.x,dy=event.clientY-dockDrag.y;
+    if(!dockDrag.preview&&Math.hypot(dx,dy)<6)return;
+    house.classList.add('moving');
+    dockDrag.preview=point('dock',normalizePart('dock',dockDrag.start.x+dx,dockDrag.start.y+dy));
+    positionUI();
+  });
+  function cancelDockDrag(){
+    if(!dockDrag)return;
+    const id=dockDrag.id;dockDrag=null;house.classList.remove('moving');
+    if(house.hasPointerCapture(id))house.releasePointerCapture(id);
+    positionUI();
+  }
+  house.addEventListener('pointerup',event=>{
+    if(dockDrag?.id!==event.pointerId)return;
+    const p=dockDrag.preview;cancelDockDrag();
+    if(p){dockClickUntil=Date.now()+350;commitLayout('dock',snapDock(p.x,p.y));}
+  });
+  house.addEventListener('pointercancel',cancelDockDrag);
+  house.addEventListener('lostpointercapture',cancelDockDrag);
+  house.addEventListener('keydown',event=>{
+    const p=dockPoint(),box=bounds('dock'),key=event.key;
+    if(key==='Home')commitLayout('dock',null,true);
+    else if(key==='ArrowLeft'||key==='ArrowRight'){
+      p.x+=key==='ArrowLeft'?-32:32;commitLayout('dock',snapDock(p.x,p.y));
+    }else if(key==='ArrowUp'||key==='ArrowDown'){
+      p.y+=key==='ArrowUp'?-32:32;
+      p.x=p.x<width/2?box.left:box.right;commitLayout('dock',snapDock(p.x,p.y));
+    }else return;
+    event.preventDefault();
+  });
   menu.addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;let name=b.dataset.action;if(name==='nap'&&model.nap)name='wake';play(name);if(name==='close')actor.focus();});
   speech.querySelector('.dismiss').addEventListener('click',()=>speech.hidden=true);speech.querySelector('.open').addEventListener('click',openApp);
-  root.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.hidden=true;speech.hidden=true;if(!panel.hidden)closePanel();else actor.focus({preventScroll:true});e.stopPropagation();}});
+  root.addEventListener('keydown',e=>{if(e.key==='Escape'){if(dockDrag){cancelDockDrag();dockClickUntil=Date.now()+350;return;}menu.hidden=true;speech.hidden=true;if(!panel.hidden)closePanel();else actor.focus({preventScroll:true});e.stopPropagation();}});
   document.addEventListener('pointerdown',e=>{if(!e.composedPath().includes(host)){menu.hidden=true;if(!panelPinned)closePanel(false);}},{passive:true});
   panel.querySelector('.panel-close').addEventListener('click',()=>closePanel());
   panel.querySelector('.pin').addEventListener('click',e=>{panelPinned=!panelPinned;e.currentTarget.setAttribute('aria-pressed',String(panelPinned));});
@@ -263,7 +367,25 @@
   const panelBar=panel.querySelector('.panel-bar');
   panelBar.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('button'))return;panelDrag={id:e.pointerId,x:e.clientX,y:e.clientY,left:panelX,top:panelY};panelBar.setPointerCapture(e.pointerId);e.preventDefault();});
   panelBar.addEventListener('pointermove',e=>{if(!panelDrag||e.pointerId!==panelDrag.id)return;panelX=panelDrag.left+e.clientX-panelDrag.x;panelY=panelDrag.top+e.clientY-panelDrag.y;positionPanel();});
-  const endPanelDrag=()=>{panelDrag=null;};panelBar.addEventListener('pointerup',endPanelDrag);panelBar.addEventListener('pointercancel',endPanelDrag);panelBar.addEventListener('lostpointercapture',endPanelDrag);
+  const endPanelDrag=savePosition=>{
+    if(!panelDrag)return;
+    panelDrag=null;
+    if(savePosition)commitLayout('panel',normalizePart('panel',panelX,panelY));
+    else restorePanel();
+  };
+  panelBar.addEventListener('pointerup',()=>endPanelDrag(true));
+  panelBar.addEventListener('pointercancel',()=>endPanelDrag(false));
+  panelBar.addEventListener('lostpointercapture',()=>endPanelDrag(false));
+  panelBar.addEventListener('keydown',event=>{
+    if(event.target!==panelBar)return;
+    const steps={ArrowLeft:[-24,0],ArrowRight:[24,0],ArrowUp:[0,-24],ArrowDown:[0,24]};
+    if(event.key==='Home')commitLayout('panel',null,true);
+    else if(Object.hasOwn(steps,event.key)){
+      const [x,y]=steps[event.key];
+      commitLayout('panel',normalizePart('panel',panelX+x,panelY+y));
+    }else return;
+    event.preventDefault();
+  });
   window.addEventListener('message',e=>{
     if(!panelFrame||e.source!==panelFrame.contentWindow||e.origin!==new URL(api.runtime.getURL('')).origin||!e.isTrusted||e.data?.source!=='purrple-panel')return;
     const type=e.data.type;
@@ -271,7 +393,7 @@
     if(type==='READY'){panelReady=true;panel.querySelector('.panel-status').hidden=true;return;}
     if(type==='DRAG_START'){panelDrag={remote:true,x:Number(e.data.screenX)||0,y:Number(e.data.screenY)||0,left:panelX,top:panelY};}
     if(type==='DRAG_MOVE'&&panelDrag?.remote){panelX=panelDrag.left+(Number(e.data.screenX)||0)-panelDrag.x;panelY=panelDrag.top+(Number(e.data.screenY)||0)-panelDrag.y;positionPanel();}
-    if(type==='DRAG_END'&&panelDrag?.remote)panelDrag=null;
+    if(type==='DRAG_END'&&panelDrag?.remote)endPanelDrag(true);
   });
   window.addEventListener('resize',resize,{passive:true});
   window.addEventListener('focus',()=>claim());window.addEventListener('blur',()=>setTimeout(()=>{if(!document.hasFocus())releasePresence();},0));
@@ -279,12 +401,15 @@
   window.addEventListener('pagehide',releasePresence);
   matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{mediaReduced=e.matches;if(reduced()&&model.state==='air')settle();draw();});
   api.runtime.onMessage.addListener((message,sender)=>{
+    if(message?.type==='PET_LAYOUT_CHANGED'&&message.layout){
+      layoutWrite++;layout=message.layout;placedDock();if(!panel.hidden)restorePanel();return undefined;
+    }
     if(message?.type==='PET_STATUS'){
       if(sender?.id&&sender.id!==api.runtime.id)return undefined;
       return Promise.resolve({active:active(),clip:model.clip,state:model.state,x:model.x,y:model.y,atHome:model.atHome});
     }
     if(message?.type==='STATE_CHANGED'&&message.state){state=message.state;constrain();if(!enabled())releasePresence();else{if(focusWorking()&&(model.target?.wander||model.ambientPlaying))settle();if(model.state==='rest')model.clip=focusWorking()?'study':'idle';claim();show();}const reply=state.talk?.last;if(reply?.id&&reply.id!==lastTalkId){lastTalkId=reply.id;if(Date.now()-reply.at<30000)notice(String(reply.text||'').slice(0,500),reply.reaction||'heart');}draw();}
-    else if(message?.type==='PET_REVOKED'&&(!message.leaseId||message.leaseId===lease)){lease='';cancelDrag();renderer.releaseAssets?.();renderer.clearCache?.();canvas.width=canvas.height=1;show();if(!document.hidden&&document.hasFocus())setTimeout(claim,160);}
+    else if(message?.type==='PET_REVOKED'&&(!message.leaseId||message.leaseId===lease)){lease='';ambientClock?.pause();cancelDockDrag();cancelDrag();closePanel(false);menu.hidden=true;speech.hidden=true;renderer.releaseAssets?.();renderer.clearCache?.();canvas.width=canvas.height=1;show();if(!document.hidden&&document.hasFocus())setTimeout(claim,160);}
     else if(message?.type==='REMINDER_NOTICE')notice('A little reminder is waiting. Open your plans when you are ready.','reminder',true);
     else if(message?.type==='FOCUS_NOTICE')notice('A little progress, together. Your timer is ready.','celebrate',true);
   });

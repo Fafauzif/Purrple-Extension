@@ -98,3 +98,11 @@ still has `manifest.json` at its own archive root. The build copies the offline
 installation guide to the source root while adjusting local asset paths. Signing
 preparation is separate from the deterministic offline builder; only the explicit
 owner-run signing command contacts Mozilla.
+
+## Optional Calendar and overlay layout
+
+Only the direct full app and sidebar can send typed Calendar operations to the
+background. A dedicated queue invokes the native host without blocking the core
+reducer. OAuth credentials stay in the local helper. Agenda items and tokens
+are excluded from backups and content-script state. Layout and ambient receipts
+are independent records owned by the background and gated by the active lease.

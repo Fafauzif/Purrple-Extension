@@ -88,3 +88,11 @@ Keep face, ears, paws, neckwear and props correctly layered in front, profile,
 curled, held and airborne views. Never omit equipped items to conceal a fitting
 defect. `record_motion_review.cjs` optionally records a temporal reel to the
 private excluded review directory; it is a development aid, not runtime code.
+
+### Wardrobe fit and palette
+
+Edit `neckwear-fit.json` and run `python3 art/merge_renderer_data.py`. To
+reproduce the accessory cutouts and palette, run `python3 art/recolor_wardrobe.py`
+with Pillow, NumPy and SciPy. Regenerate fitted shop images with
+`node art/render_fits.cjs` or use the locally installed Canvas adapter with
+`node art/render_fits_headless.cjs --thumbnails`. Baseline character art stays fixed.

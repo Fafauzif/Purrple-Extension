@@ -3,8 +3,9 @@
 Read CONTEXT.md, PRODUCT.md, ARCHITECTURE.md, DESIGN.md and UX-CONTRACT.md first.
 Keep the approved purple Plush Chibi identity and its fixed local artwork.
 
-- Runtime stays offline and AI-free. Do not add analytics, remote assets,
-  providers, accounts, API keys or new service dependencies.
+- Core features stay offline and AI-free. Google Calendar is the sole optional
+  integration, through an owner-installed local Firefox native host. Keep
+  credentials out of the extension and never add analytics or remote artwork.
 - Keep persistence and reward invariants in PurrpleCore; serialize background
   commits. Never award coins from UI animation callbacks.
 - Use the same renderer in every surface. Fit every equipped item to all source

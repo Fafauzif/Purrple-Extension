@@ -46,9 +46,8 @@ Focus sessions use durable end timestamps, not a front-end countdown as the
 source of truth. Pause/resume/cancel are explicit actions. Completion reconciles
 through the core and awards once. Rest and basic pet attention are always free.
 
-Settings save explicitly. Optional name defaults blank. Website permissions
-are requested by a user-clicked button only, and sidebar tasks still function
-when website access is denied. Hidden sites use hostname inputs. Native time
+Settings save explicitly. Optional name defaults blank. Firefox controls the initial website grants. Settings offers a recovery button
+if access is missing and sidebar tasks still function when access is denied. Hidden sites use hostname inputs. Native time
 fields define quiet hours in local browser time.
 
 Backup export downloads current state. Import parses and validates before
@@ -73,3 +72,7 @@ variable frame timing and registered 30 Hz geometry; equipment never changes
 merely because a motion or conversation preview is shown. Full home
 and Firefox sidebar remain available from deliberate controls. The full home
 and sidebar are one responsive document, never divergent implementations.
+
+The on-page house supports dragging and arrow keys. The dashboard bar can be
+repositioned independently. Settings resets both saved positions. Calendar is
+shown in the full app and sidebar only, with a confirmation before any write.

@@ -5,3 +5,18 @@ test('dense refinement is actual source art, not an expanded six-frame list',()=
 test('throw recovery contracts and one-shot final frames remain stable',()=>{for(const [id,duration]of [['released',.12],['cry',1.25],['paw-wipe',.75],['soothe',1.2]]){const c=R.clips.find(c=>c.id===id);assert(Math.abs(c.duration-duration)<.00001);assert.equal(c.loop,false);const f=R.frameAt(id,1000),e=R.frameAt(id,duration);assert.equal(f.key,e.key);assert.equal(f.clip,e.clip);}});
 test('normalization uses per-atlas baseline with finite accessory anchors',()=>{for(const [id,s]of Object.entries(A.sprites)){assert.equal(A.poses[id].length,s.frames.length);for(let i=0;i<s.frames.length;i++){const p=R.landmarkFor(id,i);for(const n of [...p.eye,...p.neck,p.crownY,p.headWidth,p.angle])assert(Number.isFinite(n),`${id}/${i}`);assert(p.headWidth>0);assert(p.bbox[3]<=256);}}assert.equal(R.itemIds.length,15);});
 test('gait distance scales with viewing size and brush uses dedicated art when available',()=>{assert.equal(R.strideFor('walk',128),60);assert.equal(R.strideFor('walk',256),120);assert(R.strideFor('run',128)>R.strideFor('walk',128));const f=R.frameAt('brush',.3);assert.equal(f.clip,A.sprites.brush.refined?'brush':'pat');});
+
+test('neckwear uses a source registration and a band pivot rather than the torso origin',()=>{
+ for(const [clip,poses] of Object.entries(A.poses))for(const [key,pose] of poses.entries()){
+  const resolved=R.landmarkFor(clip,key);
+  const fit=resolved.neckFit;
+  assert(Number.isFinite(fit.x)&&Number.isFinite(fit.y)&&Number.isFinite(fit.angle),clip+':'+key);
+  assert(fit.scale.every(v=>v>0&&v<=1));
+  assert(Math.abs(fit.y-pose.neckFit.y)<25);
+ }
+ const idle=R.landmarkFor('idle',0),loaf=R.landmarkFor('loaf',5),curl=R.landmarkFor('sleep',0);
+ assert(idle.neckFit.y<idle.neck[1]-8);
+ assert(Math.abs(loaf.neckFit.x-loaf.eye[0])<2);
+ assert(curl.neckFit.x<curl.neck[0]-9 && curl.neckFit.scale[0]<.7);
+ for(const item of Object.values(A.items).filter(item=>item.slot==='neck'))assert(item.pivot[1]>0&&item.pivot[1]<.25);
+});

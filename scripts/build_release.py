@@ -21,6 +21,56 @@ def sync_install_guide():
     root_guide=guide.replace('src="assets/','src="extension/assets/').replace('href="assets/','href="extension/assets/').replace("url('assets/","url('extension/assets/")
     (ROOT/'INSTALL-PURRPLE.html').write_text(root_guide)
 
+RUNTIME_PAGES = {'app.html','popup.html','animations.html','START_HERE.html',
+                 'INSTALL-PURRPLE.html','CALENDAR-SETUP.html','manifest.json'}
+ART_JSON = {'pose-registration.json','renderer-base.json','renderer-motion-anchors.json',
+            'wardrobe-data.json','neckwear-fit.json'}
+ROOT_FILES = {'AGENTS.md','ARCHITECTURE.md','CONTEXT.md','DESIGN.md','.gitattributes','.gitignore',
+              'INSTALL-PURRPLE.html','PRODUCT.md','README.md','UX-CONTRACT.md','VERIFICATION.md',
+              'package.json','package-lock.json','premium-ui.json','ui-desktop.png'}
+
+
+def runtime_paths():
+    for p in sorted(EXT.rglob('*')):
+        if not p.is_file() or p.is_symlink():
+            continue
+        rel = p.relative_to(EXT)
+        first = rel.parts[0]
+        if (rel.as_posix() in RUNTIME_PAGES or
+            len(rel.parts)==2 and ((first=='js' and p.suffix=='.js') or
+                                   (first=='css' and p.suffix=='.css')) or
+            first=='assets' and (p.suffix in {'.png','.ttf','.txt'} or
+                rel.as_posix() in {'assets/atlas-manifest.json','assets/refinement/manifest.json',
+                                    'assets/refinement/supplemental-manifest.json'})):
+            yield rel.as_posix(),p
+
+
+def source_paths():
+    allowed_dirs = {
+        'art': {'.md','.py','.cjs','.png','.html','.txt'},
+        'docs': {'.md'},
+        'scripts': {'.py'},
+        'tests': {'.py','.cjs','.html'}
+    }
+    art_data = {'art/refinement-source/' + n for n in
+                ('prompts.json','supplemental-prompts.json','registration-report.json',
+                 'supplemental-registration-report.json')}
+    for name in sorted(ROOT_FILES | {'art/'+n for n in ART_JSON} | art_data):
+        p=ROOT/name
+        if p.is_file() and not p.is_symlink():
+            yield name,p
+    for prefix,suffixes in allowed_dirs.items():
+        for p in sorted((ROOT/prefix).rglob('*')):
+            rel=p.relative_to(ROOT)
+            if (p.is_file() and not p.is_symlink() and p.suffix in suffixes and
+                not any(part.startswith('.') or part in {'__pycache__','profiles','node_modules'} for part in rel.parts)):
+                yield rel.as_posix(),p
+    for name in ['tools/calendar/calendar_host.py','tools/calendar/setup_calendar.py']:
+        yield name,ROOT/name
+    for name,p in runtime_paths():
+        yield 'extension/'+name,p
+
+
 def main():
     DIST.mkdir(exist_ok=True)
     manifest=json.loads((EXT/'manifest.json').read_text())
@@ -30,7 +80,8 @@ def main():
         raise SystemExit('The stable extension identity must be preserved.')
     required=['app.html','popup.html','js/talk.js','js/talk-ui.js','js/core.js','js/background.js','js/client.js',
               'js/renderer-data.js','js/renderer.js','js/content.js','js/app.js','js/compact.js',
-              'css/app.css','css/talk.css','css/compact.css','assets/icon128.png','START_HERE.html','INSTALL-PURRPLE.html']
+              'css/app.css','css/talk.css','css/compact.css','assets/icon128.png','START_HERE.html','INSTALL-PURRPLE.html',
+              'CALENDAR-SETUP.html','js/ambient.js','js/calendar-ui.js']
     for name in required:
         if not (EXT/name).is_file():raise SystemExit('Missing runtime file: '+name)
     sync_install_guide()
@@ -39,28 +90,15 @@ def main():
         text=p.read_text()
         if re.search(r'openrouter|api\.openai|runAI|api[_-]?key',text,re.I):
             raise SystemExit('Unexpected external-provider reference in '+str(p))
-    hashes={str(p.relative_to(EXT)):sha(p) for p in sorted(EXT.rglob('*')) if p.is_file()}
+    runtime_files=dict(runtime_paths())
+    hashes={name:sha(p) for name,p in runtime_files.items()}
     runtime=DIST/'Purrple_Firefox_Extension.zip'
     with zipfile.ZipFile(runtime,'w',zipfile.ZIP_DEFLATED,compresslevel=7) as z:
         for name in hashes:add_file(z,EXT/name,name)
     source=DIST/'Purrple_Complete_Source.zip'
-    # Actual critique scores/exchanges remain private working material. Test
-    # scripts and factual verification summaries may be included in source.
-    excluded={'dist','qa-runtime','node_modules','__pycache__','.git','.cache','profiles','privateverification'}
     with zipfile.ZipFile(source,'w',zipfile.ZIP_DEFLATED,compresslevel=7) as z:
-        for p in sorted(ROOT.rglob('*')):
-            if not p.is_file():continue
-            rel=p.relative_to(ROOT)
-            if any(part in excluded for part in rel.parts):continue
-            if rel.parts[:2]==('verification','review'):continue
-            if rel.as_posix()=='verification/premium-audit.json':continue
-            # Inspection captures are internal working material. Keep factual
-            # test reports and the scripts that reproduce them, not screenshots.
-            if rel.parts[0]=='verification' and rel.suffix.lower() in {'.png','.jpg','.jpeg','.webp','.gif','.webm','.mp4','.pdf'}:continue
-            if rel.suffix in {'.log','.pyc','.key','.pem','.p12','.pfx'} or (p.name.startswith('.') and p.name!='.gitignore'):continue
-            if p.name.lower() in {'credentials.json','secrets.json','token.json','tokens.json'}:continue
-            if 'profile' in p.name.lower() or 'geckodriver' in p.name.lower():continue
-            add_file(z,p,rel)
+        for name,path in source_paths():
+            add_file(z,path,name)
     for p in [runtime,source]:
         with zipfile.ZipFile(p) as z:
             assert z.testzip() is None

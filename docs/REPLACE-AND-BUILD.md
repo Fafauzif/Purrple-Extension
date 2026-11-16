@@ -2,7 +2,7 @@
 
 The source ZIP contains repository-root contents directly: `extension/`,
 `art/`, `scripts/`, `tests/`, documentation, and the package configuration.
-There is no extra enclosing `Purrple/` folder in version 1.1.0.
+There is no extra enclosing `Purrple/` folder.
 
 The user confirmed that the previously supplied source had not been edited.
 To update that checkout, extract `Purrple_Complete_Source.zip` into the folder

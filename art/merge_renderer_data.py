@@ -32,16 +32,28 @@ if anchors_path.exists():
 for ident,poses in data['poses'].items():
     for pose in poses:
         pose.setdefault('family','profile' if pose.get('profile') else 'sleep' if ident=='sleep' else 'held' if ident in ['held','wiggle'] else 'front')
+# Register the visible band and its local angle separately from the skeleton
+# neck used for the animation mesh. Corrections travel with their source pose.
+fits=json.loads((ROOT/'art/neckwear-fit.json').read_text())
+for ident,poses in data['poses'].items():
+    for key,pose in enumerate(poses):
+        cfg={**fits['default'], **fits['families'].get(pose['family'],{}),
+             **fits['clips'].get(ident,{}), **fits['frames'].get(ident,{}).get(str(key),{})}
+        x,y=pose[cfg['relativeTo']]
+        dx,dy=cfg['offset']
+        width=pose['headWidth']
+        bottom=(data['sprites'][ident].get('baseline') or 244)-cfg.get('floorGap',9)
+        pose['neckFit']={'x':round(x+dx*width,2), 'y':round(min(bottom,y+dy*width),2),
+                         'angle':cfg.get('angle',pose['angle']), 'scale':cfg['scale']}
+for ident,pivot in fits['itemPivots'].items():
+    data['items'][ident]['pivot']=pivot
+
 data['motionProvenance']=manifest['provenance']
 data['motionContract']={'geometryHz':30,'crossfade':False,'intermediateGeometry':'registered triangular raster mesh','sourceCountIsIllustrationCount':True}
 # Local family-level refinements; never omit an equipped item in difficult poses.
 data['fitOverrides']={
  'cozy-beanie':{'profile':{'scaleX':.96,'scaleY':1.02,'y':1},'sleep':{'scaleX':.95,'scaleY':.98,'y':1}},
  'stargazer-hat':{'sleep':{'scaleX':.95,'scaleY':.94,'y':1}},
- 'star-bandana':{'sleep':{'x':5,'y':2,'scaleX':.92,'scaleY':.92}},
- 'cozy-scarf':{'sleep':{'x':4,'y':2,'scaleX':.94,'scaleY':.92}},
- 'cloud-bib':{'sleep':{'x':5,'y':2,'scaleX':.90,'scaleY':.90}},
- 'night-bandana':{'sleep':{'x':5,'y':2,'scaleX':.92,'scaleY':.92}}
 }
 TARGET.write_text('/* Build-time merged local artwork; see art/merge_renderer_data.py. */\nglobalThis.PurrpleArt='+json.dumps(data,separators=(',',':'))+';\n')
 print(json.dumps({'refined_clips':len(manifest['sprites']),'refined_entries':sum(len(x['frames']) for x in manifest['sprites'].values()),'all_source_rows':len(data['sprites'])}))

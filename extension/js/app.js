@@ -20,7 +20,7 @@
   }
   function remaining(){const f=state?.focus;if(!f)return 0;return f.status==='running'?Math.max(0,(f.endsAt||Date.now())-Date.now()):Math.max(0,f.remainingMs||0);}
   function formatTime(ms){const seconds=Math.ceil(ms/1000);return `${Math.floor(seconds/60).toString().padStart(2,'0')}:${(seconds%60).toString().padStart(2,'0')}`;}
-  function showView(next){if(!['today','focus','wardrobe','talk','settings'].includes(next))next='today';view=next;if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);document.title='Purrple · '+({today:'Today',focus:'Study together',wardrobe:'Wardrobe',talk:'Talk',settings:'Settings'}[view]);preview=null;document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==`view-${view}`);document.querySelectorAll('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});setPose(next==='focus'?'study':'idle');render();}
+  function showView(next){if(!['today','focus','wardrobe','talk','settings'].includes(next))next='today';view=next;if(location.hash!=='#'+view)history.replaceState(null,'','#'+view);document.title='Purrple · '+({today:'Today',focus:'Study together',wardrobe:'Wardrobe',talk:'Talk',settings:'Settings'}[view]);preview=null;document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==`view-${view}`);document.querySelectorAll('[data-view]').forEach(b=>{if(b.dataset.view===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});setPose(next==='focus'?'study':'idle');render();if(next==='today')calendar?.showAgenda();}
   function render(){
     if(!state)return;
     const active=document.activeElement;
@@ -41,7 +41,7 @@
     }
   }
   function renderTasks(){
-    const signature=JSON.stringify([state.tasks,state.ledger.filter(e=>e.type==='task').map(e=>e.id),taskFilter,search,taskLimit]);if(signature===tasksSignature)return;tasksSignature=signature;
+    const signature=JSON.stringify([calendar?.connected,state.tasks,state.ledger.filter(e=>e.type==='task').map(e=>e.id),taskFilter,search,taskLimit]);if(signature===tasksSignature)return;tasksSignature=signature;
     const list=$('task-list'),focused=document.activeElement?.dataset.focus;
     const tasks=state.tasks||[];const open=tasks.filter(t=>!t.done&&!t.archived);
     $('open-count').textContent=open.length;
@@ -54,7 +54,7 @@
       const reward={small:10,medium:20,large:30}[t.effort]||20;
       const earned=(state.ledger||[]).some(entry=>entry.id==='task:'+t.id);
       const subtasks=t.subtasks||[];
-      return `<article class="task-card ${t.done?'is-done':''}" data-task="${esc(t.id)}"><div class="task-main"><button type="button" class="task-check ${t.done?'done':''}" data-action="toggle-task" data-id="${esc(t.id)}" data-focus="toggle-${esc(t.id)}" aria-label="${t.done?'Reopen':'Complete'} ${esc(t.title)}" aria-pressed="${t.done}">${t.done?'✓':''}</button><div class="task-body"><div class="task-title">${esc(t.title)}</div><div class="task-meta">${t.priority==='high'?'<span class="important">Important</span>':''}${t.dueAt?`<span class="${!t.done&&t.dueAt<Date.now()?'overdue':''}">${!t.done&&t.dueAt<Date.now()?'Due ':''}${esc(date(t.dueAt))}</span>`:''}${t.recurrence!=='none'?`<span>↻ ${esc(t.recurrence)}</span>`:''}<span class="reward">${earned?`${reward} coins earned`:`+${reward} coins`}</span></div></div><div class="task-menu">${!t.archived?`<button class="text-button" type="button" data-action="edit-task" data-id="${esc(t.id)}" data-focus="edit-${esc(t.id)}">Edit</button>`:''}<button class="text-button" type="button" data-action="archive-task" data-id="${esc(t.id)}" data-archived="${!t.archived}">${t.archived?'Restore':'Archive'}</button></div></div>${subtasks.length?`<div class="task-subtasks">${subtasks.map(s=>`<label class="subtask"><input type="checkbox" ${s.done?'checked':''} data-subtask="${esc(s.id)}" data-task-id="${esc(t.id)}" aria-label="${esc(s.title)}"><span>${esc(s.title)}</span></label>`).join('')}</div>`:''}</article>`;
+      return `<article class="task-card ${t.done?'is-done':''}" data-task="${esc(t.id)}"><div class="task-main"><button type="button" class="task-check ${t.done?'done':''}" data-action="toggle-task" data-id="${esc(t.id)}" data-focus="toggle-${esc(t.id)}" aria-label="${t.done?'Reopen':'Complete'} ${esc(t.title)}" aria-pressed="${t.done}">${t.done?'✓':''}</button><div class="task-body"><div class="task-title">${esc(t.title)}</div><div class="task-meta">${t.priority==='high'?'<span class="important">Important</span>':''}${t.dueAt?`<span class="${!t.done&&t.dueAt<Date.now()?'overdue':''}">${!t.done&&t.dueAt<Date.now()?'Due ':''}${esc(date(t.dueAt))}</span>`:''}${t.recurrence!=='none'?`<span>↻ ${esc(t.recurrence)}</span>`:''}<span class="reward">${earned?`${reward} coins earned`:`+${reward} coins`}</span></div></div><div class="task-menu">${!t.archived&&calendar?.connected?`<button class="text-button" type="button" data-action="calendar-task" data-id="${esc(t.id)}">Add to Calendar</button>`:''}${!t.archived?`<button class="text-button" type="button" data-action="edit-task" data-id="${esc(t.id)}" data-focus="edit-${esc(t.id)}">Edit</button>`:''}<button class="text-button" type="button" data-action="archive-task" data-id="${esc(t.id)}" data-archived="${!t.archived}">${t.archived?'Restore':'Archive'}</button></div></div>${subtasks.length?`<div class="task-subtasks">${subtasks.map(s=>`<label class="subtask"><input type="checkbox" ${s.done?'checked':''} data-subtask="${esc(s.id)}" data-task-id="${esc(t.id)}" aria-label="${esc(s.title)}"><span>${esc(s.title)}</span></label>`).join('')}</div>`:''}</article>`;
     }).join('');
     if(!visible.length)list.innerHTML=`<div class="empty-state"><span class="empty-symbol" aria-hidden="true">✧</span><strong>${search?'No little plans found.':taskFilter==='open'?'Room for a little plan.':taskFilter==='done'?'Your little wins will live here.':'Nothing tucked away yet.'}</strong><p>${search?'Try another word, or clear your search.':taskFilter==='open'?'Add an assignment, an errand, or just one small thing.':taskFilter==='done'?'Finish a task to earn coins for Purrple’s wardrobe.':'Archived tasks stay safe and can be restored.'}</p></div>`;
     $('load-more').hidden=selected.length<=taskLimit;
@@ -145,6 +145,11 @@
     if(b.dataset.break){try{await dispatch({type:'BREAK_START',minutes:Number(b.dataset.break)},'A little rest starts now.');setPose('sleep');}catch{}return;}
     if(b.dataset.removeSlot){try{await dispatch({type:'EQUIP',slot:b.dataset.removeSlot,id:null},'Outfit saved.');preview=null;renderShop();}catch{}return;}
     const id=b.dataset.id,action=b.dataset.action;if(!action)return;
+    if(action==='calendar-task'){
+      const task=state.tasks.find(task=>task.id===id);
+      if(task)calendar.openDraft(task.title,task.dueAt,30);
+      return;
+    }
     if(!['edit-task','preview-item'].includes(action))b.disabled=true;
     try{
       if(action==='toggle-task'){const wasDone=b.getAttribute('aria-pressed')==='true';b.disabled=true;await dispatch({type:'TASK_SET_DONE',id,done:!wasDone},wasDone?'Task reopened.':'A little win. Well done!');if(!wasDone){setPose('celebrate');notify('A little win. Well done!',false,async()=>{await dispatch({type:'TASK_SET_DONE',id,done:false},'Task reopened. Coins are earned only once.');});}}
@@ -190,6 +195,18 @@
   listen('clear-shop-search','click',()=>{shopQuery='';$('shop-search').value='';renderShop();$('shop-search').focus();});
   const saveHomeDraft=()=>{if($('quick-form').dataset.busy)return;const text=$('quick-title').value,effort=$('quick-effort').value;if(!homeDraftWrites&&text===(state?.drafts?.quickTask||'')&&effort===(state?.drafts?.quickEffort||'medium'))return;homeDraftWrites++;client.saveQuickDraft(text,effort).then(receive).catch(error=>notify(error.message||'Your draft could not be saved. Please keep this page open.',true)).finally(()=>homeDraftWrites--);};
   listen('quick-title','input',e=>{if(!e.isComposing)saveHomeDraft();});listen('quick-title','compositionend',saveHomeDraft);listen('quick-effort','change',saveHomeDraft);
+  const calendar=globalThis.PurrpleCalendarUI?.mount({onChange:()=>{if(state)renderTasks();}});
+  listen('calendar-focus','click',()=>calendar?.openDraft('Purrple focus block',null,Number($('focus-minutes').value)));
+  listen('reset-layout','click',async()=>{
+    if(!client.native){notify('Open the Firefox extension to reset the companion layout.');return;}
+    try{
+      for(const part of ['dock','panel']){
+        const result=await browser.runtime.sendMessage({type:'PET_LAYOUT',part,reset:true});
+        if(!result?.ok)throw Error(result?.error||'The position could not be reset.');
+      }
+      notify('The house and floating dashboard positions were reset.');
+    }catch(error){notify(error.message,true);}
+  });
   addEventListener('hashchange',()=>showView(location.hash.slice(1)||'today'));
   client.subscribe(receive);
   client.get().then(next=>{receive(next);showView(location.hash.slice(1)||'today');}).then(permissions).catch(error=>{$('loading').hidden=true;$('load-error').textContent=error.message||'Purrple could not open her saved data. Try reopening this page.';$('load-error').hidden=false;});

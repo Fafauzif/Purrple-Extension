@@ -20,8 +20,8 @@ fresh developer can continue without the original chat.
 - Approved first accessories: moon bow, star bandana and cozy beanie, shown in
   art/reference/approved-accessories.png. Expand to 15 fitted cosmetics.
 - Every equipped item must follow the relevant head/neck in every pose.
-- Runtime is completely offline, with no AI, inference, model, provider keys,
-  telemetry, WhatsApp integration or external backend.
+- Core features work offline and use no AI, telemetry, or remote artwork.
+  Google Calendar is optional and connects through an owner-installed local helper.
 - Interface and canned companion remarks are English.
 - Girlfriend's personal name was not provided; it is an optional local setting.
 - No personal-letter/mailbox feature. No need to replace new-tab.

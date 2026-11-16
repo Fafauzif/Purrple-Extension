@@ -145,3 +145,42 @@ test('Open app routes only to known internal sections and updates an already-ope
  assert.equal((await h.request({type:'OPEN_APP',view:'settings'},h.content)).ok,true);assert.equal(h.tabOperations.at(-1).kind,'update');assert.equal(h.tabOperations.at(-1).options.url,'moz-extension://purrple/app.html#settings');
  assert.equal((await h.request({type:'OPEN_APP',view:'https://outside.test'},h.content)).ok,false);assert.equal((await h.request({type:'OPEN_APP',view:['settings']},h.content)).ok,false);
 });
+
+test('dock placement is lease-checked, persists across claims and can reset separately', async () => {
+ const h=setup();
+ const claim=await h.request({type:'PET_CLAIM'},h.content);
+ const layout=await h.request({type:'PET_LAYOUT',part:'dock',leaseId:claim.leaseId,position:{x:0,y:.45}},h.content);
+ assert.equal(layout.ok,true);
+ assert.equal(h.storage.purrpleLayout.dock.x,0);
+ assert.equal(h.storage.purrpleLayout.dock.y,.45);
+ assert.equal((await h.request({type:'PET_LAYOUT',part:'dock',leaseId:'stale',position:{x:1,y:0}},h.content)).ok,false);
+ assert.equal((await h.request({type:'PET_LAYOUT',part:'panel',leaseId:claim.leaseId,position:{x:.25,y:.75}},h.content)).ok,true);
+ await h.request({type:'PET_RELEASE',leaseId:claim.leaseId},h.content);
+ h.tabs[0].active=false;h.tabs[1].active=true;
+ const other={url:'https://other.test/',tab:{id:2},frameId:0};
+ const next=await h.request({type:'PET_CLAIM'},other);
+ assert.equal(next.layout.dock.y,.45);
+ assert.equal(next.layout.panel.y,.75);
+ assert.equal((await h.request({type:'PET_LAYOUT',part:'dock',reset:true})).ok,true);
+ assert.equal(h.storage.purrpleLayout.dock,null);
+ assert.equal(h.storage.purrpleLayout.panel.y,.75);
+});
+
+test('Calendar is allowed only in full app and does not block the local state queue',async()=>{
+ const h=setup();
+ let finish,called=0;
+ h.browser.runtime.sendNativeMessage=(name,payload)=>{
+   assert.equal(name,'purrple_calendar');assert.equal(payload.operation,'status');called++;
+   return new Promise(resolve=>{finish=resolve;});
+ };
+ const request={type:'CALENDAR',operation:'status'};
+ assert.equal((await h.request(request,h.content)).ok,false);
+ assert.equal((await h.request(request,{...h.ui,frameId:2})).ok,false);
+ assert.equal((await h.request(request,{...h.ui,url:'moz-extension://purrple/popup.html'})).ok,false);
+ const live=h.request(request);
+ const local=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Offline while Calendar waits'}});
+ assert.equal(local.ok,true);
+ assert.equal(called,1);
+ finish({ok:true,connected:false});
+ assert.equal((await live).connected,false);
+});

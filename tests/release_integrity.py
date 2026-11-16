@@ -65,10 +65,18 @@ def main():
         with tempfile.TemporaryDirectory(prefix='purrple-source-rebuild-') as temp:
             dest = Path(temp)
             sz.extractall(dest)
+            # A Desktop OAuth download could end up beside the sources by mistake.
+            fixtures = ['client_secret.local-test.json','tools/calendar/client_secret.local-test.json',
+                        'extension/client_secret.local-test.json','extension/assets/local-token.json']
+            for name in fixtures:
+                (dest / name).write_text('{"only_test_data":true}')
             run = subprocess.run([sys.executable, 'scripts/build_release.py'], cwd=dest,
                                  text=True, capture_output=True)
             check('extracted-source-builds-offline', run.returncode == 0, run.stderr[-1200:])
             built = dest / 'dist/Purrple_Firefox_Extension.zip'
+            with zipfile.ZipFile(dest / 'dist/Purrple_Complete_Source.zip') as guarded_source:
+                check('local-oauth-json-is-not-packaged', all(n not in guarded_source.namelist() for n in fixtures))
+
             check('extracted-source-reproduces-runtime-byte-for-byte',
                   built.read_bytes() == runtime.read_bytes())
     report = dict(version=manifest['version'], runtime_sha256=digest(runtime.read_bytes()),

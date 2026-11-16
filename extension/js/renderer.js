@@ -93,6 +93,7 @@
   const spec=art.sprites[source]||art.sprites.idle,poses=art.poses[source]||art.poses.idle;
   const raw=poses[clamp(key|0,0,poses.length-1)],offset=CANON-(spec.baseline||CANON);
   const p={...raw};p.eye=[raw.eye[0],raw.eye[1]+offset];p.neck=[raw.neck[0],raw.neck[1]+offset];p.crownY=raw.crownY+offset;
+  if(raw.neckFit)p.neckFit={...raw.neckFit,y:raw.neckFit.y+offset};
   p.bbox=(raw.bbox||[32,20,224,spec.baseline||CANON]).map((n,i)=>i%2?n+offset:n);
   p.facePolygon=(raw.facePolygon||[]).map(([x,y])=>[x,y+offset]);if(raw.headMask)p.headMask={...raw.headMask,cy:raw.headMask.cy+offset};
   p.earPolygons=(raw.earPolygons||[]).map(poly=>poly.map(([x,y])=>[x,y+offset]));p.foregroundPolygons=(raw.foregroundPolygons||[]).map(poly=>poly.map(([x,y])=>[x,y+offset]));p.propY=(raw.propY||256)+offset;
@@ -111,8 +112,11 @@
    if(isClip){ctx.translate(-width*(lm.profile?.11:.33)+(overrides.x||0),(lm.crownY-lm.eye[1])-width*.015+(overrides.y||0));ctx.drawImage(im,-w/2,-h/2,w,h);}
    else{ctx.translate((lm.profile?-width*.03:0)+(overrides.x||0),(lm.crownY-lm.eye[1])+width*.14+(overrides.y||0));ctx.drawImage(im,-w/2,-h,w,h);}
   }else{
-   ctx.translate(lm.neck[0]+(overrides.x||0),lm.neck[1]+(overrides.y||0));ctx.rotate(lm.angle||0);
-   const w=width*cfg.w*profile*(overrides.scaleX||1),h=width*cfg.h*(overrides.scaleY||1);ctx.drawImage(im,-w/2,-3,w,h);
+   const fit=lm.neckFit||{x:lm.neck[0],y:lm.neck[1],angle:lm.angle||0,scale:[1,1]};
+   const [px,py]=cfg.pivot||[.5,.12];
+   ctx.translate(fit.x,fit.y);ctx.rotate(fit.angle);
+   const w=width*cfg.w*profile*fit.scale[0],h=width*cfg.h*fit.scale[1];
+   ctx.drawImage(im,-w*px,-h*py,w,h);
   }
   ctx.restore();
  }
@@ -183,8 +187,20 @@
    triangle(cx,image,[[x0,y0],[x1,y1],[x0,y1]],[points[y][x],points[y+1][x+1],points[y+1][x]]);
   }return c;
  }
+ function frameTime(id,time,motion){
+  return motion?Math.floor(localTime(id,time)*30)/30:time;
+ }
+ function isDrawReady(options={}){
+  if(!ready)return false;
+  const id=resolve(options.clip),time=Math.max(0,Number(options.time)||0);
+  const f=frameAt(id,frameTime(id,time,options.motion!==false&&!options.reducedMotion));
+  const equip=options.equipped||{};
+  const current=ensureActor(f.clip,equip);
+  const next=ensureActor(f.nextClip,equip);
+  return current&&next;
+ }
  function prepared(id,time,equipped,motion=true){
-  if(motion)time=Math.floor(localTime(id,time)*30)/30;
+  time=frameTime(id,time,motion);
   const f=frameAt(id,time),u=motion?smooth(f.mix):0,choose=u<.5?0:1;
   const source=choose?f.nextClip:f.clip,key=choose?f.nextKey:f.key;
   const a=canonicalPose(f.clip,f.key),b=canonicalPose(f.nextClip,f.nextKey),lm=choose?b:a,target=blendedPose(a,b,u);
@@ -195,9 +211,9 @@
   stats.geometryBuilds++;return{canvas:keep(motionCache,cacheKey,geometry(canvas,lm,target,id,time),64),frame:f};
  }
  function draw(ctx,options={}){
-  if(!ready)return false;
+  if(!isDrawReady(options))return false;
   const id=resolve(options.clip),time=Math.max(0,Number(options.time)||0),size=clamp(Number(options.size)||128,32,600),f=frameAt(id,time),p=f.phase;
-  const equip=options.equipped||{};if(!ensureActor(f.clip,equip)||!ensureActor(f.nextClip,equip))return false;const image=prepared(id,time,equip,options.motion!==false&&!options.reducedMotion).canvas;
+  const equip=options.equipped||{};const image=prepared(id,time,equip,options.motion!==false&&!options.reducedMotion).canvas;
   let x=Number(options.x)||0,y=Number(options.y)||0,rotation=Number(options.rotation)||0;
   if(options.motion!==false){
    if(id==='held'||id==='wiggle')rotation+=Math.sin(TAU*p)*.02;
@@ -216,7 +232,7 @@
   }
   ctx.restore();stats.draws++;return true;
  }
- const api={preload,draw,drawFrame,frameAt,clips,timeline,sourceId,durationFor,landmarkFor:canonicalPose,
+ const api={preload,draw,drawFrame,isDrawReady,frameAt,clips,timeline,sourceId,durationFor,landmarkFor:canonicalPose,
   strideFor:(id,size=128)=>((id==='run'?220:120)*size/256),
   itemIds:Object.keys(art?.items||{}),get ready(){return ready;},get assetsReady(){return ready;},
   releaseAssets,

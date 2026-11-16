@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Purrple \u00b7 Your little study companion",
-  "version": "1.1.0",
-  "description": "A little lavender cat, your tasks, a cozy study timer, and a wardrobe earned one small win at a time. Works offline.",
+  "name": "Purrple · Your little study companion",
+  "version": "1.2.0",
+  "description": "A little lavender cat, your tasks, a cozy study timer, and a wardrobe earned one small win at a time. Core features work offline, with optional Google Calendar.",
   "browser_specific_settings": {
     "gecko": {
       "id": "purrple-companion@purrple.local",
@@ -10,6 +10,10 @@
       "data_collection_permissions": {
         "required": [
           "none"
+        ],
+        "optional": [
+          "personalCommunications",
+          "personallyIdentifyingInfo"
         ]
       }
     }
@@ -27,6 +31,7 @@
   "background": {
     "scripts": [
       "js/talk.js",
+      "js/ambient.js",
       "js/core.js",
       "js/background.js"
     ]
@@ -73,6 +78,7 @@
       "js": [
         "js/renderer-data.js",
         "js/renderer.js",
+        "js/ambient.js",
         "js/content.js"
       ],
       "run_at": "document_idle",
@@ -108,5 +114,8 @@
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'self'; base-uri 'none'"
-  }
+  },
+  "optional_permissions": [
+    "nativeMessaging"
+  ]
 }

@@ -4,9 +4,10 @@
   const api=globalThis.browser||globalThis.chrome,Core=globalThis.PurrpleCore;
   if(!api||!Core)return;
   const KEY='purrpleState',POSITION='purrplePosition',JOURNAL='purrpleRequestJournal';
+  const LAYOUT='purrpleLayout', AMBIENT='purrpleAmbientReceipt';
   const PANEL_KEY='purrplePanelCapabilities',PANEL_TTL=12*60*60*1000;
   const panelStorage=api.storage.session||api.storage.local;
-  let queue=Promise.resolve(),lease=null,notificationRetryAt=0,scheduledAt=null;
+  let queue=Promise.resolve(),calendarQueue=Promise.resolve(),lease=null,notificationRetryAt=0,scheduledAt=null;
   const extensionURL=api.runtime.getURL('');
   async function panelCapabilities(){
     const data=await panelStorage.get(PANEL_KEY),now=Date.now(),records=data[PANEL_KEY]||{};
@@ -118,6 +119,10 @@
     if(!input||!Number.isFinite(input.x)||!Number.isFinite(input.y))throw Error('Invalid companion position.');
     return{x:Math.max(0,Math.min(1,input.x)),y:Math.max(0,Math.min(1,input.y))};
   }
+  async function getLayout(){
+    const stored=(await api.storage.local.get(LAYOUT))[LAYOUT];
+    return stored?.version===1?stored:{version:1,dock:null,panel:null};
+  }
   async function releaseLease(){
     const old=lease;lease=null;
     if(old)await api.tabs.sendMessage(old.tabId,{type:'PET_REVOKED',leaseId:old.id}).catch(()=>{});
@@ -125,6 +130,27 @@
   async function handler(request,sender){
     if(!request||typeof request.type!=='string')return undefined;
     if(request.type==='STATE_CHANGED')return undefined;
+    if(request.type==='CALENDAR'){
+      // Only the direct full app and sidebar may use the native host.
+      const page=typeof sender?.url==='string'&&sender.url.split(/[?#]/,1)[0]===api.runtime.getURL('app.html');
+      if(!page||(sender.frameId??0)!==0)return{ok:false,error:'Open the full Purrple app to use Calendar.'};
+      if(!['status','connect','list','create','disconnect'].includes(request.operation))return{ok:false,error:'Unknown Calendar operation.'};
+      if(['connect','list','create'].includes(request.operation)&&api.permissions){
+        const available=await api.permissions.getAll();
+        if(Array.isArray(available.data_collection)&&
+           !['personalCommunications','personallyIdentifyingInfo'].every(type=>available.data_collection.includes(type))){
+          return{ok:false,error:'Allow Calendar data from Settings first.',code:'permission'};
+        }
+      }
+      const reply=await api.runtime.sendNativeMessage('purrple_calendar',{
+        operation:request.operation,
+        event:request.operation==='create'?request.event:undefined
+      }).catch(()=>null);
+      if(reply?.ok&&['connect','disconnect'].includes(request.operation)){
+        await api.runtime.sendMessage({type:'CALENDAR_CHANGED'}).catch(()=>{});
+      }
+      return reply||{ok:false,error:'Calendar helper unavailable. Follow the setup guide and allow the helper in Firefox.'};
+    }
     const ui=await isUI(sender);
     if(!ui&&!isContent(sender))return {ok:false,error:'This request is not from a Purrple surface.'};
     switch(request.type){
@@ -168,7 +194,30 @@
         if(lease&&lease.tabId!==sender.tab.id)await releaseLease();
         if(!lease)lease={id:globalThis.crypto.randomUUID(),tabId:sender.tab.id};
         const stored=await api.storage.local.get(POSITION);
-        return{ok:true,active:true,leaseId:lease.id,position:stored[POSITION]||{x:.82,y:1}};
+        return{ok:true,active:true,leaseId:lease.id,position:stored[POSITION]||{x:.82,y:1},layout:await getLayout()};
+      }
+      case 'PET_LAYOUT':{
+        const ownsLease=isContent(sender)&&lease&&lease.id===request.leaseId&&lease.tabId===sender.tab.id&&await activeSender(sender);
+        if((!ui||!request.reset)&&!ownsLease)throw Error('Move the companion from the active tab.');
+        if(!['dock','panel'].includes(request.part))throw Error('Choose a companion control to move.');
+        const layout=await getLayout();
+        layout[request.part]=request.reset?null:position(request.position);
+        await api.storage.local.set({[LAYOUT]:layout});
+        if(ui&&lease)await api.tabs.sendMessage(lease.tabId,{type:'PET_LAYOUT_CHANGED',layout}).catch(()=>{});
+        return{ok:true,layout};
+      }
+      case 'PET_AMBIENT':{
+        if(!isContent(sender)||!lease||lease.id!==request.leaseId||lease.tabId!==sender.tab.id||!await activeSender(sender))return{ok:true};
+        const state=await load(), Ambient=globalThis.PurrpleAmbient;
+        const timing=Ambient?.timings(state.settings.chattiness);
+        const now=Date.now();
+        if(!timing||!state.settings.petEnabled||Core.quietNow(state.settings,now)||
+           state.focus?.kind==='focus'&&state.focus.status==='running'&&state.focus.endsAt>now)return{ok:true};
+        const old=(await panelStorage.get(AMBIENT))[AMBIENT];
+        if(old&&now>=old.at&&now-old.at<timing.interval)return{ok:true};
+        const index=old?((old.index+5)%Ambient.lines.length):0;
+        await panelStorage.set({[AMBIENT]:{at:now,index}});
+        return{ok:true,text:Ambient.lines[index]};
       }
       case 'PET_PANEL_OPEN':{
         if(!isContent(sender)||!await activeSender(sender)||lease?.id!==request.leaseId||lease.tabId!==sender.tab.id)throw Error('Open the companion in the active tab first.');
@@ -205,9 +254,15 @@
       default:return undefined;
     }
   }
+  function calendarRequest(request,sender){
+    const next=calendarQueue.then(()=>handler(request,sender));
+    calendarQueue=next.catch(()=>{});
+    return next;
+  }
   api.runtime.onMessage.addListener((request,sender)=>{
-    if(request?.type==='STATE_CHANGED')return undefined;
-    return serial(()=>handler(request,sender)).catch(error=>({ok:false,error:String(error?.message||error)}));
+    if(['STATE_CHANGED','CALENDAR_CHANGED'].includes(request?.type))return undefined;
+    const work=request?.type==='CALENDAR'?calendarRequest(request,sender):serial(()=>handler(request,sender));
+    return work.catch(error=>({ok:false,error:String(error?.message||error)}));
   });
   api.alarms.onAlarm.addListener(alarm=>{if(['purrple-next','purrple-heartbeat'].includes(alarm.name))serial(async()=>reconcileAndNotify(await load())).catch(console.error);});
   // Avoid passing a Promise to the pure reconciliation path.

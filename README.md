@@ -110,7 +110,7 @@ changing persistence, messaging, shared rendering or wardrobe anchors.
 
 ## Update the GitHub checkout
 
-Version 1.1.0's source ZIP contains the repository contents directly, without
+The source ZIP contains the repository contents directly, without
 the old enclosing `Purrple/` folder. Extract it into the directory containing
 `extension/` and `package.json`, and replace matching files. Preserve `.git/`.
 The user confirmed no edits since the previous source ZIP; save any newer edits
@@ -124,3 +124,7 @@ command performs no upload. The explicit `--submit` operation needs the owner's
 private Mozilla API environment and uploads to Mozilla. Read
 `docs/MOZILLA-SIGNING.md` before using it. Never commit credentials or describe
 an unsigned build as signed.
+
+## Optional Google Calendar
+
+See [Calendar setup](docs/CALENDAR.md). The Firefox ZIP works on its own for all non-Calendar features.

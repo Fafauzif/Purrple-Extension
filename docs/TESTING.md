@@ -90,3 +90,20 @@ templates escape user text and are covered by injection/runtime checks. The
 remaining warning concerns data-collection metadata on Firefox for Android
 140–141. This release targets desktop Firefox; Android was not verified. A
 zero-error lint result is not a signed release or a warning-free security audit.
+
+## Version 1.2 checks
+
+```sh
+npm test
+python3 tests/calendar_host_test.py
+python3 scripts/build_release.py
+python3 tests/release_integrity.py
+python3 tests/firefox_revision.py
+```
+
+The revision test installs the packaged runtime and uses native mouse input.
+On desktop Linux without an existing Calendar host registration it temporarily
+registers a synthetic host and removes it afterward. This exercises Firefox
+permission prompts, the app, and native messaging without contacting Google.
+Use a throwaway Google account after following the Calendar setup guide to
+verify live consent, agenda, event creation, and token refresh.

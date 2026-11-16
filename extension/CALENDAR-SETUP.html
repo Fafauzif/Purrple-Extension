@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Google Calendar setup · Purrple</title><link rel="stylesheet" href="css/app.css">
+<main style="max-width:46rem;margin:2rem auto;padding:1rem">
+<section class="panel">
+<h1>Connect Google Calendar</h1>
+<p>Purrple can show upcoming events on your primary Google calendar and create events after you review them. The extension and its core tools work without this connection.</p>
+<ol>
+<li>Extract <strong>Purrple_Complete_Source.zip</strong>. Install Python 3.10 or newer if needed.</li>
+<li>In your own Google Cloud project, enable Google Calendar API. In Google Auth Platform, configure the app and add your Google account as a test user if the app audience is External and the status is Testing.</li>
+<li>Under Clients, create an OAuth client of type <strong>Desktop app</strong>. Download its JSON. Keep it outside the source folder and keep it private.</li>
+<li>Open a terminal in the extracted source folder. On Windows run <code>py tools/calendar/setup_calendar.py install "C:\path\to\downloaded-client.json"</code>. On regular desktop Linux or macOS run the same command using <code>python3</code> and your actual JSON path.</li>
+<li>Load <strong>Purrple_Firefox_Extension.zip</strong> through <code>about:debugging</code> → <strong>This Firefox</strong> → <strong>Load Temporary Add-on</strong>. Open Purrple Settings and choose <strong>Allow Calendar data</strong> if shown, then <strong>Connect Google Calendar</strong>. Allow Firefox to use the local helper and finish Google consent in your default browser.</li>
+</ol>
+<p>External Google apps in Testing may need reconnection after seven days. If your account is managed, its policy may block Calendar access. To remove the connection, use <strong>Disconnect</strong> in Purrple Settings, then run <code>py tools/calendar/setup_calendar.py uninstall</code> or the equivalent with <code>python3</code>.</p>
+<p><a href="https://developers.google.com/workspace/calendar/api/auth" rel="noopener">Google Calendar permissions</a> · <a href="https://developers.google.com/identity/protocols/oauth2/native-app" rel="noopener">Google OAuth for desktop apps</a></p>
+</section>
+</main></html>

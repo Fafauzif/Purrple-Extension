@@ -71,3 +71,7 @@ personal sentence “I love you”. This is guide copy, not a mailbox/letter fea
 The owner gets separate, honest unsigned/signed installation and signing steps.
 The source ZIP must extract directly into the confirmed repository root so
 matching files can be replaced without an extra wrapper directory.
+
+## Google Calendar
+
+After owner setup and explicit consent, the full app shows a seven-day agenda and can create an event from a task or a planned focus block. Calendar is an optional online connection.

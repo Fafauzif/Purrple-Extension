@@ -10,3 +10,15 @@
 .resize-none{resize:none;min-height:96px}
 
 .quick-effort-home{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin:9px 3px 0;color:var(--muted);font-size:12px}.quick-effort-home label{font-weight:800}.quick-effort-home select{border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fffbff;color:var(--purple-dark);font-size:12px;min-height:32px;max-width:190px}
+
+/* Optional Google Calendar */
+.calendar-panel {margin-block: 16px; min-width: 0}
+.calendar-header, .calendar-actions {display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.calendar-header h2 {margin:0}
+.calendar-events {margin:0; padding:0; list-style:none; display:grid; gap:8px}
+.calendar-events li {display:grid; gap:2px; border-top:1px solid var(--line); padding-block:8px; overflow-wrap:anywhere}
+.calendar-events .calendar-day {font-weight:700; color:var(--purple-dark)}
+#calendar-form {padding:22px; display:grid; gap:10px; min-width:0}
+#calendar-form p, #calendar-form h2 {margin:0}
+#calendar-dialog {max-width:min(92vw,470px)}
+#calendar-focus {margin-top:10px}
