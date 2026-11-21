@@ -14,17 +14,36 @@ def main():
   def sf(selector):
    host=d.command('/element',{'using':'css selector','value':'purrple-companion'});shadow=d.command('/element/'+host[native.ELEMENT]+'/shadow',method='GET')[SHADOW];return d.command('/shadow/'+shadow+'/element',{'using':'css selector','value':selector})
   def sc(selector):el=sf(selector);return d.command('/element/'+el[native.ELEMENT]+'/click',{})
-  def menu():sc('.paw')
-  menu();sc('[data-action="play"]');check('native-visible-play-drawer-has-eight-actions',d.js('return !arguments[0].hidden && arguments[0].querySelectorAll("button").length===8;',sf('.play-actions')));d.screenshot('native-play-drawer.png')
-  for i,clip in enumerate(['knead','wave','nuzzle','roll','stretch','loaf']):
-   if i:menu();sc('[data-action="play"]')
-   sc('.play-actions [data-action="'+clip+'"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==='+json.dumps(clip),timeout=3)
+  def menu():sc('.actor')
+  game_only=(EXT/'game.html').is_file()
+  menu();sc('[data-action="play"]')
+  check('native-visible-play-has-starter-game',d.js('return !arguments[0].hidden && !!arguments[0].querySelector("[data-action=companion-play-paw-pairs]");',sf('.menu')))
+  if game_only:
+   handle=d.command('/window',method='GET')
+   sc('[data-action="companion-play-paw-pairs"]')
+   for _ in range(80):
+    try:frame=sf('.panel iframe');break
+    except RuntimeError:time.sleep(.1)
+   else:raise AssertionError('Game iframe did not appear')
+   d.command('/frame',{'id':frame})
+   d.wait('return location.pathname==="/game.html" && document.querySelector("#game-content .cg-game-title")?.textContent==="Paw Pairs"',timeout=15)
+   check('native-selected-game-has-no-planner-controls',d.js('return !document.querySelector(".compact-nav,.cp-nav")'))
+   d.click('[data-cp=start-game]');d.wait('return document.querySelectorAll(".cg-card").length===12')
+   d.click('#game-close');d.command('/window',{'handle':handle})
+   d.wait('return document.querySelector("purrple-companion").dataset.active==="true"')
+   check('native-game-close-restores-purrple-focus',d.js('return arguments[0].getRootNode().activeElement===arguments[0]',sf('.actor')))
+  else:
+   sc('.menu [data-action=back]')
+   sc('.menu header button')
+  for clip in ['knead','wave','nuzzle','roll','stretch','loaf']:
+   menu();sc('[data-action="care"]' if game_only else '[data-action="play"]');sc('[data-action="tricks"]')
+   sc('.menu [data-action="'+clip+'"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==='+json.dumps(clip),timeout=3)
    check('native-visible-play-'+clip+'-reaches-authored-clip',True)
-  menu();sc('[data-action="more"]');sc('[data-action="nap"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==="doze"');check('native-nap-enters-doze-then-sleep',bool(d.wait('return document.querySelector("purrple-companion").dataset.clip==="sleep"',timeout=5)))
-  menu();sc('[data-action="more"]');sc('[data-action="nap"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==="wake"');check('native-wake-reaches-authored-clip',True)
-  menu();sc('[data-action="more"]');sc('[data-action="home"]');d.wait('return document.querySelector("purrple-companion").dataset.atHome==="true"',timeout=12);sc('.house');d.wait('return document.querySelector("purrple-companion").dataset.atHome==="false"')
-  overlap=d.js('const p=arguments[0].getBoundingClientRect(),h=arguments[1].getBoundingClientRect();return {overlap:p.left<h.right&&p.right>h.left&&p.top<h.bottom&&p.bottom>h.top};',sf('.paw'),sf('.house'))
-  check('native-house-wake-keeps-paw-control-clear',not overlap['overlap'],overlap)
+  menu();sc('[data-action="care"]');sc('[data-action="nap"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==="doze"');check('native-nap-enters-doze-then-sleep',bool(d.wait('return document.querySelector("purrple-companion").dataset.clip==="sleep"',timeout=5)))
+  menu();sc('[data-action="care"]');sc('[data-action="nap"]');d.wait('return document.querySelector("purrple-companion").dataset.clip==="wake"');check('native-wake-reaches-authored-clip',True)
+  menu();sc('[data-action="care"]');sc('[data-action="home"]');d.wait('return document.querySelector("purrple-companion").dataset.atHome==="true"',timeout=12);sc('.house');d.wait('return document.querySelector("purrple-companion").dataset.atHome==="false"')
+  overlap=d.js('const p=arguments[0].getBoundingClientRect(),h=arguments[1].getBoundingClientRect();return {overlap:p.left<h.right&&p.right>h.left&&p.top<h.bottom&&p.bottom>h.top};',sf('.actor'),sf('.house'))
+  check('native-house-wake-keeps-cat-control-clear',not overlap['overlap'],overlap)
   def throw(strong):
    xy=d.js('const h=document.querySelector("purrple-companion");return{x:Number(h.dataset.x),y:Number(h.dataset.y)-58};')
    moves=[{'type':'pointerMove','duration':0,'x':round(xy['x']),'y':round(xy['y'])},{'type':'pointerDown','button':0},{'type':'pointerMove','duration':100 if strong else 500,'x':round(xy['x']-(260 if strong else 35)),'y':round(xy['y']-(180 if strong else 30))}]

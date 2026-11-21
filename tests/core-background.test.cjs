@@ -8,25 +8,25 @@ const NOW=Date.parse('2026-11-15T09:00:00Z');
 const clone=o=>structuredClone(o);
 function event(){const listeners=[];return{addListener:fn=>listeners.push(fn),fire:(...args)=>Promise.all(listeners.map(fn=>fn(...args))),listeners};}
 function setup(initial){
- let clock=NOW,failSave=false,failNotification=false,saveCount=0,alarmWrites=0;
+ let clock=NOW,failSave=false,failNotification=false,saveCount=0,alarmWrites=0,checkpoint=null;
  const storage={purrpleState:clone(initial||C.defaultState(NOW))},alarms=new Map(),notices=[],notifications=[],runtimeMessages=[],tabOperations=[];
  const tabs=[{id:1,active:true,windowId:1,url:'https://example.com/'},{id:2,active:false,windowId:1,url:'https://other.test/'}];
  const browser={
   storage:{local:{get:async key=>({[key]:clone(storage[key])}),set:async value=>{if(failSave){failSave=false;throw Error('Storage unavailable');}saveCount++;for(const[k,v]of Object.entries(value))storage[k]=clone(v);}}},
   runtime:{getURL:p=>'moz-extension://purrple/'+p,onMessage:event(),onStartup:event(),onInstalled:event(),sendMessage:async message=>{runtimeMessages.push(clone(message));}},
-  tabs:{query:async query=>query.active?tabs.filter(t=>t.active):tabs,get:async id=>tabs.find(t=>t.id===id),sendMessage:async(id,msg)=>{notices.push({id,msg:clone(msg)});},create:async options=>{tabOperations.push({kind:'create',options});return{id:3};},update:async(id,options)=>{tabOperations.push({kind:'update',id,options});},onActivated:event(),onRemoved:event()},
+  tabs:{query:async query=>query.active?tabs.filter(t=>t.active):tabs,get:async id=>tabs.find(t=>t.id===id),sendMessage:async(id,msg)=>{notices.push({id,msg:clone(msg)});if(msg.type==='PET_CHECKPOINT'&&checkpoint)return {presence:clone(checkpoint)};},create:async options=>{tabOperations.push({kind:'create',options});return{id:3};},update:async(id,options)=>{tabOperations.push({kind:'update',id,options});},onActivated:event(),onRemoved:event()},
   windows:{get:async()=>({focused:true}),update:async()=>{},onFocusChanged:event()},
   alarms:{create:(name,config)=>{alarmWrites++;alarms.set(name,clone(config));},clear:async name=>alarms.delete(name),onAlarm:event()},
   notifications:{create:async(id,config)=>{notifications.push({id,config});if(failNotification)throw Error('OS notifications denied');return id;},onClicked:event()}
  };
  const injected={...C,defaultState:()=>C.defaultState(clock),reduce:(s,a,n=clock)=>C.reduce(s,a,n),reconcile:(s,n=clock)=>C.reconcile(s,n)};
  class MockDate extends Date{static now(){return clock;}}
- const context={browser,PurrpleCore:injected,Date:MockDate,URL,crypto:require('node:crypto').webcrypto,console:{warn:()=>{},error:()=>{}}};
+ const context={browser,PurrpleCore:injected,Date:MockDate,URL,setTimeout,clearTimeout,crypto:require('node:crypto').webcrypto,console:{warn:()=>{},error:()=>{}}};
  vm.runInNewContext(script,context);
  const ui={url:'moz-extension://purrple/app.html',tab:{id:3},frameId:0};
  const content={url:'https://example.com/',tab:{id:1},frameId:0};
  const request=(message,sender=ui)=>browser.runtime.onMessage.listeners[0](message,sender);
- return{browser,storage,alarms,notices,notifications,runtimeMessages,tabOperations,tabs,request,ui,content,counts:()=>({saveCount,alarmWrites}),setClock:n=>clock=n,failNextSave:()=>failSave=true,failNotifications:()=>failNotification=true};
+ return{browser,storage,alarms,notices,notifications,runtimeMessages,tabOperations,tabs,request,ui,content,counts:()=>({saveCount,alarmWrites}),setClock:n=>clock=n,setCheckpoint:value=>checkpoint=value,failNextSave:()=>failSave=true,failNotifications:()=>failNotification=true};
 }
 test('disabled notifications never schedule an overdue task alarm',async()=>{
  let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW);
@@ -42,7 +42,8 @@ test('quiet hours do not spin task alarms but retain focus completion scheduling
  assert.equal(h.alarms.get('purrple-next').when,NOW+25*60000);assert.equal(h.notifications.length,0);
 });
 test('failed OS delivery backs off for at least one minute despite repeated state reads',async()=>{
- const s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW),h=setup(s);
+ let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Overdue',dueAt:NOW-1000},NOW);
+ s=C.reduce(s,{type:'SETTINGS',patch:{notifications:true}},NOW);const h=setup(s);
  h.failNotifications();
  for(let i=0;i<8;i++)await h.request({type:'GET_STATE'});
  assert.equal(h.notifications.length,1);assert.equal(h.notices.filter(n=>n.msg.type==='REMINDER_NOTICE').length,1);
@@ -52,18 +53,22 @@ test('failed OS delivery backs off for at least one minute despite repeated stat
 test('concurrent actions are serialized and one purchase debits once',async()=>{
  const h=setup();let r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Large task',effort:'large'}}),id=r.state.tasks[0].id;
  await h.request({type:'ACTION',action:{type:'TASK_TOGGLE',id}});
+ for(const effort of ['large','small']){
+   const result=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Fund purchase',effort}});
+   await h.request({type:'ACTION',action:{type:'TASK_TOGGLE',id:result.state.tasks.at(-1).id}});
+ }
  const responses=await Promise.all(Array.from({length:8},()=>h.request({type:'ACTION',action:{type:'SHOP_BUY',id:'moon-bow'}})));
- assert.ok(responses.every(r=>r.ok));assert.equal(h.storage.purrpleState.wallet.balance,10);assert.deepEqual(h.storage.purrpleState.owned,['moon-bow']);
+ assert.ok(responses.every(r=>r.ok));assert.equal(h.storage.purrpleState.wallet.balance,1);assert.deepEqual(h.storage.purrpleState.owned,['moon-bow']);
 });
 test('different clients completing one stale open task cannot undo each other',async()=>{
  const h=setup();const r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Shared completion'}}),id=r.state.tasks[0].id;
  await Promise.all(['surface-a','surface-b'].map(requestId=>h.request({type:'ACTION',requestId,action:{type:'TASK_SET_DONE',id,done:true}})));
- assert.equal(h.storage.purrpleState.tasks[0].done,true);assert.equal(h.storage.purrpleState.wallet.balance,10);
+ assert.equal(h.storage.purrpleState.tasks[0].done,true);assert.equal(h.storage.purrpleState.wallet.balance,1);
 });
 test('a repeated request token cannot repeat a task toggle',async()=>{
  const h=setup();let r=await h.request({type:'ACTION',action:{type:'TASK_ADD',title:'Small task'}}),id=r.state.tasks[0].id;
  await Promise.all(Array.from({length:5},()=>h.request({type:'ACTION',requestId:'same-toggle',action:{type:'TASK_TOGGLE',id}})));
- assert.equal(h.storage.purrpleState.tasks[0].done,true);assert.equal(h.storage.purrpleState.wallet.balance,10);
+ assert.equal(h.storage.purrpleState.tasks[0].done,true);assert.equal(h.storage.purrpleState.wallet.balance,1);
 });
 test('content surfaces receive public state and cannot mutate tasks or export backups',async()=>{
  let s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Private title'},NOW),h=setup(s);
@@ -94,7 +99,7 @@ test('countdown polling returns current time without rewriting history or recrea
   h.setClock(NOW+i*1000);const r=await h.request({type:'GET_STATE'});assert.equal(r.state.focus.remainingMs,1500000-i*1000);
  }
  assert.deepEqual(h.counts(),initial);
- h.setClock(NOW+1500001);const result=await h.request({type:'GET_STATE'});assert.equal(result.state.wallet.balance,5);assert.ok(h.counts().saveCount>initial.saveCount);
+ h.setClock(NOW+1500001);const result=await h.request({type:'GET_STATE'});assert.equal(result.state.wallet.balance,1);assert.ok(h.counts().saveCount>initial.saveCount);
 });
 test('floating private panel needs a tab-bound token and pins its first authenticated frame',async()=>{
  const s=C.reduce(C.defaultState(NOW),{type:'TASK_ADD',title:'Private task'},NOW),h=setup(s);
@@ -110,9 +115,10 @@ test('floating private panel needs a tab-bound token and pins its first authenti
 });
 test('runtime broadcasts carry no private data and content talk uses only canned prompt IDs',async()=>{
  const h=setup();await h.request({type:'GET_STATE'});
- const r=await h.request({type:'PET_TALK',promptId:'love-you'},h.content);assert.equal(r.ok,true);assert.ok(r.state.talk.last.text);assert.equal(r.state.tasks,undefined);
+ const leaseId=(await h.request({type:'PET_CLAIM'},h.content)).leaseId;
+ const r=await h.request({type:'PET_TALK',leaseId,promptId:'love-you'},h.content);assert.equal(r.ok,true);assert.ok(r.state.talk.last.text);assert.equal(r.state.tasks,undefined);
  assert.ok(h.runtimeMessages.filter(m=>m.type==='STATE_CHANGED').every(m=>m.state===undefined));
- assert.equal((await h.request({type:'PET_TALK',promptId:'not-a-prompt'},h.content)).ok,false);
+ assert.equal((await h.request({type:'PET_TALK',leaseId,promptId:'not-a-prompt'},h.content)).ok,false);
  assert.equal((await h.request({type:'ACTION',action:{type:'TALK_FAVORITE',promptId:'love-you'}},h.content)).ok,false);
 });
 test('request journal records only bounded digests and rejects reusing a token for a different action',async()=>{
@@ -136,7 +142,7 @@ test('durable replay returns current state after reload without repeating a togg
  vm.runInNewContext(script,context);
  const reloaded=h.browser.runtime.onMessage.listeners.at(-1);
  const replay=await reloaded({type:'ACTION',requestId:'survives-reload',action:{id,type:'TASK_TOGGLE'}},h.ui);
- assert.equal(replay.ok,true);assert.equal(replay.state.tasks.length,2);assert.equal(replay.state.tasks[0].done,true);assert.equal(replay.state.wallet.balance,10);
+ assert.equal(replay.ok,true);assert.equal(replay.state.tasks.length,2);assert.equal(replay.state.tasks[0].done,true);assert.equal(replay.state.wallet.balance,1);
 });
 test('Open app routes only to known internal sections and updates an already-open tab',async()=>{
  const h=setup();await h.request({type:'GET_STATE'});
@@ -183,4 +189,28 @@ test('Calendar is allowed only in full app and does not block the local state qu
  assert.equal(called,1);
  finish({ok:true,connected:false});
  assert.equal((await live).connected,false);
+});
+
+test('handoff checkpoints the last place and pose before switching tabs',async()=>{
+ const h=setup(),first=await h.request({type:'PET_CLAIM',instance:'doc-one'},h.content);
+ h.setCheckpoint({position:{x:.24,y:1},pose:'sleep',time:1.25});
+ h.tabs[0].active=false;h.tabs[1].active=true;
+ await h.browser.tabs.onActivated.fire({tabId:2});
+ const sender={url:'https://other.test/',tab:{id:2},frameId:0};
+ const next=await h.request({type:'PET_CLAIM',instance:'doc-two'},sender);
+ assert.notEqual(first.leaseId,next.leaseId);
+ assert.deepEqual(next.presence,{position:{x:.24,y:1},pose:'sleep',time:1.25});
+ assert.equal((await h.request({type:'PET_RELEASE',leaseId:first.leaseId,position:{x:.99,y:1}},h.content)).released,false);
+ assert.deepEqual(h.storage.purrplePosition,{x:.24,y:1});
+});
+
+test('new documents in the same browser tab cannot inherit a stale lease',async()=>{
+ const h=setup();
+ const first=await h.request({type:'PET_CLAIM',instance:'before-navigation'},h.content);
+ await h.request({type:'PET_SAVE',leaseId:first.leaseId,presence:{position:{x:.37,y:1},pose:'idle',time:.42}},h.content);
+ const reload=await h.request({type:'PET_CLAIM',instance:'after-navigation'},h.content);
+ assert.notEqual(first.leaseId,reload.leaseId);
+ assert.deepEqual(reload.presence,{position:{x:.37,y:1},pose:'idle',time:.42});
+ assert.equal((await h.request({type:'PET_SAVE',leaseId:first.leaseId,position:{x:0,y:1}},h.content)).saved,false);
+ assert.equal((await h.request({type:'PET_CLAIM',instance:'after-navigation'},h.content)).leaseId,reload.leaseId);
 });

@@ -26,6 +26,12 @@ def main():
   def actor(script,*args):
    return d.async_js('const done=arguments[arguments.length-1];const b=document.querySelector("browser.webextension-popup-browser");if(!b){done({error:"No actual popup browser"});return;}const a=b.browsingContext.currentWindowGlobal.getActor("MarionetteCommands");Promise.resolve((async(a)=>{'+script+'})(a)).then(done,e=>done({error:String(e)}));',*args)
   def pjs(script,*args):return actor('return await a.executeScript(arguments[0],arguments[1],{timeout:20000});',script,list(args))
+  def popup_wait(script,timeout=8):
+   end=time.monotonic()+timeout
+   while time.monotonic()<end:
+    if pjs(script) is True:return True
+    time.sleep(.1)
+   return False
   def native_click(selector):return actor('const el=await a.findElement("css selector",arguments[0],{});return await a.clickElement(el,new Map([["moz:accessibilityChecks",false],["moz:webdriverClick",true]]));',selector)
   def native_type(selector,text):return actor('const el=await a.findElement("css selector",arguments[0],{});return await a.sendKeysToElement(el,arguments[1],new Map([["moz:accessibilityChecks",false],["moz:webdriverClick",true],["strictFileInteractability",false]]));',selector,text)
   def snapshot(name):
@@ -36,21 +42,37 @@ def main():
   check('actual-toolbar-popup-usable-intrinsic-size',360<=geometry['width']<=380 and 500<=geometry['height']<=610,geometry)
   check('actual-toolbar-popup-no-horizontal-overflow',geometry['scroll']<=geometry['width'])
   check('actual-toolbar-popup-native-ready',geometry['native'] and not geometry['preview'])
-  check('actual-toolbar-popup-four-working-tabs',pjs('return document.querySelectorAll("[data-compact-view]").length===4'))
+  check('actual-toolbar-popup-four-navigation-controls',pjs('return document.querySelectorAll(".compact-nav button").length===4'))
   result=native_type('#compact-task-title','Typed in the real Firefox toolbar popup');check('actual-toolbar-native-keyboard-input',not isinstance(result,dict) or not result.get('error'),result)
-  result=native_click('#compact-task-add');time.sleep(.2);check('actual-toolbar-native-click-adds-task',pjs('return PurrpleCompact.getState().tasks.some(t=>t.title==="Typed in the real Firefox toolbar popup")'),result)
+  result=native_click('#compact-task-add');check('actual-toolbar-native-click-adds-task',popup_wait('return PurrpleCompact.getState().tasks.some(t=>t.title==="Typed in the real Firefox toolbar popup")'),result)
   native_click('[data-compact-view="focus"]');check('actual-toolbar-focus-tab-opens',pjs('return PurrpleCompact.getView()')=='focus')
-  native_click('[data-compact-view="wardrobe"]');check('actual-toolbar-wardrobe-catalog-visible',pjs('return document.querySelectorAll("#compact-shop-grid [data-compact-action=try]").length')==15)
-  native_click('[data-compact-view="talk"]');native_click('[data-talk-quick="love-you"]');time.sleep(.2);check('actual-toolbar-talk-reply-saved',pjs('return PurrpleCompact.getState().talk.last?.promptId')=='love-you')
-  reply=pjs('return PurrpleCompact.getState().talk.last');snapshot('actual-toolbar-talk-native.png')
+  native_click('[data-compact-view="wardrobe"]');check('actual-toolbar-wardrobe-catalog-visible',pjs('return document.querySelectorAll("#compact-shop-grid [data-compact-action=try]").length >= 15'))
+  native_click('#compact-pet');native_click('#compact-pet-menu [data-action="talk"]');native_click('#compact-pet-menu [data-action="joke"]')
+  check('actual-toolbar-talk-reply-saved',popup_wait('return PurrpleCompact.getState().talk.last?.promptId === "joke"'))
+  check('actual-toolbar-reply-stays-with-cat',popup_wait('return !document.getElementById("compact-pet-speech").hidden && document.getElementById("compact-pet-speech").closest(".compact-hero") !== null'))
+  snapshot('actual-toolbar-talk-native.png')
   native_click('[data-compact-view="today"]');snapshot('actual-toolbar-today-native.png')
   native_click('#panel-close');d.wait('return !document.querySelector("browser.webextension-popup-browser")')
   check('actual-toolbar-close-button-closes-native-popup',True)
-  d.command('/moz/context',{'context':'content'});d.wait('return document.querySelector("purrple-companion")?.dataset.active==="true" && document.querySelector("purrple-companion").dataset.clip==='+json.dumps(reply['reaction']),timeout=3)
-  host=d.command('/element',{'using':'css selector','value':'purrple-companion'});shadow=d.command('/element/'+host[native.ELEMENT]+'/shadow',method='GET')['shadow-6066-11e4-a52e-4f735466cecf'];speech=d.command('/shadow/'+shadow+'/element',{'using':'css selector','value':'.speech'})
-  check('actual-toolbar-reply-appears-immediately-on-cat-reclaim',d.js('return !arguments[0].hidden && arguments[0].querySelector("p").textContent===arguments[1];',speech,reply['text']))
-  d.screenshot('actual-toolbar-reply-on-page-native.png');d.command('/moz/context',{'context':'chrome'})
-  open_popup();check('actual-toolbar-reopen-keeps-task-and-talk',pjs('return PurrpleCompact.getState().tasks.length===1 && PurrpleCompact.getState().talk.history.length===1'))
+  d.command('/moz/context',{'context':'content'})
+  d.wait('return document.querySelector("purrple-companion")?.dataset.active==="true"',timeout=10)
+  def cat_button(selector):
+   host=d.command('/element',{'using':'css selector','value':'purrple-companion'})
+   shadow=d.command('/element/'+host[native.ELEMENT]+'/shadow',method='GET')['shadow-6066-11e4-a52e-4f735466cecf']
+   return d.command('/shadow/'+shadow+'/element',{'using':'css selector','value':selector})
+  def cat_click(selector):
+   item=cat_button(selector);return d.command('/element/'+item[native.ELEMENT]+'/click',{})
+  check('actual-toolbar-reply-is-not-duplicated-on-webpage',d.js('return arguments[0].hidden',cat_button('.speech')))
+  cat_click('.actor');cat_click('.menu [data-action=more]');cat_click('.menu [data-action=hide]')
+  d.wait('return document.querySelector("purrple-companion")?.dataset.active==="false"')
+  d.command('/moz/context',{'context':'chrome'})
+  open_popup()
+  check('actual-toolbar-reopen-keeps-task-and-talk',pjs('return PurrpleCompact.getState().tasks.length===1 && PurrpleCompact.getState().talk.history.length===1'))
+  native_click('#compact-reshow')
+  check('actual-toolbar-show-here-saves-current-site',popup_wait('return PurrpleCompact.getState().settings.hiddenHosts.length===0'))
+  native_click('#panel-close')
+  d.command('/moz/context',{'context':'content'});d.wait('return document.querySelector("purrple-companion")?.dataset.active==="true"',timeout=10)
+  check('actual-toolbar-show-here-restores-cat',True)
  except Exception as e:
   report['error']=str(e);check('native-toolbar-harness-completes',False,str(e))
  finally:

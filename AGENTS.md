@@ -1,6 +1,7 @@
 # Working on Purrple
 
 Read CONTEXT.md, PRODUCT.md, ARCHITECTURE.md, DESIGN.md and UX-CONTRACT.md first.
+Use docs/EXTENDING-PURRPLE.md for the approved workflow and routes for new games, accessories and décor.
 Keep the approved purple Plush Chibi identity and its fixed local artwork.
 
 - Core features stay offline and AI-free. Google Calendar is the sole optional
@@ -8,8 +9,9 @@ Keep the approved purple Plush Chibi identity and its fixed local artwork.
   credentials out of the extension and never add analytics or remote artwork.
 - Keep persistence and reward invariants in PurrpleCore; serialize background
   commits. Never award coins from UI animation callbacks.
-- Use the same renderer in every surface. Fit every equipped item to all source
-  poses. Do not hide an item in difficult poses to conceal a rendering defect.
+- Use the same renderer in every surface. Review every equipped item across all source
+  poses. Preserve intentional coverage rules for body and paw props. Do not
+  use visibility to conceal a rendering defect.
 - Keep content-page state minimal. Never expose task text, wallet history or
   backups to an ordinary webpage or scrape the page's contents.
 - Preserve backup compatibility and existing ownership. Rejected imports must

@@ -63,7 +63,7 @@
       row.append(title, time); list.append(row);
     }
   }
-  function mount({ onChange }) {
+  function mount({ onChange, onEvents = () => {} }) {
     if (!transport?.runtime?.id || !$('calendar-settings') || location.protocol !== 'moz-extension:' || window.top !== window) return null;
     let connection = '', fetchedAt = 0, busy = false, refreshId = 0, creating = false, eventSaved = false;
     const dialog = $('calendar-dialog'), createButton = $('calendar-create');
@@ -71,6 +71,7 @@
     function setConnected(result) {
       const next = result.connected ? result.connection : '';
       if (next !== connection) {
+        onEvents({ status: next ? 'loading' : 'disconnected', account: next });
         refreshId++;
         fetchedAt = 0;
         renderEvents([]);
@@ -94,6 +95,7 @@
         if (result.connection !== selected) { setConnected(result); return; }
         renderEvents(result.events);
         fetchedAt = Date.now();
+        onEvents({ status: result.hasMore ? 'limited' : 'connected', account: selected, events: result.events, fetchedAt });
         $('calendar-agenda-status').textContent = (result.events.length ? 'Next seven days.' : 'No upcoming events in the next seven days.') +
           (result.hasMore ? ' The list is limited to the first 100 events.' : '');
       } catch (error) {
@@ -101,6 +103,9 @@
         const prefix = fetchedAt ? 'Showing the last refresh from ' + new Date(fetchedAt).toLocaleTimeString() + '. ' : '';
         $('calendar-agenda-status').textContent = prefix + error.message;
         if (error.code === 'reconnect') $('calendar-status').textContent = 'Authorization expired. Disconnect, then connect again.';
+        const revoked = ['reconnect', 'permission'].includes(error.code);
+        if (revoked) { renderEvents([]); fetchedAt = 0; }
+        onEvents({ status: revoked ? 'revoked' : 'stale', account: selected, message: error.message });
       } finally { $('calendar-refresh').disabled = false; }
     }
     async function updateConsent() {
@@ -113,6 +118,7 @@
         refreshId++;
         fetchedAt = 0;
         $('calendar-agenda-status').textContent = 'Allow Calendar data in Settings to see events.';
+        onEvents({ status: 'revoked' });
       }
       return !needsConsent;
     }
@@ -123,7 +129,10 @@
         if (await updateConsent() && connection) void refresh();
       } catch (error) { $('calendar-status').textContent = error.message; }
     };
-    transport.permissions.onRemoved.addListener(() => { updateConsent().catch(() => {}); });
+    transport.permissions.onRemoved.addListener(change => {
+      if (change?.permissions?.includes('nativeMessaging')) setConnected({ connected: false });
+      updateConsent().catch(() => {});
+    });
     $('calendar-refresh').onclick = refresh;
     $('calendar-connect').onclick = async () => {
       if (busy) return;
@@ -194,6 +203,7 @@
     }).catch(error => { $('calendar-status').textContent = error.message; });
     return {
       get connected() { return !!connection; },
+      refresh,
       showAgenda() { if (!fetchedAt || Date.now() - fetchedAt > 300000) void refresh(); },
       openDraft(title, start, minutes) {
         if (!connection || dialog.open) return;

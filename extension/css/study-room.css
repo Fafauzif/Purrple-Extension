@@ -1,0 +1,144 @@
+/* Paper controls sit beside an original, stateful pixel scene. */
+#view-focus .focus-grid {
+  --study-room: url("../assets/purrple-study-light-rest.png");
+  --study-lit: url("../assets/purrple-study-light-lit.png");
+  --study-board: #dec2ac;
+  --study-board-ink: #432838;
+  --study-board-dim: #694654;
+  --study-board-rule: #a27776;
+  --study-button: #57334e;
+  --study-button-ink: #fff4df;
+  display: grid;
+  grid-template-columns: minmax(232px, .66fr) minmax(0, 1.55fr);
+  gap: clamp(16px, 3vw, 38px);
+  align-items: start;
+  padding: clamp(15px, 3vw, 36px);
+  border: 1px solid var(--study-board-rule);
+  background: var(--study-board);
+  color: var(--study-board-ink);
+}
+html[data-theme="night"] #view-focus .focus-grid {
+  --study-room: url("../assets/purrple-study-night-rest.png");
+  --study-lit: url("../assets/purrple-study-night-lit.png");
+  --study-board: #2e2334;
+  --study-board-ink: #fff1e0;
+  --study-board-dim: #dfc3d6;
+  --study-board-rule: #795e73;
+  --study-button: #efb782;
+  --study-button-ink: #3c2231;
+}
+#view-focus .focus-card {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  text-align: start;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+}
+#view-focus .focus-card :is(p, .muted, .field label, .field small, .text-button) {
+  color: var(--study-board-dim);
+}
+#view-focus .focus-card .timer {
+  margin: .15em 0 .28em;
+  color: inherit;
+  font: 600 clamp(2.7rem, 6vw, 4.8rem)/1 ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.07em;
+}
+#view-focus .focus-card #timer-kind {
+  margin: 0;
+  font-size: .875rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+#view-focus .focus-card #timer-caption { margin: 0 0 .85rem; font-size: .88rem; }
+#view-focus .focus-card .field { margin-block-end: .65rem; gap: .2rem; }
+#view-focus .focus-card .field :is(input, select) {
+  border-color: var(--study-board-rule);
+  border-radius: 0;
+}
+#view-focus .focus-card .button {
+  border-radius: 0;
+}
+#view-focus .focus-card .primary {
+  border-color: var(--study-button);
+  background: var(--study-button);
+  color: var(--study-button-ink);
+}
+#view-focus .focus-card .subtle {
+  border-color: var(--study-board-rule);
+  background: transparent;
+  color: var(--study-board-ink);
+}
+#view-focus .focus-card .timer-actions,
+#view-focus .focus-card .break-actions {
+  justify-content: flex-start;
+  gap: .25rem .85rem;
+}
+#view-focus .focus-card .break-actions {
+  margin-block-start: .9rem;
+  padding-block-start: .55rem;
+  border-color: var(--study-board-rule);
+}
+#view-focus .focus-card .reward-note { margin-block-start: .45rem; }
+#view-focus .focus-card :focus-visible {
+  outline: 2px solid var(--study-board-ink);
+  outline-offset: 2px;
+}
+#view-focus .study-companion {
+  position: relative;
+  order: 0;
+  width: 100%;
+  padding: 0;
+  min-width: 0;
+  aspect-ratio: 7 / 4;
+  isolation: isolate;
+  border: 2px solid var(--study-board-rule);
+  border-radius: 0;
+  background: var(--study-room) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+#view-focus .study-companion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: var(--study-lit) center / 100% 100% no-repeat;
+  mask-image: none;
+  border-radius: 0;
+  transition: opacity 240ms ease-out;
+}
+#view-focus[data-session="focus"] .study-companion::before { opacity: 1; }
+#view-focus[data-session="paused"] .study-companion::before { opacity: .38; }
+#view-focus .study-companion #focus-canvas {
+  position: absolute;
+  width: 58%;
+  max-width: none;
+  height: auto;
+  left: 61%;
+  bottom: 34%;
+  transform: translateX(-50%);
+  margin: 0;
+  border: 0;
+  background: none;
+}
+#view-focus .study-companion #focus-cat-line { display: none; }
+#view-focus .history-item { border-radius: 0; }
+#view-focus .parking-form .quick-add { border-radius: 0; }
+@media (max-width: 760px) {
+  #view-focus .focus-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  #view-focus .study-companion { grid-row: 1; max-width: 30rem; }
+  #view-focus .focus-card .timer { font-size: clamp(2.65rem, 10vw, 4rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #view-focus .study-companion::before { transition: none; }
+}
+
+#view-focus:not([data-session="idle"], [data-session="finished"]) .break-actions { display: none; }

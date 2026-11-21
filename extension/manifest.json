@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Purrple · Your little study companion",
-  "version": "1.2.0",
-  "description": "A little lavender cat, your tasks, a cozy study timer, and a wardrobe earned one small win at a time. Core features work offline, with optional Google Calendar.",
+  "name": "Purrple \u00b7 Your little study companion",
+  "version": "3.2.0",
+  "description": "Your local workday planner, focus timer, and little lavender companion.",
   "browser_specific_settings": {
     "gecko": {
       "id": "purrple-companion@purrple.local",
@@ -32,6 +32,9 @@
     "scripts": [
       "js/talk.js",
       "js/ambient.js",
+      "js/wardrobe-v2.js",
+      "js/planner-calendar.js",
+      "js/companion-domain.js",
       "js/core.js",
       "js/background.js"
     ]
@@ -76,12 +79,14 @@
         "https://*/*"
       ],
       "js": [
+        "js/wardrobe-v2.js",
         "js/renderer-data.js",
         "js/renderer.js",
         "js/ambient.js",
+        "js/pet-menu.js",
         "js/content.js"
       ],
-      "run_at": "document_idle",
+      "run_at": "document_end",
       "all_frames": false
     }
   ],
@@ -89,11 +94,16 @@
     {
       "resources": [
         "popup.html",
+        "game.html",
         "css/app.css",
         "css/talk.css",
         "css/compact.css",
         "js/talk.js",
         "js/talk-ui.js",
+        "js/wardrobe-v2.js",
+        "js/planner-calendar.js",
+        "js/companion-domain.js",
+        "js/pet-menu.js",
         "js/core.js",
         "js/client.js",
         "js/renderer-data.js",
@@ -102,7 +112,6 @@
         "assets/fonts/*.ttf",
         "assets/atlases/*.png",
         "assets/wardrobe/*.png",
-        "assets/wardrobe/*.json",
         "assets/wardrobe/thumbs/*.png",
         "assets/refinement/*.png"
       ],

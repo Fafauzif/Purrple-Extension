@@ -39,3 +39,17 @@ The generated fitting viewer is `art/fit-preview.html`. It exposes each of180
 raw source frames and every head/neck item. Per-item contacts and pixel-change
 coverage are development verification, not a guarantee of perfection; visual
 review remains necessary for fit and recognizability.
+
+## Purrple’s pixel study and room
+
+- `extension/assets/purrple-room-{light,night}.png` and
+  `extension/assets/purrple-study-{light,night}-{rest,lit}.png` are original
+  pixel backgrounds drawn by the Purrple project in `art/study-room.py` and
+  generated locally with Pillow. They depict the room, gift space, and
+  focus desk. The project may modify and redistribute them with this source.
+- The desk, curtains, shelving, window, landscape and rug are new scenes.
+  Design With Character’s Pixel Study Room informed the decision to tie
+  illumination to session state. Its character, scene pixels and code were
+  not reused.
+- Purrple’s sprite and existing wearable assets are drawn separately by the
+  existing renderer so outfits and saved décor stay supported.

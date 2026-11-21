@@ -1,0 +1,573 @@
+.cp-root {
+  --cp-desk-paper: #fbf5ee;
+  --cp-desk-rule: #d7bfdc;
+  --cp-desk-plum: #523561;
+  --cp-desk-lavender: #eee2f2;
+  min-width: 0;
+}
+
+.cp-root .cp-header {
+  align-items: start;
+  gap: .8rem 1.2rem;
+}
+
+.cp-root .cp-header h2 {
+  margin-block-start: .25rem;
+}
+
+.cp-bond {
+  display: grid;
+  gap: .3rem;
+  flex: 0 1 21rem;
+  min-inline-size: 0;
+  padding: .7rem .85rem;
+  border: 1px solid var(--cp-desk-rule);
+  border-radius: .55rem;
+  background: var(--cp-desk-paper);
+}
+
+.cp-bond-top,
+.cp-room-tools,
+.cp-keepsake {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.cp-bond-top {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .2rem .5rem;
+}
+
+.cp-bond-top span {
+  color: var(--cp-desk-plum);
+  font-size: .81rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.cp-root .cp-bond progress {
+  display: block;
+  inline-size: 100%;
+  block-size: .55rem;
+  margin: 0;
+  accent-color: var(--cp-desk-plum);
+}
+
+.cp-root .cp-bond .cp-level {
+  margin: 0;
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.cp-root .cp-nav {
+  gap: .35rem;
+  margin-block-end: .75rem;
+  padding-block-end: .65rem;
+}
+
+.cp-root .cp-button {
+  max-inline-size: 100%;
+  white-space: normal;
+}
+
+.cp-room-tools {
+  flex-wrap: wrap;
+}
+
+.cp-room-tools [data-id="play"] {
+  background: var(--cp-desk-plum);
+  color: #fff8ff;
+  border-color: var(--cp-desk-plum);
+}
+
+.cp-root .cp-discovery {
+  border-inline-start: .25rem solid var(--cp-accent);
+}
+
+.cp-gift-layout,
+.cp-scrapbook-replay {
+  display: grid;
+  grid-template-columns: minmax(0, 1.43fr) minmax(0, 1fr);
+  align-items: start;
+  gap: .9rem;
+}
+
+.cp-gift-reception,
+.cp-gift-list {
+  display: grid;
+  min-inline-size: 0;
+  gap: .65rem;
+}
+
+.cp-gift-reception .cp-stage {
+  border-radius: .75rem;
+  aspect-ratio: 16 / 8;
+  min-block-size: 9rem;
+  max-block-size: 15rem;
+}
+
+.cp-gift-cat,
+.cp-story-cat {
+  position: absolute;
+  right: 8%;
+  bottom: 7%;
+  z-index: 2;
+  inline-size: min(54%, 17rem);
+  block-size: auto;
+  pointer-events: none;
+}
+
+.cp-gift-list {
+  border-block: 1px solid var(--cp-desk-rule);
+  background: var(--cp-desk-paper);
+  border-radius: .45rem;
+  gap: 0;
+}
+
+.cp-gift {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  align-items: start;
+  gap: .6rem;
+  padding: .65rem;
+}
+
+.cp-gift + .cp-gift {
+  border-block-start: 1px dashed var(--cp-desk-rule);
+}
+
+.cp-gift-details {
+  display: grid;
+  justify-items: start;
+  gap: .25rem;
+}
+
+.cp-root .cp-gift-details h3 {
+  font-size: 1.04rem;
+}
+
+.cp-root .cp-shelf-note {
+  color: var(--cp-muted);
+  font-size: .83rem;
+}
+
+.cp-root .cp-thank-you {
+  background: var(--cp-desk-paper);
+  border-radius: .55rem;
+  border-color: var(--cp-desk-rule);
+  border-inline-start: .25rem solid var(--cp-accent);
+}
+
+.cp-keepsake {
+  width: fit-content;
+  max-inline-size: 100%;
+  padding: .15rem .55rem .15rem .22rem;
+  border: 1px solid var(--cp-desk-rule);
+  border-radius: .35rem;
+  background: var(--cp-desk-lavender);
+  font-size: .84rem;
+}
+
+.cp-keepsake img {
+  object-fit: contain;
+}
+
+.cp-gift-present {
+  position: absolute;
+  z-index: 3;
+  inset-inline-start: 50%;
+  inset-block-end: 11%;
+  inline-size: clamp(2.5rem, 13%, 4.2rem);
+  filter: drop-shadow(0 3px 0 #51304c2e);
+  animation: cp-present-gift 380ms cubic-bezier(.22,.78,.32,1) both;
+  pointer-events: none;
+}
+
+@keyframes cp-present-gift {
+  from { transform: translate(-.7rem, .45rem) scale(.9); opacity: .65; }
+  to { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+.cp-gift-object {
+  display: block;
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 1;
+}
+
+.cp-gift-object-pressed-flower::before,
+.cp-gift-object-pressed-flower::after,
+.cp-gift-object-pressed-flower i,
+.cp-gift-object-paper-star::before,
+.cp-gift-object-paper-star::after,
+.cp-gift-object-wool-pom::before,
+.cp-gift-object-wool-pom::after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.cp-gift-object-pressed-flower::before {
+  width: 10%;
+  height: 60%;
+  left: 45%;
+  top: 29%;
+  transform: rotate(-22deg);
+  background: #54785b;
+}
+
+.cp-gift-object-pressed-flower::after {
+  inset: 8% 29% 49% 16%;
+  background: #9a527c;
+  clip-path: polygon(34% 0,66% 0,66% 24%,100% 24%,100% 69%,68% 69%,68% 100%,30% 100%,30% 69%,0 69%,0 24%,34% 24%);
+}
+
+.cp-gift-object-pressed-flower i {
+  width: 18%;
+  height: 16%;
+  left: 34%;
+  top: 21%;
+  background: #f7c078;
+  z-index: 1;
+  box-shadow: .3rem .82rem 0 -.12rem #789266;
+}
+
+.cp-gift-object-paper-star::before,
+.cp-gift-object-paper-star::after {
+  inset: 9%;
+  clip-path: polygon(50% 0,65% 31%,100% 36%,75% 61%,81% 100%,50% 82%,19% 100%,25% 61%,0 36%,35% 31%);
+  background: #9a653b;
+}
+
+.cp-gift-object-paper-star::after {
+  inset: 16%;
+  background: conic-gradient(from 18deg at 49% 55%, #eebd6c 0 28%, #ffd878 28% 54%, #eebd6c 54% 70%, #ffe49d 70%);
+}
+
+.cp-gift-object-wool-pom::before {
+  inset: 12% 11% 18% 13%;
+  clip-path: polygon(26% 0,73% 0,73% 10%,88% 10%,88% 25%,100% 25%,100% 73%,88% 73%,88% 90%,72% 90%,72% 100%,23% 100%,23% 90%,11% 90%,11% 75%,0 75%,0 24%,11% 24%,11% 10%,26% 10%);
+  background: repeating-linear-gradient(-28deg, #74458d 0 17%, #a56eb2 17% 32%, #d1a9de 32% 36%, #a56eb2 36% 49%);
+}
+
+.cp-gift-object-wool-pom::after {
+  width: 34%;
+  height: 18%;
+  bottom: 4%;
+  left: 53%;
+  border-right: 2px solid #74458d;
+  border-bottom: 2px solid #74458d;
+  transform: rotate(14deg);
+}
+
+.cp-scrapbook-replay {
+  margin-block-end: .7rem;
+}
+
+.cp-motion-off .cp-gift-present {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-gift-present { animation: none; }
+}
+
+.cp-compact .cp-bond {
+  flex: 1 1 auto;
+  padding: .5rem .65rem;
+}
+
+.compact-body:is([data-view="play"], [data-view="gifts"], [data-view="room"]) .compact-hero {
+  display: none;
+}
+
+.cp-compact {
+  padding-block-start: .75rem;
+}
+
+.cp-compact .cp-header {
+  margin-block-end: .55rem;
+}
+
+.cp-compact .cp-nav .cp-button {
+  font-size: .8rem;
+  padding: .35rem .55rem;
+  min-block-size: 34px;
+}
+
+.cp-compact .cp-gift-layout,
+.cp-compact .cp-room-layout,
+.cp-compact .cp-play-layout,
+.cp-compact .cp-scrapbook-replay {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 630px) {
+  .cp-gift-layout,
+  .cp-scrapbook-replay {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .cp-root .cp-header {
+    flex-wrap: wrap;
+  }
+
+  .cp-bond {
+    flex-basis: 100%;
+  }
+}
+
+/* The room is a scene first. Tools and the scrapbook use the paper palette. */
+.cp-root {
+  --cp-desk-paper: var(--surface, #f8ecd7);
+  --cp-desk-rule: var(--line, #ae8c80);
+  --cp-desk-plum: var(--purple, #603955);
+  --cp-desk-lavender: var(--lilac, #efdfd8);
+  --cp-art: url("../assets/purrple-room-light.png");
+  --cp-art-night: url("../assets/purrple-room-night.png");
+}
+html[data-theme="night"] .cp-root { --cp-art: var(--cp-art-night); }
+.cp-root .cp-header { align-items: end; gap: .7rem 1.5rem; }
+.cp-root .cp-header .cp-main-title {
+  margin: 0;
+  font-family: Georgia, Cambria, serif;
+  font-weight: 700;
+  font-size: clamp(1.85rem, 4vw, 3.5rem);
+  line-height: .98;
+  letter-spacing: -.04em;
+}
+.cp-compact .cp-header .cp-main-title { font-size: clamp(1.6rem, 7vw, 2.15rem); }
+.cp-root .cp-bond {
+  flex: 0 1 17rem;
+  border: 0;
+  border-block-end: 1px solid var(--cp-desk-rule);
+  border-radius: 0;
+  padding: 0 0 .4rem;
+  background: transparent;
+}
+.cp-compact .cp-bond { flex-basis: auto; flex-grow: 1; }
+.cp-root .cp-bond .cp-bond-top span { color: var(--cp-muted); }
+.cp-root .cp-nav { gap: .2rem .65rem; padding-block: .25rem; }
+.cp-root .cp-nav .cp-button {
+  padding-inline: .4rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+.cp-root .cp-nav [aria-current="page"] {
+  border-block-end-color: currentColor;
+}
+.cp-root .cp-room-layout {
+  grid-template-columns: minmax(0, 1fr);
+  max-inline-size: 61rem;
+  gap: .65rem;
+}
+.cp-root .cp-stage {
+  aspect-ratio: 7 / 4;
+  max-block-size: none;
+  min-block-size: 0;
+  border: 2px solid #775468;
+  border-radius: 0;
+  background: #a67d93;
+}
+.cp-root .cp-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--cp-art) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+.cp-root .cp-theme-twilight .cp-backdrop { background-image: var(--cp-art-night); }
+.cp-root .cp-theme-reading .cp-backdrop { filter: sepia(.14) saturate(1.18); }
+.cp-root :is(.cp-cat, .cp-story-cat, .cp-gift-cat) {
+  right: auto;
+  left: 68%;
+  bottom: 14.8%;
+  width: 52%;
+  transform: translateX(-50%);
+  image-rendering: pixelated;
+}
+.cp-root :is(.cp-story-cat, .cp-gift-cat) { width: 53%; }
+.cp-root .cp-gift-present { inset-inline-start: 48%; inset-block-end: 15%; }
+.cp-root .cp-room-tools {
+  display: flex;
+  gap: .35rem .55rem;
+}
+.cp-root .cp-room-tools .cp-button {
+  border-radius: 0;
+  background: transparent;
+  color: var(--cp-accent);
+  border-color: var(--cp-desk-rule);
+}
+.cp-root .cp-room-tools [data-cp="pet"],
+.cp-root .cp-room-tools .cp-button:hover {
+  border-color: var(--cp-accent);
+  color: var(--cp-ink);
+  background: var(--cp-lilac);
+}
+.cp-root :is(.cp-discovery, .cp-occasions, .cp-journal, .cp-thank-you, .cp-room-arrange) {
+  color: var(--cp-ink);
+  background: transparent;
+  border: 0;
+  border-block-start: 1px solid var(--cp-desk-rule);
+  border-radius: 0;
+  padding: .7rem 0;
+}
+.cp-root :is(.cp-occasions, .cp-room-arrange) summary {
+  cursor: pointer;
+  padding-block: .3rem;
+  font-weight: 700;
+}
+.cp-root .cp-room-controls {
+  display: grid;
+  width: min(100%, 34rem);
+  gap: .5rem;
+  padding-block-start: .45rem;
+}
+.cp-root :is(.cp-room-controls, .cp-gift-list, .cp-occasions) :is(select, input:not([type="range"])) {
+  color: var(--cp-ink);
+  background: var(--cp-surface);
+}
+.cp-root .cp-gift-layout { align-items: start; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); }
+.cp-root .cp-gift-list { border-radius: 0; border-block: 1px solid var(--cp-line); }
+.cp-root .cp-gift { padding-inline: .25rem; }
+.cp-root .cp-gift + .cp-gift { border-block-start-style: solid; }
+.cp-root .cp-gift-details .cp-button,
+.cp-root .cp-keepsake { border-radius: 0; }
+.cp-root .cp-journal-top { align-items: baseline; }
+.cp-root .cp-scrapbook-replay { align-items: start; }
+.cp-root .cp-decor { border-radius: 0; }
+.cp-root .cp-decor:hover { background: transparent; }
+.cp-compact .cp-gift-layout { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 675px) {
+  .cp-root .cp-gift-layout { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .cp-root .cp-header { flex-wrap: wrap; align-items: start; }
+  .cp-root .cp-bond { flex-basis: 100%; }
+}
+
+.cp-root .cp-room-tools {
+  margin-block: .05rem .1rem;
+}
+
+/* Group layout controls without stretching native inputs across the room. */
+.cp-root .cp-room-arrange > summary {
+  min-height: 44px;
+  padding-block: 10px;
+}
+.cp-root .cp-room-controls {
+  width: min(100%, 38rem);
+  min-width: 0;
+  gap: .75rem;
+  padding: clamp(.55rem, 2.2vw, 1.1rem);
+  border: 1px solid var(--cp-line);
+  background: var(--cp-surface);
+}
+.cp-root .cp-room-controls .cp-fields {
+  display: grid;
+  gap: .2rem;
+  width: min(100%, 21rem);
+  min-width: 0;
+}
+.cp-root .cp-room-controls select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: .45rem .7rem;
+  color: var(--cp-ink);
+  border: 1px solid var(--cp-desk-rule);
+  border-radius: 0;
+  font: inherit;
+}
+.cp-root .cp-room-controls .cp-position {
+  grid-template-columns: repeat(auto-fit,minmax(min(100%, 11.5rem), 1fr));
+  gap: .2rem 1rem;
+}
+.cp-room-controls .cp-axis {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0 .5rem;
+  min-width: 0;
+}
+.cp-room-controls .cp-axis label {
+  margin: 0;
+  text-wrap: balance;
+}
+.cp-room-controls .cp-axis output {
+  color: var(--cp-muted);
+  font-size: .78rem;
+  font-variant-numeric: tabular-nums;
+}
+.cp-room-controls .cp-axis input[type="range"] {
+  appearance: none;
+  grid-column: 1/-1;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.cp-room-controls .cp-axis input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 2px;
+  background: var(--cp-line);
+}
+.cp-room-controls .cp-axis input[type="range"]::-moz-range-track {
+  height: 5px;
+  border-radius: 2px;
+  background: var(--cp-line);
+}
+.cp-room-controls .cp-axis input[type="range"]::-moz-range-progress {
+  height: 5px;
+  background: var(--cp-accent);
+}
+.cp-room-controls .cp-axis input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  border: 2px solid var(--cp-surface);
+  border-radius: 50%;
+  background: var(--cp-accent);
+  box-shadow: 0 0 0 1px var(--cp-accent);
+}
+.cp-room-controls .cp-axis input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cp-surface);
+  border-radius: 50%;
+  background: var(--cp-accent);
+  box-shadow: 0 0 0 1px var(--cp-accent);
+}
+.cp-root .cp-room-controls :is(select, input[type="range"], button):focus-visible {
+  outline: 2px solid var(--cp-accent);
+  outline-offset: 2px;
+}
+.cp-root .cp-room-controls .cp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: .35rem;
+  margin: 0;
+}
+.cp-root .cp-room-controls .cp-button {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+  border-radius: 0;
+  text-wrap: balance;
+}
+.cp-root .cp-room-controls .cp-help { text-wrap: pretty; }
+.cp-root .cp-room-controls [data-cp="place"] {
+  border-color: var(--cp-accent);
+  background: var(--cp-accent);
+  color: var(--cp-surface);
+}
+@media (forced-colors: active) {
+  .cp-room-controls .cp-axis input[type="range"] { appearance: auto; }
+}

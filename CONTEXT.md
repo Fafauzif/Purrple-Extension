@@ -4,6 +4,35 @@ Read PRODUCT.md, README.md, ARCHITECTURE.md, DESIGN.md and UX-CONTRACT.md before
 changing this project. User conversation decisions are summarized here so a
 fresh developer can continue without the original chat.
 
+## Approved 3.2 baseline
+
+Start with [the extension workflow](docs/EXTENDING-PURRPLE.md) for new games,
+cosmetics, and room décor. Treat the installed 3.2 behavior and
+[release notes](docs/RELEASE-3.2.md) as the baseline if older notes below differ.
+
+- The owner approved the Halftone Dossier planner and original Pixel Study Room.
+  Keep the approved lavender cat artwork and all existing purchased assets.
+  Light and Night share a saved preference.
+- Click the roaming cat for six balanced action bubbles. Tasks is inside the
+  menu; the toolbar opens Today directly. Talk replies remain above the planner
+  even when pinned. Agenda opens in-page.
+- Play opens a dedicated board with Begin or restores a saved round. Keep the
+  planner tabs off the game surface. Restore focus on close. Borrow interaction
+  principles from the references named in the release notes and create original
+  game artwork, rules, and writing.
+- Use the shared CSS-pixel character size across full surfaces. Compact
+  thumbnails and constrained canvases fit their available space. Keep the
+  last grounded position and resting pose when handing off across supported
+  pages and warm the resident artwork for short tab switches.
+- Preserve room decoration controls, keyboard access, reduced motion, and the
+  restored game and room state on browser Back/Forward.
+- Current task payouts are 1/2/3 coins. Older 10/20/30 coin receipts remain
+  valid. The current focus payout is 1 coin from 15 minutes and 2 from 30,
+  with legacy rules retained for older saved sessions.
+- Chromium local previews and simulated extension messaging were exercised.
+  The 3.2 handoff does not establish native add-on installation or real
+  handoff timing. Keep that distinction in any future verification notes.
+
 ## Decisions and history
 
 - Name chosen by the girlfriend: **Purrple**. She loves purple.
@@ -25,7 +54,7 @@ fresh developer can continue without the original chat.
 - Interface and canned companion remarks are English.
 - Girlfriend's personal name was not provided; it is an optional local setting.
 - No personal-letter/mailbox feature. No need to replace new-tab.
-- Task coins 10/20/30 and a modest study bonus were approved. No penalties.
+- The original 10/20/30 task payouts and older study bonuses are historical. Preserve their receipts. No penalties.
 - Firefox private signing is deferred. The owner is willing to use a Mozilla
   account, but authentication and actual submission have not happened. Keep
   temporary loading, preparation for signing and a truly signed release distinct.

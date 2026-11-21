@@ -1,43 +1,44 @@
 #!/usr/bin/env python3
-"""Prepare an unlisted Mozilla signing submission; uploading requires --submit.
+"""Prepare the built Firefox ZIP for the owner's existing Mozilla add-on entry."""
 
-Credentials are read by web-ext from WEB_EXT_API_KEY / WEB_EXT_API_SECRET.
-This script never writes them to disk or includes them in command arguments.
-"""
+import argparse
+import json
 from pathlib import Path
-import argparse,json,os,shutil,subprocess,sys
+import shutil
+import subprocess
+import tempfile
+import zipfile
 
-ROOT=Path(__file__).resolve().parents[1]
-EXPECTED_ID='purrple-companion@purrple.local'
+from build_release import ARCHIVES, GECKO_ID, ROOT
+
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--submit',action='store_true',help='Explicitly upload this extension to Mozilla for unlisted signing')
-    args=parser.parse_args()
-    manifest=json.loads((ROOT/'extension/manifest.json').read_text())
-    if manifest.get('browser_specific_settings',{}).get('gecko',{}).get('id')!=EXPECTED_ID:
-        raise SystemExit('The stable Purrple extension ID changed. Resolve identity and migration before signing.')
-    tool=shutil.which('web-ext')
-    artifact=ROOT/'dist/signed'
-    commands=[['web-ext','lint','--source-dir',str(ROOT/'extension')],
-              ['web-ext','sign','--channel=unlisted','--source-dir',str(ROOT/'extension'),'--artifacts-dir',str(artifact)]]
-    print(f"Purrple {manifest['version']} · unlisted Mozilla signing")
-    print('Extension identity:',EXPECTED_ID)
-    print('Signed artifacts directory:',artifact)
-    if not args.submit:
-        print('Preparation only. Nothing has been uploaded or signed.')
-        print('Install Mozilla web-ext, provide WEB_EXT_API_KEY and WEB_EXT_API_SECRET through your private session environment, then rerun with --submit.')
-        for command in commands:print('Command:', ' '.join(command))
-        return
-    if not tool:raise SystemExit('Install Mozilla web-ext first. See docs/MOZILLA-SIGNING.md.')
-    if not all(os.environ.get(key) for key in ['WEB_EXT_API_KEY','WEB_EXT_API_SECRET']):
-        raise SystemExit('The private signing environment is incomplete. No credentials were printed and no upload was attempted.')
-    artifact.mkdir(parents=True,exist_ok=True)
-    for command in commands:
-        command[0]=tool
-        subprocess.run(command,cwd=ROOT,check=True)
-    print('Signing command completed. Inspect Mozilla’s response and the downloaded XPI before sharing it. A local ZIP filename alone is not evidence of signing.')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--lint', action='store_true',
+                        help='Run Mozilla web-ext lint against the extracted Firefox runtime ZIP.')
+    parser.add_argument('--zip', type=Path, default=ROOT / 'dist' / ARCHIVES['firefox'],
+                        help='Firefox runtime ZIP produced by build_release.py.')
+    args = parser.parse_args()
+    if not args.zip.is_file():
+        raise SystemExit('Build the Firefox runtime ZIP with scripts/build_release.py first.')
+    with zipfile.ZipFile(args.zip) as archive:
+        manifest = json.loads(archive.read('manifest.json'))
+        if manifest.get('browser_specific_settings', {}).get('gecko', {}).get('id') != GECKO_ID:
+            raise SystemExit('Firefox release ZIP does not preserve the Purrple Gecko ID.')
+        if damaged := archive.testzip():
+            raise SystemExit(f'The Firefox ZIP contains a damaged file: {damaged}')
+        print(f'Purrple {manifest["version"]} · {GECKO_ID}')
+        print('Use the existing Mozilla Add-ons developer entry and its current distribution channel.')
+        print('Select the built Firefox runtime ZIP when Mozilla asks for the update package.')
+        print('See docs/MOZILLA-SIGNING.md for the signed update workflow.')
+        if args.lint:
+            if not (tool := shutil.which('web-ext')):
+                raise SystemExit('Install Mozilla web-ext or put its executable on PATH to run local lint.')
+            with tempfile.TemporaryDirectory(prefix='purrple-firefox-lint-') as dest:
+                archive.extractall(dest)
+                result = subprocess.run([tool, 'lint', '--source-dir', dest], check=False)
+                raise SystemExit(result.returncode)
 
-if __name__=='__main__':
-    try:main()
-    except subprocess.CalledProcessError as error:sys.exit(error.returncode)
+
+if __name__ == '__main__':
+    main()

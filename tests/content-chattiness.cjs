@@ -18,7 +18,7 @@ const root=path.resolve(__dirname,'..');
   window.PurrpleRenderer={preload:async()=>{},clearCache(){},releaseAssets(){},draw(){}};
   window.prefs=(patch,focus=null)=>{settings={...settings,...patch};listeners.forEach(fn=>fn({type:'STATE_CHANGED',state:{settings,equipped:{},focus}}));};
  });
- for(const entry of ['ambient.js','content.js']) await page.addScriptTag({content:fs.readFileSync(path.join(root,'extension/js',entry),'utf8')});
+ for(const entry of ['ambient.js','pet-menu.js','content.js']) await page.addScriptTag({content:fs.readFileSync(path.join(root,'extension/js',entry),'utf8')});
  await page.clock.runFor(100);
  await page.evaluate(()=>new MutationObserver(()=>{const s=fixtureRoot.querySelector('.speech');if(!s.hidden){const text=s.querySelector('p').textContent;if(messages.at(-1)?.text!==text)messages.push({text,at:Date.now()});}}).observe(fixtureRoot.querySelector('.speech'),{attributes:true,subtree:true,childList:true}));
  const results=[],check=(id,pass,detail)=>results.push({id,pass:!!pass,detail});

@@ -30,20 +30,24 @@ def main():
   check('strict-csp-roaming-active',True)
   check('strict-csp-canvas-extension-origin-protection',d.js('const c=arguments[0];try{c.getContext("2d").getImageData(0,0,1,1);return false;}catch(e){return e.name==="SecurityError" && c.width>0 && c.height>0;}',sf('.scene')))
   d.click('#host-button');check('strict-csp-host-js-and-clickthrough',d.js('return document.getElementById("host-button").textContent')=='Still works')
-  sc('.paw');sc('[data-action="dashboard"]');enter();check('strict-csp-private-iframe-native-state',d.js('return PurrpleClient.native && document.getElementById("preview-label").hidden'));top()
+  sc('.actor');sc('.menu [data-action=today]');enter();check('strict-csp-private-iframe-native-state',d.js('return PurrpleClient.native && document.getElementById("preview-label").hidden'));top()
   d.wait('return arguments.length===0 && true');time.sleep(.1);check('strict-csp-ready-handshake-completes',d.js('return arguments[0].hidden;',sf('.panel-status')));d.screenshot('strict-csp-panel-native.png')
-  sc('.panel-close');d.command('/window/rect',{'width':500,'height':420});d.command('/moz/context',{'context':'chrome'});d.js('gBrowser.selectedBrowser.fullZoom=1.5;');d.command('/moz/context',{'context':'content'});time.sleep(.2)
+  enter();d.click('#panel-close');top();d.command('/window/rect',{'width':500,'height':420});d.command('/moz/context',{'context':'chrome'});d.js('gBrowser.selectedBrowser.fullZoom=1.5;');d.command('/moz/context',{'context':'content'});time.sleep(.2)
   check('native-page-zoom-one-hundred-fifty-percent',d.js('return Math.abs(devicePixelRatio-1.5)<.01'),d.js('return {devicePixelRatio,innerWidth,innerHeight}'))
-  sc('.paw',False);sc('[data-action="dashboard"]',False);time.sleep(.2)
+  sc('.actor',False);sc('.menu [data-action=today]',False);time.sleep(.2)
   geometry=d.js('const r=arguments[0].getBoundingClientRect();return{x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:r.width,height:r.height,innerWidth,innerHeight};',sf('.panel'))
   check('native-zoomed-short-panel-clamped-to-viewport',geometry['x']>=11 and geometry['y']>=11 and geometry['right']<=geometry['innerWidth']-10 and geometry['bottom']<=geometry['innerHeight']-10,geometry)
   enter();check('native-zoomed-short-panel-no-horizontal-overflow',d.js('return document.documentElement.scrollWidth<=innerWidth'),d.js('return {innerWidth,scroll:document.documentElement.scrollWidth,innerHeight}'))
   check('native-short-panel-usable-content-scroll-owner',d.js('const m=document.getElementById("compact-main");return m.clientHeight>=120 && document.documentElement.scrollHeight>innerHeight;'),d.js('return {mainHeight:document.getElementById("compact-main").clientHeight,documentHeight:document.documentElement.scrollHeight,innerHeight};'))
-  d.click('[data-compact-view="talk"]');d.wait('return !document.getElementById("compact-talk").hidden');check('native-short-panel-talk-control-operates',d.js('return PurrpleCompact.getView()')=='talk');d.click('[data-talk-quick="love-you"]');d.wait('return PurrpleCompact.getState().talk.last?.promptId==="love-you"');d.js('document.querySelector("[data-talk-reply]").scrollIntoView({block:"center"});');check('native-short-panel-reply-can-be-scrolled-fully-into-view',d.js('const r=document.querySelector("[data-talk-reply]").getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight;'));top();d.screenshot('zoomed-short-panel-native.png')
+  d.click('#compact-pet');d.click('#compact-pet-menu [data-action=talk]')
+  check('native-short-panel-talk-control-operates',d.js('return !document.getElementById("compact-pet-menu").hidden && document.getElementById("compact-pet-menu").dataset.level==="talk"'))
+  d.click('#compact-pet-menu [data-action=joke]');d.wait('return PurrpleCompact.getState().talk.last?.promptId==="joke"')
+  d.js('document.getElementById("compact-pet-speech").scrollIntoView({block:"center"});')
+  check('native-short-panel-reply-can-be-scrolled-fully-into-view',d.js('const r=document.getElementById("compact-pet-speech").getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight;'));top();d.screenshot('zoomed-short-panel-native.png')
   d.command('/moz/context',{'context':'chrome'});d.js('gBrowser.selectedBrowser.fullZoom=1;');d.command('/moz/context',{'context':'content'});d.command('/window/rect',{'width':1280,'height':950})
-  sc('.panel-close');d.navigate(url.replace('/strict','/ordinary'));d.wait("return document.querySelector('purrple-companion')?.dataset.active==='true'",timeout=30)
+  enter();d.click('#panel-close');top();d.navigate(url.replace('/strict','/ordinary'));d.wait("return document.querySelector('purrple-companion')?.dataset.active==='true'",timeout=30)
   # Ordinary host-created frames have no access even without the panel query.
-  for path in ['popup.html','app.html']:
+  for path in (['popup.html','app.html','game.html?game=paw-pairs'] if (EXT/'game.html').exists() else ['popup.html','app.html']):
    d.js('const f=document.createElement("iframe");f.id="unauthorized";f.src=arguments[0];document.body.append(f);',base+path)
    el=d.command('/element',{'using':'css selector','value':'#unauthorized'})
    try:
@@ -51,9 +55,9 @@ def main():
     state=d.message({'type':'GET_STATE'});backup=d.message({'type':'BACKUP_EXPORT'});change=d.action('TASK_ADD',title='Host frame attempt')
     check('native-host-created-'+path+'-private-operations-denied',not state.get('ok') and not backup.get('ok') and not change.get('ok'),{'state':state,'backup':backup,'action':change})
    except RuntimeError as e:
-    if path!='app.html' or 'no such frame' not in str(e):raise
+    if path!='app.html' or not any(reason in str(e) for reason in ('no such frame','browser is not defined')):raise
     manifest=json.loads((EXT/'manifest.json').read_text());resources=manifest['web_accessible_resources'][0]['resources']
-    check('native-full-app-not-web-accessible-and-frame-blocked','app.html' not in resources,'Firefox refused frame navigation to the unexposed full app.')
+    check('native-full-app-not-web-accessible-and-frame-blocked','app.html' not in resources,'Firefox rejected the frame or opened it without extension APIs.')
    top();d.js('document.getElementById("unauthorized").remove();')
  except Exception as e:
   report['error']=str(e);check('native-boundaries-harness-complete',False,str(e))

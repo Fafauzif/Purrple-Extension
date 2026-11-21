@@ -1,0 +1,94 @@
+/* Calendar reuses app controls. The three source treatments keep a visible text cue. */
+.planner-heading { margin-bottom: 22px; }
+.planner-heading .planner-zone { margin-top: 6px; font-size: .84rem; }
+.planner-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.planner-period-nav { display: flex; gap: 5px; }
+.planner-period-nav .button { min-height: 38px; padding: 6px 12px; }
+.planner-period-nav .planner-arrow { min-width: 38px; font-size: 1rem; }
+.planner-view-switch button { min-height: 36px; }
+.planner-date-label { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px; margin-inline-start: auto; color: var(--muted); font-size: .8rem; }
+.planner-date-label input { min-height: 36px; padding: 5px 7px; color: var(--purple-dark); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.planner-period-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2px 18px; margin-block: 18px 10px; }
+.planner-period-head h2 { font-size: 1.28rem; }
+.planner-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(140px, 18%); gap: 15px; align-items: start; }
+.planner-week { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); border: 1px solid var(--line); background: var(--surface); border-radius: 12px; }
+.planner-week-key { grid-column: 1 / -1; margin: 0; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: .72rem; background: var(--paper); border-radius: 12px 12px 0 0; }
+.planner-day { min-width: 0; padding: 8px; }
+.planner-week .planner-day { min-height: 280px; border-inline-start: 1px solid var(--line); }
+.planner-week .planner-day:nth-child(2) { border-inline-start: 0; border-radius: 0 0 0 12px; }
+.planner-week .planner-day:last-child { border-radius: 0 0 12px 0; }
+.planner-date-today { background-color: #f5effa; }
+.planner-day-heading { display: flex; align-items: center; justify-content: space-between; gap: 3px 5px; margin-bottom: 8px; }
+.planner-day-heading h3 { min-width: 0; margin: 0; font-size: .9rem; font-weight: 600; }
+.planner-week .planner-day-heading { flex-wrap: wrap; }
+.planner-date-today .planner-day-heading h3 { color: #603778; }
+.planner-day-label { border: 0; min-height: 29px; background: transparent; text-align: start; font: inherit; color: inherit; font-weight: 700; padding: 2px; white-space: nowrap; border-radius: 4px; }
+.planner-day-label:hover { text-decoration: underline; }
+.planner-small-button { display: inline-grid; place-items: center; min-height: 28px; min-width: 28px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--purple); font-weight: 800; }
+.planner-small-button:hover { background: var(--lilac); }
+.planner-drop-target { outline: 2px solid var(--purple); outline-offset: -2px; }
+.planner-lane, .planner-inbox-list, .planner-today-list { margin: 0; padding: 0; list-style: none; }
+.planner-lane { display: grid; gap: 6px; }
+.planner-week .planner-all-lane { align-content: start; height: 88px; overflow-y: auto; margin-bottom: 7px; padding: 2px 3px 7px; border-bottom: 1px solid var(--line); }
+.planner-lane-heading { font-weight: 800; font-size: .72rem; margin-block: 7px 5px; }
+.planner-entry { display: grid; min-width: 0; gap: 2px; border: 1px solid var(--source-border); border-inline-start-width: 3px; border-radius: 7px; background: var(--source-tint); color: var(--source-text); padding: 5px 6px; }
+.planner-entry-block { --source-border: #d0b7e0; --source-tint: #f0e5f8; --source-text: #523469; }
+.planner-entry-due { --source-border: #e5c88c; --source-tint: #fff4dc; --source-text: #674913; }
+.planner-entry-actual { --source-border: #c7c4d6; --source-tint: #f2f1f7; --source-text: #4a435f; }
+.planner-entry-external { --source-border: #a5cfbf; --source-tint: #eaf6f0; --source-text: #245846; }
+.planner-entry-meta { display: flex; flex-wrap: wrap; gap: 1px 6px; align-items: baseline; }
+.planner-entry-meta .planner-entry-clock { font-size: .69rem; }
+.planner-entry-type { font-size: .61rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.planner-entry-title { overflow-wrap: anywhere; min-width: 0; font-size: .81rem; font-weight: 800; line-height: 1.3; }
+button.planner-entry-title { padding: 1px 0; border: 0; background: transparent; color: inherit; text-align: start; min-height: 24px; }
+button.planner-entry-title:hover { text-decoration: underline; }
+.planner-external-actions { display: flex; flex-wrap: wrap; gap: 0 9px; }
+.planner-external-actions .text-button { text-align: start; font-size: .69rem; color: inherit; min-height: 26px; }
+.planner-entry-clock { font-variant-numeric: tabular-nums; color: inherit; }
+.planner-agenda, .planner-day-view { display: grid; gap: 9px; }
+.planner-agenda .planner-day, .planner-day-view .planner-day { border: 1px solid var(--line); border-radius: 9px; background: var(--surface); padding: 12px; }
+.planner-agenda .planner-date-today, .planner-day-view .planner-date-today { border-color: #c0a7d2; }
+.planner-agenda .planner-timed-lane, .planner-day-view .planner-timed-lane { margin-top: 5px; }
+.planner-agenda .planner-entry, .planner-day-view .planner-entry { padding: 8px 10px; }
+.planner-inbox { border: 1px solid var(--line); border-radius: 11px; background: var(--surface); padding: 12px; min-width: 0; }
+.planner-inbox h3 { font-size: 1rem; margin-block-end: 5px; }
+.planner-inbox-list li { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0 10px; padding-block: 7px; border-bottom: 1px solid var(--line); }
+.planner-inbox-list li:last-child { border-bottom: 0; }
+.planner-inbox-list .text-button { min-height: 28px; color: var(--purple); }
+.planner-inbox-title { font-size: .85rem; overflow-wrap: anywhere; }
+.planner-empty { color: var(--muted); font-size: .82rem; }
+.planner-no-agenda { padding: 8px 0; }
+.planner-provider { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 10px; padding: 6px 10px; margin-bottom: 8px; border-inline-start: 3px solid #8fb9a8; background: #eef8f2; border-radius: 0 7px 7px 0; }
+.planner-provider p { font-size: .8rem; color: #285a48; }
+.planner-check { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; font-size: .86rem; margin-bottom: 8px; }
+.planner-check input { accent-color: var(--purple); width: 17px; height: 17px; }
+.planner-preview { min-height: 1.45em; font-size: .83rem; margin-block: 6px; }
+.planner-warning { color: #744912; }
+.planner-dialog-actions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; margin-top: 15px; }
+.planner-today { padding: 13px 0; margin-block: 5px 13px; border-block: 1px solid var(--line); }
+.planner-today-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0 10px; align-items: center; }
+.planner-today-heading h2 { font-size: 1.12rem; }
+.planner-today-list li { display: flex; gap: 4px 12px; flex-wrap: wrap; align-items: baseline; }
+.planner-today-list .text-button { overflow-wrap: anywhere; text-align: start; }
+.planner-today-list .planner-entry-clock { font-size: .75rem; color: var(--muted); }
+@media (max-width: 1050px) {
+  .planner-layout { grid-template-columns: minmax(0,1fr); }
+  .planner-inbox-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%, 180px),1fr)); gap: 0 13px; }
+}
+@media (max-width: 740px) {
+  .planner-view-switch [data-calendar-view='week'] { display: none; }
+  .planner-date-label { margin-inline-start: 0; }
+}
+@media (max-width: 380px) {
+  .planner-heading { align-items: flex-start; flex-wrap: wrap; }
+  .planner-toolbar { gap: 7px; }
+  .planner-inbox-list { display: block; }
+  .planner-dialog-actions .button { white-space: normal; }
+}
+/* A native sidebar can leave the app with fewer than 240 CSS pixels at zoom. */
+@media (max-width: 300px) {
+  .app-header { gap: 7px; }
+  .app-header .brand { font-size: 1.25rem; gap: 5px; }
+  .app-header .brand-paw { flex: 0 0 25px; width: 25px; height: 25px; border-radius: 7px; font-size: 1.1rem; }
+  .app-header .coin-pill { gap: 4px; padding: 4px 7px; }
+}

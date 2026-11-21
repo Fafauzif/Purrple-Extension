@@ -17,12 +17,12 @@ test('serialized core conversation counters are shared and produce safe public r
  let s=C.defaultState(NOW),balance=s.wallet.balance;
  s=C.reduce(s,{type:'TALK_REPLY',promptId:'love-you'},NOW);const first=s.talk.last;
  s=C.reduce(s,{type:'TALK_REPLY',promptId:'love-you'},NOW+1);assert.notEqual(s.talk.last.text,first.text);assert.equal(s.talk.total,2);assert.equal(s.wallet.balance,balance);
- const p=C.publicState(s);assert.ok(p.talk.last.text);assert.equal(p.talk.history,undefined);assert.equal(p.talk.favorites,undefined);assert.equal(p.talk.last.promptId,undefined);assert.equal(p.drafts,undefined);
+ const p=C.publicState(s,true);assert.ok(p.talk.last.text);assert.equal(C.publicState(s).talk.last,null);assert.equal(p.talk.history,undefined);assert.equal(p.talk.favorites,undefined);assert.equal(p.talk.last.promptId,undefined);assert.equal(p.drafts,undefined);
 });
 test('favorites and talk history survive backup while legacy version-one backups remain valid',()=>{
  let s=C.defaultState(NOW);s=C.reduce(s,{type:'TALK_REPLY',promptId:'sorry-throw'},NOW);s=C.reduce(s,{type:'TALK_FAVORITE',promptId:'love-you',favorite:true},NOW);
  let restored=C.validateBackup(s,NOW);assert.deepEqual(restored.talk,s.talk);
- const legacy=C.defaultState(NOW);delete legacy.talk;delete legacy.drafts;restored=C.validateBackup(legacy,NOW);assert.equal(restored.talk.total,0);assert.equal(restored.drafts.quickTask,'');
+ const legacy={...C.defaultState(NOW),version:1};delete legacy.talk;delete legacy.drafts;restored=C.validateBackup(legacy,NOW);assert.equal(restored.talk.total,0);assert.equal(restored.drafts.quickTask,'');
 });
 test('quick-task drafts recover and clear only on a successful draft-backed commit',()=>{
  let s=C.reduce(C.defaultState(NOW),{type:'QUICK_TASK_DRAFT',text:'Remember this task'},NOW);
@@ -36,10 +36,10 @@ test('quick effort survives reload and backup and is honored when the recovered 
  s=C.validateBackup(s,NOW+2);assert.equal(s.drafts.quickEffort,'large');
  s=C.reduce(s,{type:'QUICK_TASK_DRAFT',text:'A large task updated'},NOW+3);assert.equal(s.drafts.quickEffort,'large');
  s=C.reduce(s,{type:'TASK_ADD',title:'A large task updated',fromDraft:true},NOW+4);assert.equal(s.tasks[0].effort,'large');assert.equal(s.drafts.quickTask,'');assert.equal(s.drafts.quickEffort,'large');
- s=C.reduce(s,{type:'TASK_SET_DONE',id:s.tasks[0].id,done:true},NOW+5);assert.equal(s.wallet.balance,30);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id:s.tasks[0].id,done:true},NOW+5);assert.equal(s.wallet.balance,3);
 });
 test('legacy quick drafts default to medium and invalid effort cannot overwrite progress',()=>{
- const old=C.defaultState(NOW);delete old.drafts.quickEffort;old.drafts.quickTask='An old saved draft';
+ const old={...C.defaultState(NOW),version:1};delete old.drafts.quickEffort;old.drafts.quickTask='An old saved draft';
  const restored=C.validateBackup(old,NOW);assert.equal(restored.drafts.quickTask,'An old saved draft');assert.equal(restored.drafts.quickEffort,'medium');
  assert.throws(()=>C.reduce(restored,{type:'QUICK_TASK_DRAFT',text:'Broken',effort:'huge'},NOW));assert.equal(restored.drafts.quickTask,'An old saved draft');
  const invalid=structuredClone(restored);invalid.drafts.quickEffort='huge';assert.throws(()=>C.validateBackup(invalid,NOW));

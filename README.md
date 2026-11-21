@@ -1,130 +1,52 @@
-# Purrple
+# Purrple 3.2
 
-A little lavender companion for Firefox: tasks, study sessions, permanent
-wardrobe rewards and a playful cat that keeps you company on ordinary webpages.
+Purrple is a local workday planner, focus timer, and lavender browser companion. Open the toolbar to see your tasks, or click Purrple on a supported webpage to plan, work, play, or give her a gift.
 
-## Use the extension
+## Install
 
-Requires Firefox 140 or later. Extract `Purrple_Firefox_Extension.zip`, open
-`about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on…**, and
-select the extracted `manifest.json`. Allow website access for the roaming cat
-and refresh already-open website tabs. Open Purrple from the extensions menu.
-
-This is an **unsigned development build**, as agreed. Normal Firefox removes
-temporary add-ons on browser restart. Load the same folder again to continue.
-Export a backup before uninstalling, clearing extension data, switching browser
-profiles or replacing it with a signed release. Signing through Mozilla is
-needed for permanent installation in standard Firefox; renaming ZIP to XPI
-does not replace that step.
-
-Open **INSTALL-PURRPLE.html** for the friendly illustrated five-step guide.
-The same guide is inside the runtime folder, linked from `START_HERE.html`.
-It clearly separates this temporary development build from a future signed XPI.
-
-## Everyday use
-
-- Add assignments, errands and small plans with optional due dates, priorities,
-  subtasks and daily/weekly recurrence.
-- Complete small/medium/large tasks for 10/20/30 coins. Each occurrence earns its
-  reward once, including across reopened tasks and multiple browser tabs.
-- Start, pause or resume study sessions; a completed focus session earns 5 coins.
-  Take 5/10-minute breaks without a penalty.
-- Try on 15 accessories, buy favorites permanently and save a head+neck outfit.
-- Pet, brush, play, pick up, gently toss, or send Purrple to her little house.
-  Explore 45 movements in `extension/animations.html`.
-- Choose from 90 authored thoughts with 270 local replies. Quick task drafts
-  remember both their title and selected reward size.
-- Change size, 24/30 fps presentation, motion level, remarks, quiet hours and the
-  list of sites where she should stay hidden.
-- Download and restore a complete JSON backup from Settings.
-
-The compact toolbar popup, on-page panel, sidebar and dashboard use the same
-data. The compact popup and page panel both offer tasks, focus, wardrobe and
-fixed local conversations, so daily actions do not require opening a full tab.
-Your existing new-tab page remains
-unchanged. Firefox protects settings, add-ons and its built-in PDF viewer from
-webpage injection; use the sidebar or dashboard there. When Firefox is fully
-closed, reminders catch up when it is running again.
-
-## Local by design
-
-No runtime AI model, API key, login, account, subscription, analytics, remote
-font, remote asset or backend. Character artwork was generated during
-development and is bundled as fixed local assets. Tasks and progress stay in
-this Firefox profile, unless you explicitly export a backup.
-
-Offline operation removes service dependencies. Future browser changes can
-still require compatibility maintenance. There is no built-in 5000-task lifetime
-cap; archive and export old plans for a manageable list and safe long-term use.
-
-## Source layout
-
-| Directory/file | Purpose |
+| Browser | Archive and installation |
 | --- | --- |
-| `extension/` | Complete ready-to-load Firefox runtime |
-| `extension/js/core.js` | Pure, versioned state reducer and data validation |
-| `extension/js/background.js` | Storage authority, alarms, notifications and tab leases |
-| `extension/js/content.js` | Roaming companion, interactions and page isolation |
-| `extension/js/renderer*.js` | Shared animation, wardrobe fitting and frame data |
-| `extension/js/client.js`, `app.js` | Native data client and shared product interface |
-| `art/` | Approved references, accessory sources and reproducible preparation |
-| `scripts/build_release.py` | Build both ZIPs without network access |
-| `tests/` | Data, background, browser and interaction test scripts |
-| `verification/` | Factual test reports; internal browser captures are excluded |
-| `CONTEXT.md`, `PRODUCT.md` | Decisions, requirements and future handover |
-| `DESIGN.md`, `UX-CONTRACT.md` | Visual system and interaction contracts |
-| `INSTALL-PURRPLE.html` | Offline illustrated guide for the recipient |
-| `docs/MOZILLA-SIGNING.md` | Private owner-operated Mozilla signing steps |
-| `docs/REPLACE-AND-BUILD.md` | Repository-root replacement and reproducible ZIPs |
+| Firefox | Select `Purrple_Firefox_Extension.zip` in **Load Temporary Add-on…** at `about:debugging#/runtime/this-firefox`. For a permanent update, the owner submits this ZIP through the existing Mozilla Add-ons developer entry and installs the signed update. |
+| Brave | Extract `Purrple_Chromium_Extension.zip` to a permanent folder. At `brave://extensions`, turn on **Developer mode**, choose **Load unpacked**, and select the folder containing `manifest.json`. |
+| Chrome | Use the same Chromium ZIP and **Load unpacked** at `chrome://extensions`. |
 
-## Build and test
+Pin Purrple from the Extensions menu and refresh open websites. Download a backup from **Settings** before an update or a browser move. Keep an unpacked Brave or Chrome installation in the same directory when updating. [Full installation instructions](docs/INSTALL-3.2.md) · [Illustrated quick start](INSTALL-PURRPLE.html) · [Mozilla update workflow](docs/MOZILLA-SIGNING.md)
 
-The prebuilt extension needs no tooling. To rebuild ZIPs, use Python 3:
+## Make a plan
 
-```sh
-python scripts/build_release.py
-```
+- **Today** opens from the toolbar or Purrple’s menu. Add, edit, complete, or start focusing on a task from the compact planner. Use the full dashboard for a broader review.
+- **Calendar** schedules local blocks in Week, Day, or Agenda. A task’s due date is independent of the time you reserve for it.
+- **Focus** starts, pauses, or resumes a session and keeps parked notes in the trusted extension view. Small, medium, and large tasks earn 1, 2, and 3 coins. A completed focus session earns 1 coin from 15 minutes or 2 coins from 30 minutes. Shorter sessions still count in your history.
+- **Play** opens a game-only window where you are and saves unfinished rounds. Choose a Paw Pairs board, try a themed Cozy Clues pack, or discover Lantern Paths, Pocket Pong and Three Paws. **Companion** also keeps your room, gifts, outfits and conversation journal together.
+- **Light and Night** share one saved appearance across Purrple’s surfaces. **Settings** controls roaming, quiet hours, reminders, display preferences, and backups. Export and restore transfers your local progress between browser profiles.
 
-Run logic tests using Node 18 or later:
+The local planner, timer, and companion work offline. The optional Firefox Google Calendar helper continues to use the local native-messaging setup. [Firefox Google Calendar setup](docs/CALENDAR.md)
+
+## Continue development
+
+Start with [project context](CONTEXT.md), then use [the extension workflow](docs/EXTENDING-PURRPLE.md) for adding games, accessories, or room décor. It includes a reusable brief for future collaborators.
+
+## Build and verify
+
+From the extracted source root, use Python 3.10 or later to reproduce the three ZIPs. Use Node 20 or later for the unit tests.
 
 ```sh
-node --test tests/*.test.cjs
+python3 scripts/build_release.py
+python3 tests/release_integrity.py
+npm test
+python3 tests/calendar_host_test.py
 ```
 
-Browser tests need their documented Playwright or Firefox/WebDriver development
-dependencies. Browser executables and temporary profiles are deliberately not
-included. Asset-preparation scripts list their drawing-time requirements.
-Those tools are never needed to run the extension.
+`release.json` in the output directory records file sizes, SHA-256 hashes and per-entry runtime hashes. The integrity test checks the archives and rebuilds them from the extracted source. [Rebuild details](docs/REPLACE-AND-BUILD.md) · [Verification results](docs/VERIFICATION-3.2.md) · [Test workflows](docs/TESTING.md) · [Purrple 3.2 release notes](docs/RELEASE-3.2.md)
 
-For optional Chromium-based UI checks, install the declared development package
-with `npm install`, then `npx playwright install chromium`. Run
-`node tests/ui_preview.cjs` and `node tests/ui_contrast.cjs`. You can select an
-existing browser executable with `PURRPLE_BROWSER`. Native tests instead use
-`PURRPLE_FIREFOX` and `PURRPLE_GECKODRIVER` paths and
-`python tests/firefox_refinement.py`. They create a separate synthetic-data profile.
-See `docs/TESTING.md` for actual toolbar, strict-CSP/zoom, animation and exact-ZIP
-checks, their prerequisites, and the distinction between native and preview tests.
+## Source
 
-All fonts are bundled with their licenses. Read `ARCHITECTURE.md` before
-changing persistence, messaging, shared rendering or wardrobe anchors.
+| Path | Purpose |
+| --- | --- |
+| `extension/` | Shared runtime and Firefox source manifest. The build applies a small Chromium overlay and uses the Chromium service worker. |
+| `extension/js/core.js`, `extension/js/background.js` | State validation, durable timer, rewards, migration, and serialized saves. |
+| `extension/js/renderer.js`, `art/` | Shared character renderer, fit data, artwork, and preparation tools. |
+| `tools/calendar/` | Firefox local Google Calendar helper and installer. |
+| `tests/` | Unit, browser, and release verification. |
 
-## Update the GitHub checkout
-
-The source ZIP contains the repository contents directly, without
-the old enclosing `Purrple/` folder. Extract it into the directory containing
-`extension/` and `package.json`, and replace matching files. Preserve `.git/`.
-The user confirmed no edits since the previous source ZIP; save any newer edits
-before replacement. See `docs/REPLACE-AND-BUILD.md` for the full procedure.
-
-## Prepare permanent installation
-
-Mozilla signing is not complete in this package. The owner can prepare an
-unlisted signing submission with `python scripts/sign_release.py`; that default
-command performs no upload. The explicit `--submit` operation needs the owner's
-private Mozilla API environment and uploads to Mozilla. Read
-`docs/MOZILLA-SIGNING.md` before using it. Never commit credentials or describe
-an unsigned build as signed.
-
-## Optional Google Calendar
-
-See [Calendar setup](docs/CALENDAR.md). The Firefox ZIP works on its own for all non-Calendar features.
+[Architecture](ARCHITECTURE.md) · [Artwork provenance](art/ASSET_PROVENANCE.md) · [Purrple 1.2 historical release notes](docs/RELEASE-1.2.md)

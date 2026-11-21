@@ -143,6 +143,7 @@ def main():
         d.wait("return document.querySelectorAll('[data-task]').length===1")
         ui_task=d.state()['tasks'][0]
         check('real-ui-task-create',ui_task['title']=='A task entered through the real Firefox UI')
+        d.click('.task-actions > summary')
         d.click('[data-action="edit-task"]')
         d.wait("return document.getElementById('task-dialog').open")
         d.fill('#task-title','Edited in Firefox')

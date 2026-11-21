@@ -1,0 +1,23 @@
+[data-purrple-transition-actor] {
+  view-transition-name: purrple-actor;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(root) {
+  animation-duration: 180ms;
+  animation-timing-function: ease-out;
+}
+
+::view-transition-group(purrple-actor) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(.22, .6, .36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*) {
+    animation-duration: 0s;
+  }
+}

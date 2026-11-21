@@ -1,0 +1,58 @@
+/* Loading uses the real Today sheet and its current task-row dimensions. */
+.loading-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+[data-skeleton] {
+  --skeleton-fill: #afa7a1;
+}
+html[data-theme=night] [data-skeleton] { --skeleton-fill: #706675; }
+[data-skeleton] .skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 52px;
+}
+[data-skeleton] .skeleton-row > span {
+  display: block;
+  background: var(--skeleton-fill);
+  opacity: .45;
+  border-radius: 2px;
+  height: 13px;
+  width: min(68%, 16rem);
+}
+[data-skeleton] .skeleton-row > span:first-child {width: 19px; height: 19px;}
+[data-skeleton] .skeleton-row:nth-child(even) > span:last-child {width: min(44%, 12rem);}
+[data-skeleton] :is(.today-rail, .compact-hero) canvas {visibility: hidden;}
+
+html[data-motion=reduce] *,html[data-motion=reduce] *::before,html[data-motion=reduce] *::after {scroll-behavior:auto!important;transition:none!important;animation:none!important;}
+
+/* Keep desktop density, but give touch controls a usable physical target. */
+@media (any-pointer: coarse) {
+  :is(.main-nav, .compact-nav, .cp-nav, .pet-actions, .panel-actions, .dialog-actions) button,
+  :is(.button, .task-check, .icon-button),
+  :is(#theme-toggle, #panel-close, #game-close, #close-play),
+  :is(select, input[type="range"]) {min-block-size:44px;}
+  :is(.task-check, .icon-button, #game-close, #close-play) {min-inline-size:44px;}
+  :is(.cp-room-tools, .dialog-actions, .compact-row-actions) {flex-wrap:wrap;}
+}
+
+/* Safe-area insets are zero on ordinary browser windows. */
+body {
+  padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+  padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+}
+:root {scroll-padding-bottom:env(safe-area-inset-bottom, 0px);}
+
+:where(time, output, [role="timer"], input[type="number"], .coin-pill, .shop-price,
+  .cp-bond, .cg-score, .compact-item-price, .compact-task-count, .planner-time, td) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(h1, h2, h3, .cp-main-title, .cg-game-title) {text-wrap:balance;}
+:where(.page-heading, .cp-gift-details, .cp-memory, .study-companion, .empty-state) p {text-wrap:pretty;}

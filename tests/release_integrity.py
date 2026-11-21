@@ -1,92 +1,147 @@
 #!/usr/bin/env python3
-"""Verify both deliverables, including the source archive's offline rebuild.
+"""Validate the exact three release archives and rebuild the runtime ZIPs offline."""
 
-Run after scripts/build_release.py. Uses only Python's standard library.
-Private review material and local browser profiles must never enter either ZIP.
-"""
-from pathlib import Path, PurePosixPath
+import argparse
 import hashlib
 import json
+from pathlib import Path, PurePosixPath
 import subprocess
 import sys
 import tempfile
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DIST = ROOT / 'dist'
-checks = []
+FILENAMES = {
+    'source': 'Purrple_Complete_Source.zip',
+    'firefox': 'Purrple_Firefox_Extension.zip',
+    'chromium': 'Purrple_Chromium_Extension.zip',
+}
+TARGETS = ('firefox', 'chromium')
+PRIVATE = {'qa-runtime', 'privateverification', 'profiles', 'node_modules', '.git',
+           'drafts', 'generated_images', 'verification'}
 
 
-def check(name, passed, detail=None):
-    checks.append(dict(name=name, passed=bool(passed), detail=detail))
+def check(results, name, passed, detail=None):
+    results.append(dict(name=name, passed=bool(passed), detail=detail))
     if not passed:
-        raise AssertionError(name + ': ' + str(detail))
+        raise AssertionError(f'{name}: {detail}')
 
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def main():
-    runtime = DIST / 'Purrple_Firefox_Extension.zip'
-    source = DIST / 'Purrple_Complete_Source.zip'
-    with zipfile.ZipFile(runtime) as rz, zipfile.ZipFile(source) as sz:
-        rn, sn = rz.namelist(), sz.namelist()
-        for name, archive in [('runtime', rz), ('source', sz)]:
-            check(name + '-zip-crc', archive.testzip() is None)
-            check(name + '-safe-relative-paths', all(
-                not PurePosixPath(n).is_absolute() and '..' not in PurePosixPath(n).parts
-                for n in archive.namelist()))
-            check(name + '-excludes-local-and-private-material', all(
-                not ({'qa-runtime', 'privateverification', 'node_modules', '.git'} & set(PurePosixPath(n).parts))
-                and not n.startswith('verification/review/')
-                for n in archive.namelist()))
-        check('runtime-manifest-at-root', 'manifest.json' in rn)
-        check('source-repository-root-layout', all(n in sn for n in [
-            'README.md', 'AGENTS.md', 'CONTEXT.md', 'extension/manifest.json',
-            'scripts/build_release.py', 'art/README.md']))
-        check('no-extra-source-wrapper-folder', not any(n.startswith('Purrple/') for n in sn))
-        check('internal-browser-captures-not-shipped', not any(
-            n.startswith('verification/') and PurePosixPath(n).suffix.lower() in
-            {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.webm', '.mp4', '.pdf'} for n in sn))
-        manifest = json.loads(rz.read('manifest.json'))
-        check('stable-addon-identity', manifest['browser_specific_settings']['gecko']['id'] == 'purrple-companion@purrple.local')
-        check('runtime-matches-source-archive', all(
-            'extension/' + n in sn and rz.read(n) == sz.read('extension/' + n) for n in rn))
-        check('cute-installation-guide-in-both-deliverables', all(
-            b'I love you' in archive.read(name)
-            for archive, name in [(rz, 'INSTALL-PURRPLE.html'), (sz, 'INSTALL-PURRPLE.html')]))
-        check('motion-explorer-shipped', 'animations.html' in rn)
-        check('original-refinement-art-and-reproduction-sources-shipped', all(n in sn for n in [
-            'art/refinement-source/locomotion-original.png',
-            'art/refinement-source/brush-only-original.png',
-            'art/prepare_refinements.py', 'art/prepare_refinements_supplement.py',
-            'art/measure_motion_anchors.py', 'art/merge_renderer_data.py']))
-        with tempfile.TemporaryDirectory(prefix='purrple-source-rebuild-') as temp:
-            dest = Path(temp)
-            sz.extractall(dest)
-            # A Desktop OAuth download could end up beside the sources by mistake.
-            fixtures = ['client_secret.local-test.json','tools/calendar/client_secret.local-test.json',
-                        'extension/client_secret.local-test.json','extension/assets/local-token.json']
-            for name in fixtures:
-                (dest / name).write_text('{"only_test_data":true}')
-            run = subprocess.run([sys.executable, 'scripts/build_release.py'], cwd=dest,
-                                 text=True, capture_output=True)
-            check('extracted-source-builds-offline', run.returncode == 0, run.stderr[-1200:])
-            built = dest / 'dist/Purrple_Firefox_Extension.zip'
-            with zipfile.ZipFile(dest / 'dist/Purrple_Complete_Source.zip') as guarded_source:
-                check('local-oauth-json-is-not-packaged', all(n not in guarded_source.namelist() for n in fixtures))
+def read_archive(path, target, results):
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        check(results, f'{target}-zip-crc', archive.testzip() is None)
+        check(results, f'{target}-unique-safe-paths', len(set(names)) == len(names) and all(
+            not PurePosixPath(name).is_absolute() and '..' not in PurePosixPath(name).parts
+            and '\\' not in name for name in names))
+        check(results, f'{target}-excludes-private-material', all(
+            not (PRIVATE & set(PurePosixPath(name).parts)) and
+            not PurePosixPath(name).name.lower().startswith(('client_secret', 'oauth_token'))
+            for name in names))
+        return {name: archive.read(name) for name in names}
 
-            check('extracted-source-reproduces-runtime-byte-for-byte',
-                  built.read_bytes() == runtime.read_bytes())
-    report = dict(version=manifest['version'], runtime_sha256=digest(runtime.read_bytes()),
-                  source_sha256=digest(source.read_bytes()), passed=len(checks), failed=0,
-                  scope='Archive CRC, privacy/root layout, source/runtime parity and offline source rebuild.',
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--dist', type=Path, default=ROOT / 'dist')
+    parser.add_argument('--report', type=Path, default=ROOT / 'verification/review/release-integrity.json')
+    args = parser.parse_args()
+    checks = []
+    files = {target: args.dist / filename for target, filename in FILENAMES.items()}
+    archives = {target: read_archive(path, target, checks) for target, path in files.items()}
+    source = archives['source']
+    major_minor = '.'.join(json.loads(source['extension/manifest.json'])['version'].split('.')[:2])
+    install_guide = f'docs/INSTALL-{major_minor}.md'
+    check(checks, 'exactly-three-release-archives',
+          {path.name for path in args.dist.glob('*.zip')} == set(FILENAMES.values()))
+    needed = {'README.md', 'AGENTS.md', 'CONTEXT.md', 'extension/manifest.json',
+              'scripts/build_release.py', 'art/README.md', 'package-lock.json',
+              install_guide, 'tools/calendar/calendar_host.py',
+              'art/refinement-source/locomotion-original.png',
+              'art/refinement-source/brush-only-original.png',
+              'art/prepare_refinements.py', 'art/prepare_refinements_supplement.py',
+              'art/measure_motion_anchors.py', 'art/merge_renderer_data.py'}
+    check(checks, 'source-repository-root-and-art-reproduction', needed <= set(source), sorted(needed - set(source)))
+    check(checks, 'install-guide-in-source', b'I love you' in source['INSTALL-PURRPLE.html'])
+
+    manifests = {}
+    for target in TARGETS:
+        runtime = archives[target]
+        check(checks, f'{target}-manifest-at-root', 'manifest.json' in runtime)
+        manifests[target] = json.loads(runtime['manifest.json'])
+        check(checks, f'{target}-files-match-source', all(
+            data == source['extension/' + name] for name, data in runtime.items()
+            if name != 'manifest.json'))
+        check(checks, f'{target}-guide-and-motion-explorer',
+              b'I love you' in runtime['INSTALL-PURRPLE.html'] and 'animations.html' in runtime)
+    firefox, chromium = (manifests[target] for target in TARGETS)
+    gecko = firefox['browser_specific_settings']['gecko']
+    check(checks, 'stable-firefox-id-and-consent', gecko['id'] == 'purrple-companion@purrple.local'
+          and gecko['data_collection_permissions']['required'] == ['none']
+          and firefox['optional_permissions'] == ['nativeMessaging'])
+    check(checks, 'firefox-manifest-matches-source',
+          archives['firefox']['manifest.json'] == source['extension/manifest.json'])
+    check(checks, 'firefox-background-and-sidebar', bool(firefox['background']['scripts'])
+          and 'sidebar_action' in firefox and 'js/worker.js' not in archives['firefox'])
+    check(checks, 'chromium-worker-and-side-panel', chromium['background'] == {'service_worker': 'js/worker.js'}
+          and chromium['side_panel']['default_path'] == firefox['sidebar_action']['default_panel']
+          and 'sidePanel' in chromium['permissions'] and 'js/worker.js' in archives['chromium'])
+    check(checks, 'chromium-excludes-firefox-only-declarations',
+          not ({'browser_specific_settings', 'sidebar_action', 'optional_permissions'} & set(chromium))
+          and 'nativeMessaging' not in chromium['permissions'])
+    check(checks, 'shared-runtime-parity',
+          set(archives['chromium']) - set(archives['firefox']) == {'js/worker.js'}
+          and all(archives['chromium'][name] == data for name, data in archives['firefox'].items()
+                  if name != 'manifest.json'))
+    version = firefox['version']
+    check(checks, 'release-versions-match', version == chromium['version']
+          == json.loads(source['package.json'])['version']
+          == json.loads(source['package-lock.json'])['version'])
+    guide_version = f'Purrple {major_minor}'.encode()
+    check(checks, 'release-guide-versions-match', guide_version in source['README.md']
+          and guide_version in source[install_guide]
+          and all(guide_version in archives[target]['START_HERE.html'] for target in TARGETS))
+    metadata = json.loads((args.dist / 'release.json').read_bytes())
+    check(checks, 'metadata-version-matches', metadata['version'] == version)
+    for target, path in files.items():
+        record = metadata['artifacts'][target]
+        check(checks, f'{target}-archive-size-sha-and-entry-count',
+              record['filename'] == path.name and record['bytes'] == path.stat().st_size
+              and record['sha256'] == digest(path.read_bytes()) and record['entries'] == len(archives[target]))
+        if target in TARGETS:
+            check(checks, f'{target}-entry-sha256', record['entry_sha256'] ==
+                  {name: digest(data) for name, data in archives[target].items()})
+
+    with tempfile.TemporaryDirectory(prefix='purrple-source-rebuild-') as temp:
+        dest = Path(temp)
+        with zipfile.ZipFile(files['source']) as archive:
+            archive.extractall(dest)
+        scratch_fixtures = ['client_secret.local-test.json',
+                            'tools/calendar/client_secret.local-test.json',
+                            'extension/client_secret.local-test.json',
+                            'extension/assets/local-token.json', 'extension/assets/creds-token.png',
+                            'extension/assets/wardrobe/drafts/private.png', 'art/drafts/unselected.png']
+        for name in scratch_fixtures:
+            path = dest / name
+            path.parent.mkdir(exist_ok=True, parents=True)
+            path.write_text('{"only_test_data":true}')
+        run = subprocess.run([sys.executable, 'scripts/build_release.py'], cwd=dest,
+                             text=True, capture_output=True)
+        check(checks, 'extracted-source-builds-offline', run.returncode == 0, run.stderr[-1200:])
+        for target, path in files.items():
+            check(checks, f'{target}-byte-for-byte-from-source',
+                  (dest / 'dist' / path.name).read_bytes() == path.read_bytes())
+
+    report = dict(version=version, artifacts=metadata['artifacts'], passed=len(checks), failed=0,
+                  scope='Archive CRC, path safety, privacy, manifests, SHA-256 and byte-for-byte offline rebuild.',
                   checks=checks)
-    out = ROOT / 'verification/review/release-integrity.json'
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + '\n')
-    print(json.dumps({k: v for k, v in report.items() if k != 'checks'}, indent=2))
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({k: v for k, v in report.items() if k not in ('checks', 'artifacts')}, indent=2))
 
 
 if __name__ == '__main__':

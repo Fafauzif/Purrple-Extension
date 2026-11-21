@@ -14,6 +14,12 @@ const check=(name,pass,detail)=>{reports.push({name,pass:!!pass,detail});if(!pas
  page.on('pageerror',e=>errors.push(e.message));
  const state=()=>page.evaluate(()=>PurrpleUI.getState());
  const view=name=>page.locator(`[data-view="${name}"]`).click();
+ const taskAction=async(action,id)=>{
+   const row=page.locator(`[data-task="${id}"]`);
+   const menu=row.locator('.task-actions');
+   if(await menu.getAttribute('open')===null)await menu.locator('summary').click();
+   await row.locator(`[data-action="${action}"]`).click();
+ };
  try{
   await page.goto('file://'+path.join(root,'extension/app.html'));
   await page.waitForFunction(()=>PurrpleUI.getState());
@@ -26,7 +32,7 @@ const check=(name,pass,detail)=>{reports.push({name,pass:!!pass,detail});if(!pas
   await page.waitForFunction(()=>PurrpleUI.getState().tasks.length===1);
   check('quick-add-saved',(await state()).tasks[0].title==='Read the seminar notes');
   let task=(await state()).tasks[0];
-  await page.locator(`[data-action="edit-task"][data-id="${task.id}"]`).click();
+  await taskAction('edit-task',task.id);
   await page.locator('#task-title').fill('Read <strong>notes</strong> & annotate');
   await page.locator('#task-subtasks').fill('Read\nRead\nAnnotate');
   await page.locator('#save-task').click();await page.waitForFunction(()=>!document.getElementById('task-dialog').open);
@@ -34,7 +40,7 @@ const check=(name,pass,detail)=>{reports.push({name,pass:!!pass,detail});if(!pas
   check('no-title-html-injection',await page.locator('.task-title strong').count()===0);
   task=(await state()).tasks[0];
   check('duplicate-subtask-titles-have-unique-ids',new Set(task.subtasks.map(s=>s.id)).size===3);
-  await page.locator(`[data-action="edit-task"][data-id="${task.id}"]`).click();await page.locator('#save-task').click();await page.waitForFunction(()=>!document.getElementById('task-dialog').open);
+  await taskAction('edit-task',task.id);await page.locator('#save-task').click();await page.waitForFunction(()=>!document.getElementById('task-dialog').open);
   check('duplicate-subtask-edit-roundtrip',(await state()).tasks[0].subtasks.length===3);
   await page.locator('[data-subtask]').first().check();
   await page.waitForFunction(()=>PurrpleUI.getState().tasks[0].subtasks[0].done);
@@ -88,10 +94,10 @@ const check=(name,pass,detail)=>{reports.push({name,pass:!!pass,detail});if(!pas
   await page.locator('#confirm-cancel').click();check('cancel-restore-preserves-data',JSON.stringify(await state())===before);
   await page.locator('#backup-file').setInputFiles({name:'Purrple.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(backup))});await page.locator('#confirm-ok').click();await page.waitForFunction(()=>!document.getElementById('confirm-dialog').open);
   check('backup-roundtrip',(await state()).wallet.balance===40&&(await state()).equipped.head==='moon-bow');
-  await view('today');await page.locator('[data-task-filter="done"]').click();await page.locator(`[data-action="archive-task"][data-id="${task.id}"]`).click();
-  await page.locator('[data-task-filter="archived"]').click();check('archive-visible',await page.locator(`[data-task="${task.id}"]`).count()===1);await page.locator(`[data-action="archive-task"][data-id="${task.id}"]`).click();
+  await view('today');await page.locator('[data-task-filter="done"]').click();await taskAction('archive-task',task.id);
+  await page.locator('[data-task-filter="archived"]').click();check('archive-visible',await page.locator(`[data-task="${task.id}"]`).count()===1);await taskAction('archive-task',task.id);
   check('archive-restores',!(await state()).tasks.find(t=>t.id===task.id).archived);
-  await page.locator('[data-task-filter="open"]').click();await page.locator('#task-search').fill('no-such-task');check('search-empty-feedback',await page.locator('#task-list .empty-state').textContent().then(s=>s.includes('No little plans found')));await page.locator('#clear-task-search').click();check('clear-search-refocuses',await page.locator('#task-search').evaluate(el=>el===document.activeElement));
+  await page.locator('[data-task-filter="open"]').click();await page.locator('#task-search').fill('no-such-task');check('search-empty-feedback',await page.locator('#task-list .empty-state').textContent().then(s=>s.includes('No matching tasks')));await page.locator('#clear-task-search').click();check('clear-search-refocuses',await page.locator('#task-search').evaluate(el=>el===document.activeElement));
   for(const width of [1280,390,320]){
    await page.setViewportSize({width,height:900});
    for(const tab of ['today','focus','wardrobe','settings']){await view(tab);check(`no-overflow-${tab}-${width}`,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(out,`${tab}-${width}.png`),fullPage:true});}

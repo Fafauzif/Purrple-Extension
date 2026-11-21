@@ -15,11 +15,13 @@ is generated, inferred or downloaded while Purrple runs.
   new illustrations from 216 cells, rejected cells and reused reaction subsets.
 - `renderer-motion-anchors.json`: measured support-paw landmarks, regenerated
   by `measure_motion_anchors.py`.
+- `sprite-registration.json`: silhouette anchors measured from all actor tiles by
+  `measure_sprite_registration.py`.
 
 The merged actor has 317 registered source-frame entries across 38 source rows,
 including documented reused subsets. The shared renderer exposes 45 behaviors.
 These are not 317 unique new drawings or 45 entirely new actions. Root movement
-and registered shape articulation run independently of illustrated pose cadence;
+and eased sprite placement run independently of illustrated pose cadence;
 the default presentation target is 30 FPS.
 
 ## Build a release without changing artwork
@@ -39,6 +41,7 @@ python art/prepare_wardrobe.py
 python art/prepare_refinements.py
 python art/prepare_refinements_supplement.py
 python art/measure_motion_anchors.py
+python art/measure_sprite_registration.py
 python art/merge_renderer_data.py
 ```
 
@@ -74,12 +77,15 @@ With the project's Playwright development dependency and browser installed:
 ```sh
 node art/render_fits.cjs
 node art/render_motion_review.cjs
+node art/audit_sprite_playback.cjs
 node tests/animation-explorer-e2e.cjs
 ```
 
 `render_fits.cjs` regenerates shop thumbnails and checks every registered frame
 against all 15 individual items, with combined-outfit contacts.
-`render_motion_review.cjs` samples actual runtime clips and reports drawing cost.
+`render_motion_review.cjs` captures review panels. `audit_sprite_playback.cjs`
+checks every source pose, plus every planned 30 FPS step in all 45 clips with
+plain, equipped, and studio-travel rendering.
 Treat reports as preparation/coverage evidence, then inspect playback at 128px
 and larger dashboard sizes. Visibility counts alone do not establish good fit
 or smoothness.

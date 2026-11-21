@@ -1,5 +1,73 @@
 # Testing Purrple
 
+## Purrple 3.1
+
+In addition to the package checks below, these preview commands exercise the redesigned workspace, game window, and sprite playback. Set `PURRPLE_BROWSER` to a local Chromium executable if needed.
+
+```sh
+node tests/workday-v3-preview.cjs
+node tests/panel-v3-preview.cjs
+node tests/study-room-preview.cjs
+node art/audit_sprite_playback.cjs
+```
+
+The webpage panel fixture uses simulated extension messaging. See the native installation instructions below for installed-addon tests.
+
+## Purrple 3.0
+
+Run the reducer, local Calendar helper, and package rebuild checks from a clean source extraction.
+
+```sh
+npm test
+python3 tests/calendar_host_test.py
+python3 scripts/build_release.py
+python3 tests/release_integrity.py
+```
+
+The installed-package smoke tests use disposable browser profiles. Run the browser that matches the recipient’s installation.
+
+```sh
+PURRPLE_FIREFOX=/path/to/firefox PURRPLE_GECKODRIVER=/path/to/geckodriver python3 tests/firefox_packaged_v2.py dist/Purrple_Firefox_Extension.zip
+PURRPLE_BROWSER=/path/to/brave node tests/chromium-packaged.cjs brave dist/Purrple_Chromium_Extension.zip
+PURRPLE_BROWSER=/path/to/google-chrome node tests/chromium-packaged.cjs chrome dist/Purrple_Chromium_Extension.zip
+```
+
+Use `chromium` in place of `chrome` for a stock Chromium binary. The reports record the actual browser, archive hash, and checks completed. The Chromium DevTools run opens the real extension popup document in a tab and covers the compact flow from capture, edit and scheduling to a linked timer, completion, and Paw Pairs resume. Firefox also attempts native toolbar and sidebar activation and checks whether a task saved in the webpage panel appears in the toolbar.
+
+For a disposable **local preview** in Chromium, install Playwright's development dependency with `npm ci` and a compatible Chromium binary with `npx playwright install chromium`. Run `node tests/workday-v3-preview.cjs` to exercise the compact flow at 355 × 515 with reduced motion. The preview uses localStorage. Extension permissions, native panel opening, timers across browser restart, and migration require the installed-package workflow.
+
+Run `PURRPLE_BROWSER=/path/to/chromium node tests/panel-v3-preview.cjs` for a separate rendered fixture that uses Chromium and mocks the extension APIs. It checks the webpage controls and panel UI in place. The installed-package checks exercise browser-granted privileges and real extension storage.
+
+For the final manual pass, install the exact archive, pin Purrple and refresh a regular webpage. Check the native toolbar and side panel, an in-place Play round and gift scene, the close button and Escape, task privacy on the host page, wardrobe fit in sitting and sleeping poses, the Bond meter, and a narrow panel at high zoom. Repeat with website access denied and use the toolbar fallback. Export a backup from a prior installation and confirm that tasks, an in-flight focus session, wardrobe, and Companion progress appear after an update. Keep personal profiles, backups, and screenshots out of the source archive.
+
+## Purrple 2.0
+
+Run the unit, helper, and integrity suites using the extracted source tree.
+
+```sh
+npm test
+python3 tests/calendar_host_test.py
+python3 scripts/build_release.py
+python3 tests/release_integrity.py
+```
+
+For the browser suites, provide actual Firefox and GeckoDriver executables
+through `PURRPLE_FIREFOX` and `PURRPLE_GECKODRIVER`. Pass the exact Firefox ZIP
+as the archive argument to `tests/firefox_packaged_v2.py`,
+`tests/firefox_calendar_v2.py`, `tests/firefox_workday_v2.py`,
+`tests/firefox_companion_v2.py`, or `tests/firefox_pet_menu.py`. Run each script
+with `--help` for its disposable output and upgrade fixture arguments. Set
+`PURRPLE_BROWSER` to an actual Brave or Chrome executable for the installed
+Chromium tests and run `node tests/chromium-packaged.cjs brave dist/Purrple_Chromium_Extension.zip`. Use `chrome` in place of `brave` for Chrome. Set `PURRPLE_OVERLAY_ONLY=1` to focus on the webpage and `PURRPLE_PLACEMENT_ONLY=1` to skip the separate Talk scenario during a targeted Move and Reset rerun. See the verification notes for
+the browser modes and exercised checks. [Verification](VERIFICATION-2.0.md)
+
+## Historical 1.x verification and development fixtures
+
+The older scripts and screenshots below record the 1.x implementation. A
+historical result applies to its stated version and described test mode.
+
+For Purrple 2.0, see the [release verification summary](VERIFICATION-2.0.md). The 1.x checks and results below are historical unless re-run and recorded against the 2.0 archives.
+
 The unit suite runs without a network or a browser:
 
 ```sh

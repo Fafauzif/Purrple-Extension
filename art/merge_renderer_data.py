@@ -49,7 +49,10 @@ for ident,pivot in fits['itemPivots'].items():
     data['items'][ident]['pivot']=pivot
 
 data['motionProvenance']=manifest['provenance']
-data['motionContract']={'geometryHz':30,'crossfade':False,'intermediateGeometry':'registered triangular raster mesh','sourceCountIsIllustrationCount':True}
+registration=json.loads((ROOT/'art/sprite-registration.json').read_text())
+assert all(len(registration[ident])==len(spec['frames']) for ident,spec in data['sprites'].items())
+data['registration']=registration
+data['motionContract']={'geometryHz':30,'crossfade':False,'intermediateGeometry':'single-raster silhouette registration and eased pose timing','sourceCountIsIllustrationCount':True}
 # Local family-level refinements; never omit an equipped item in difficult poses.
 data['fitOverrides']={
  'cozy-beanie':{'profile':{'scaleX':.96,'scaleY':1.02,'y':1},'sleep':{'scaleX':.95,'scaleY':.98,'y':1}},

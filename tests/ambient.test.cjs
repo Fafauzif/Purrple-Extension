@@ -31,3 +31,16 @@ test('a suspended tab cannot cause an ambient catch-up remark', () => {
   assert.equal(clock.update('balanced', 8 * 60_000, true, true), false);
   assert.equal(new Set(ambient.lines).size, ambient.lines.length);
 });
+
+test('site greetings use bounded hostname categories and wait before repeating', () => {
+  assert.equal(ambient.siteContext('WWW.YOUTUBE.COM.'), 'video');
+  assert.equal(ambient.siteContext('music.youtube.com'), 'audio');
+  assert.equal(ambient.siteContext('en.wikipedia.org'), 'reading');
+  assert.equal(ambient.siteContext('youtube.com.evil.test'), null);
+  assert.equal(ambient.siteContext('dyoutube.com'), null);
+  assert.equal(ambient.siteContext('https://www.youtube.com/'), null);
+  const first = ambient.contextRemark('vimeo.com', null, 100);
+  assert.match(first.text, /watching/);
+  assert.equal(ambient.contextRemark('youtube.com', first, 100 + 60_000), null);
+  assert.notEqual(ambient.contextRemark('youtube.com', first, 100 + 75 * 60_000).text, first.text);
+});

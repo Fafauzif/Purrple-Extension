@@ -1,5 +1,7 @@
 # Purrple 1.2.0 development release
 
+Historical release record. For the current version, see [Purrple 2.0 installation](INSTALL-2.0.md).
+
 ## What changed
 
 - The on-page house can be dragged using the mouse or moved using the arrow keys while focused. It snaps to the left, right, or bottom edge. The cat approaches its horizontal location on the page floor. The house and floating dashboard remember separate positions. Settings resets both.

@@ -66,8 +66,9 @@ Focus sessions select quiet study poses; reduced-motion mode keeps her calmer.
 
 Every product surface uses the same renderer. The library contains 45 behaviors
 and 198 newly accepted illustrations in this refinement. Variable per-frame
-timing combines fixed illustrated keys with registered 30 Hz geometry, continuous
-breathing, secondary motion, movement and physics at 24/30 fps presentation.
+timing combines fixed illustrated keys with measured silhouette registration.
+One composited actor per frame uses eased placement, breathing and continuous
+root motion and physics at 24/30 fps presentation.
 This is not 30 unique hand-drawn frames per second. Source drawings, extraction
 scripts, frame metadata and per-pose fitting data remain available for refinement.
 
@@ -106,3 +107,28 @@ background. A dedicated queue invokes the native host without blocking the core
 reducer. OAuth credentials stay in the local helper. Agenda items and tokens
 are excluded from backups and content-script state. Layout and ambient receipts
 are independent records owned by the background and gated by the active lease.
+
+## Purrple 2.0 runtime
+
+The source manifest targets Firefox and retains the installed Gecko ID. The
+builder derives a Chromium manifest with a classic MV3 worker and side-panel
+entry. Both load the same domain modules before registering background events.
+A native panel is opened from a user action when the browser exposes it. The
+compact extension tab provides the same workspace when the panel call fails.
+
+The first committed v2 read migrates v1 progress in place. The ledger records
+which reward rule applies. New focus receipts carry the unpaused duration, and
+an already-running timer keeps the v1 rule. Calendar blocks, task deadlines,
+and completed sessions are separate records. Timer reconciliation, imported
+positions, and portable save replacement use the same serialized background.
+The provider mapping and native Google credentials stay outside portable saves.
+Ordinary pages receive the equipment, timer status, and simple companion
+capabilities they need. Authored replies return directly to the requesting
+leased tab.
+
+The Calendar and Companion domains manage independent validated slices in the
+same save. The Calendar keeps wall dates, zones, and instants distinct. The
+Companion records XP, game rounds, and discoveries with stable IDs. Each
+mutation resolves and persists before the browser publishes its state change.
+The renderer uses one registered sprite family for the dashboard, compact
+surfaces, room, and webpage overlay.

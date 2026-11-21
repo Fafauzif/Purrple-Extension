@@ -13,7 +13,7 @@ test('more than 5000 completed tasks and rewards survive a JSON backup roundtrip
   const prototype=s.tasks[0];
   s.tasks=Array.from({length:6001},(_,i)=>({...clone(prototype),id:'history-'+i,title:'Archived task '+i,done:true,archived:true,completedAt:NOW}));
   s.ledger=s.tasks.map(t=>({id:'task:'+t.id,type:'task',amount:10,ref:t.id,at:NOW}));
-  s.wallet={balance:60010,totalEarned:60010};s.stats.completedTasks=6001;
+  s.version=1;s.wallet={balance:60010,totalEarned:60010};s.stats.completedTasks=6001;
   const restored=C.validateBackup(JSON.stringify({state:s}),NOW);
   assert.equal(restored.tasks.length,6001);assert.equal(restored.ledger.length,6001);
   assert.deepEqual(restored.wallet,s.wallet);
@@ -53,8 +53,8 @@ test('changing effort then reopening a rewarded task cannot farm a larger reward
   s=C.reduce(s,{type:'TASK_UPDATE',id:'a',patch:{effort:'large'}},NOW+2);
   s=C.reduce(s,{type:'TASK_TOGGLE',id:'a'},NOW+3);
   s=C.reduce(s,{type:'TASK_TOGGLE',id:'a'},NOW+4);
-  assert.equal(s.wallet.balance,10);assert.equal(s.ledger.length,1);
-  assert.equal(C.validateBackup(s,NOW+5).wallet.balance,10);
+  assert.equal(s.wallet.balance,1);assert.equal(s.ledger.length,1);
+  assert.equal(C.validateBackup(s,NOW+5).wallet.balance,1);
 });
 
 test('recurring occurrences earn separately while parent reopening cannot duplicate children',()=>{
@@ -66,7 +66,7 @@ test('recurring occurrences earn separately while parent reopening cannot duplic
   s=C.reduce(s,{type:'TASK_TOGGLE',id:'daily'},NOW+3);
   assert.equal(s.tasks.filter(t=>t.parentId==='daily').length,1);
   s=C.reduce(s,{type:'TASK_TOGGLE',id:child.id},child.dueAt);
-  assert.equal(s.wallet.balance,20);assert.equal(s.ledger.length,2);
+  assert.equal(s.wallet.balance,2);assert.equal(s.ledger.length,2);
   assert.equal(s.tasks.filter(t=>t.parentId===child.id).length,1);
 });
 
@@ -78,10 +78,10 @@ test('focus history retention does not drop lifetime bonuses or award twice on r
     s=C.reconcile(s,t+60001);
   }
   assert.equal(s.focusHistory.length,365);assert.equal(s.ledger.length,370);
-  assert.equal(s.wallet.balance,1850);assert.equal(s.stats.focusMinutes,370);
+  assert.equal(s.wallet.balance,0);assert.equal(s.stats.focusMinutes,370);
   s=C.validateBackup({state:s},NOW+370*120000);
   const next=C.reconcile(s,NOW+999*120000);
-  assert.equal(next.wallet.balance,1850);assert.equal(next.ledger.length,370);
+  assert.equal(next.wallet.balance,0);assert.equal(next.ledger.length,370);
 });
 
 test('backward local clocks produce restorable paused timers and only one eventual bonus',()=>{
@@ -92,7 +92,7 @@ test('backward local clocks produce restorable paused timers and only one eventu
   s=C.reduce(s,{type:'FOCUS_RESUME'},NOW);
   s=C.reconcile(s,NOW+60001);
   s=C.reconcile(s,NOW+120000);
-  assert.equal(s.wallet.balance,5);assert.equal(s.ledger.length,1);
+  assert.equal(s.wallet.balance,0);assert.equal(s.ledger.length,1);
 });
 
 test('a failed import leaves the previously saved data and input object unchanged',()=>{

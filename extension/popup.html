@@ -1,15 +1,163 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Purrple · Today</title><link rel="stylesheet" href="css/app.css"><link rel="stylesheet" href="css/talk.css"><link rel="stylesheet" href="css/compact.css"></head>
-<body class="compact-body"><div class="compact-shell">
-<header class="compact-header"><button type="button" id="panel-move" class="panel-move" aria-label="Move Purrple’s panel. Drag, or use arrow keys." title="Drag to move. Arrow keys also move the panel." hidden>⠿</button><div class="compact-brand"><strong>Purrple</strong><span id="compact-subtitle">A little company.</span></div><span class="coin-pill" id="compact-coins"><span aria-hidden="true">✧</span><strong id="coin-balance">0</strong><span>coins</span></span><button type="button" id="panel-close" class="compact-close" aria-label="Close Purrple">×</button></header>
-<div id="preview-label" class="compact-preview" hidden>Local preview · native features use Firefox when installed.</div>
-<nav class="compact-nav" aria-label="Purrple’s dashboard"><button type="button" data-compact-view="today" aria-current="page">Today</button><button type="button" data-compact-view="focus">Focus</button><button type="button" data-compact-view="wardrobe">Wardrobe</button><button type="button" data-compact-view="talk">Talk</button></nav>
-<div id="compact-error" class="compact-error" role="alert" hidden></div><div id="compact-loading" class="loading-state">Finding her little spot…</div>
-<main class="compact-main" id="compact-main" hidden>
-<div class="compact-hero" id="compact-hero"><canvas id="compact-canvas" width="400" height="235" role="img" aria-label="Purrple wearing your saved outfit"></canvas><div><h1 id="compact-greeting">A little at a time.</h1><p id="compact-summary">One small thing is a good start.</p><span id="outfit-preview-tag" class="compact-preview-tag" hidden>Trying on</span></div></div>
-<section id="compact-today" class="compact-view" aria-label="Today’s tasks"><form id="compact-task-form" class="compact-add" novalidate><label class="sr-only" for="compact-task-title">New task</label><input id="compact-task-title" maxlength="200" placeholder="A little task to do…" autocomplete="off"><button class="button primary" type="submit" id="compact-task-add">Add</button><div class="compact-effort"><label for="compact-task-effort">Task size</label><select id="compact-task-effort"><option value="small">Small · 10 coins</option><option value="medium" selected>Medium · 20 coins</option><option value="large">Large · 30 coins</option></select><span id="compact-draft-status" role="status"></span></div></form><p id="compact-task-error" class="inline-error" role="alert" hidden></p><div class="compact-section-title"><h2>Your little plans</h2><span id="compact-task-count"></span></div><div id="compact-task-list" class="compact-task-list"></div><button class="text-button compact-more" type="button" id="compact-all-tasks">All tasks & details →</button><div id="compact-focus-summary" class="compact-timer-summary" hidden><span id="compact-focus-summary-text"></span><button type="button" class="text-button" data-compact-go="focus">See timer →</button></div></section>
-<section id="compact-focus" class="compact-view" aria-label="Study together" hidden><div class="compact-timer"><span id="compact-timer-kind">A quiet focus session</span><strong id="compact-timer-display" role="timer" aria-live="off">25:00</strong><p id="compact-timer-caption">Purrple is ready when you are.</p></div><form id="compact-focus-form" novalidate><div class="compact-focus-fields"><div class="field"><label for="compact-minutes">Time together</label><select id="compact-minutes"><option value="5">5 minutes</option><option value="15">15 minutes</option><option value="25" selected>25 minutes</option><option value="45">45 minutes</option></select></div><div class="field"><label for="compact-focus-task">A task <span class="muted">(optional)</span></label><select id="compact-focus-task"><option value="">Just a quiet session</option></select></div></div><button type="submit" class="button primary wide" id="compact-focus-start">Start together</button></form><div id="compact-timer-actions" class="compact-timer-actions" hidden><button type="button" class="button primary" id="compact-focus-pause">Pause</button><button type="button" class="button subtle" id="compact-focus-end">End session</button></div><div class="compact-break-row"><span id="compact-break-label">A little breather?</span><button class="text-button" type="button" id="compact-break-start">5-minute break</button></div><p class="compact-footnote">Finished focus sessions earn 5 coins. No penalties for pauses.</p></section>
-<section id="compact-wardrobe" class="compact-view" aria-label="Purrple’s wardrobe" hidden><div class="compact-outfit-status"><strong id="compact-outfit-heading">Wearing now</strong><p id="compact-outfit-copy">Her everyday little look.</p><button class="text-button" type="button" id="compact-preview-reset" hidden>Back to saved outfit</button></div><div class="compact-wardrobe-search"><label class="sr-only" for="compact-shop-search">Find an accessory</label><input id="compact-shop-search" type="search" placeholder="Find an accessory…" autocomplete="off"><button class="text-button" id="compact-shop-clear" type="button" aria-label="Clear accessory search" hidden>Clear</button></div><div class="compact-shop-filters" aria-label="Accessory filter"><button type="button" data-compact-shop="all" aria-pressed="true">All</button><button type="button" data-compact-shop="owned">Yours</button><button type="button" data-compact-shop="head">Head</button><button type="button" data-compact-shop="neck">Neck</button></div><div id="compact-shop-grid" class="compact-shop-grid"></div></section>
-<section id="compact-talk" class="compact-view" aria-label="Talk with Purrple" hidden><div id="compact-talk-root"></div></section>
-</main><footer class="compact-footer"><button type="button" id="open-app">Full home ↗</button><button type="button" id="open-sidebar">Sidebar</button><label><input id="compact-roam" type="checkbox"><span>Roam</span></label></footer>
-</div><div id="compact-status" class="compact-status" role="status" aria-live="polite" hidden></div>
-<script src="js/talk.js"></script><script src="js/core.js"></script><script src="js/client.js"></script><script src="js/renderer-data.js"></script><script src="js/renderer.js"></script><script src="js/talk-ui.js"></script><script src="js/compact.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
+  <title>Purrple · Today</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/planner.css">
+  <link rel="stylesheet" href="css/companion.css">
+  <link rel="stylesheet" href="css/companion-games.css">
+  <link rel="stylesheet" href="css/companion-v3.css">
+  <link rel="stylesheet" href="css/compact.css">
+  <link rel="preload" href="assets/purrple-study-light-rest.png" as="image">
+  <link rel="preload" href="assets/purrple-study-light-lit.png" as="image">
+  <link rel="preload" href="assets/purrple-study-night-rest.png" as="image">
+  <link rel="preload" href="assets/purrple-study-night-lit.png" as="image">
+<link rel="stylesheet" href="css/ux-details.css">
+<link rel="stylesheet" href="css/command-menu.css"><link rel="stylesheet" href="css/view-transitions.css">
+</head>
+<body class="compact-body">
+  <div class="compact-shell">
+    <header class="compact-header">
+      <button type="button" id="panel-move" class="panel-move" aria-label="Move Purrple’s panel. Drag, or use arrow keys." title="Drag to move. Arrow keys also move the panel." hidden>⠿</button>
+      <div class="compact-brand"><strong>Purrple</strong></div>
+      <span id="preview-label" class="compact-preview" hidden>Local preview</span>
+      <button type="button" id="theme-toggle" class="compact-theme" aria-pressed="false" aria-label="Night mode">Night</button>
+      <span class="coin-pill" id="compact-coins"><span aria-hidden="true">✧</span><strong id="coin-balance">0</strong><span>coins</span></span>
+      <button type="button" id="panel-pin" class="panel-pin" aria-label="Keep panel open" aria-pressed="false" title="Keep this panel open while clicking the webpage" hidden>Pin</button>
+      <button type="button" id="panel-close" class="compact-close" aria-label="Close Purrple">×</button>
+    </header>
+    <nav class="compact-nav" aria-label="Purrple views">
+      <button type="button" data-compact-view="today" aria-current="page">Today</button>
+      <button type="button" data-compact-view="focus">Focus</button>
+      <button type="button" data-compact-view="calendar">Calendar</button>
+      <button type="button" data-compact-view="wardrobe">Wardrobe</button>
+    </nav>
+    <div id="compact-error" class="compact-error" role="alert" hidden></div>
+    <div id="compact-loading" class="loading-state">Opening your plans…</div>
+    <main class="compact-main" id="compact-main" hidden>
+      <div id="compact-focus-summary" class="compact-timer-summary" hidden>
+        <span id="compact-focus-summary-text"></span>
+        <button type="button" class="text-button" id="compact-summary-pause">Pause</button>
+        <button type="button" class="text-button" data-compact-go="focus">Timer</button>
+      </div>
+      <div class="compact-hero" id="compact-hero">
+        <button id="compact-pet" class="compact-pet" type="button" aria-label="Purrple. Open actions." title="Talk, focus, play and care">
+          <canvas id="compact-canvas" width="400" height="235" aria-hidden="true"></canvas>
+        </button>
+        <div class="compact-heading"><p id="compact-summary"></p><h1 id="compact-greeting">Today</h1><span id="outfit-preview-tag" class="compact-preview-tag" hidden>Trying on</span></div>
+        <div class="compact-timer">
+          <span id="compact-timer-kind">Focus</span>
+          <strong id="compact-timer-display" role="timer" aria-live="off">25:00</strong>
+        </div>
+        <section id="compact-pet-menu" class="compact-pet-menu" hidden></section>
+        <div id="compact-pet-speech" class="compact-pet-speech" hidden></div>
+      </div>
+      <section id="compact-today" class="compact-view" aria-label="Today’s tasks">
+        <form id="compact-task-form" class="compact-add" novalidate>
+          <label class="sr-only" for="compact-task-title">New task</label>
+          <input id="compact-task-title" maxlength="200" placeholder="Add a task…" autocomplete="off">
+          <button class="button primary" type="submit" id="compact-task-add">Add</button>
+          <div class="compact-effort">
+            <label for="compact-task-effort">Task size</label>
+            <select id="compact-task-effort"><option value="small" selected>Small</option><option value="medium">Medium</option><option value="large">Large</option></select>
+          </div>
+        </form>
+        <p id="compact-task-error" class="inline-error" role="alert" hidden></p>
+        <div class="compact-section-title">
+          <h2>Tasks <span id="compact-task-count"></span></h2>
+          <div class="compact-task-filters" aria-label="Task filter">
+            <button type="button" data-compact-task-filter="open" aria-pressed="true">To do</button>
+            <button type="button" data-compact-task-filter="done" aria-pressed="false">Done</button>
+          </div>
+        </div>
+        <div id="compact-task-list" class="compact-task-list"></div>
+        <button class="text-button compact-more" type="button" id="compact-all-tasks" hidden>Show more tasks</button>
+      </section>
+      <section id="compact-calendar" class="compact-view" aria-label="Calendar" hidden>
+        <button class="text-button compact-calendar-expand" type="button" id="compact-calendar-expand">Full calendar ↗</button>
+        <div id="compact-calendar-content"></div>
+      </section>
+      <section id="compact-companion" class="compact-view" aria-label="Purrple activities" hidden>
+        <div id="compact-companion-content"></div>
+      </section>
+      <section id="compact-focus" class="compact-view" aria-label="Focus" hidden>
+        <form id="compact-focus-form" novalidate>
+          <div class="compact-focus-fields">
+            <div class="field"><label for="compact-minutes">Minutes (1–240)</label><input type="number" id="compact-minutes" min="1" max="240" value="25" required></div>
+            <div class="field"><label for="compact-focus-task">Task <span class="muted">(optional)</span></label><select id="compact-focus-task"><option value="">Just a quiet session</option></select></div>
+            <div class="field"><label for="compact-focus-intention">Next small step <span class="muted">(optional)</span></label><input id="compact-focus-intention" maxlength="160"></div>
+          </div>
+          <button type="submit" class="button primary wide" id="compact-focus-start">Start focus</button>
+        </form>
+        <div id="compact-timer-actions" class="compact-timer-actions" hidden>
+          <button type="button" class="button primary" id="compact-focus-pause">Pause</button>
+          <button type="button" class="button subtle" id="compact-focus-end">End session</button>
+        </div>
+        <p id="compact-focus-active-task" class="compact-focus-detail" hidden></p>
+        <form id="compact-focus-park" hidden>
+          <label for="compact-focus-note">Park a thought</label>
+          <div class="compact-note-input"><input id="compact-focus-note" maxlength="200" required><button class="button subtle" type="submit">Park</button></div>
+          <ul id="compact-focus-notes" hidden></ul>
+        </form>
+        <div class="compact-break-row"><span id="compact-break-label">Take a break?</span><button class="text-button" type="button" id="compact-break-start">5-minute break</button></div>
+        <p class="compact-footnote" id="compact-focus-earned" role="status"></p>
+        <section id="compact-focus-wrap" class="compact-focus-wrap" aria-label="Session wrap-up" hidden></section>
+      </section>
+      <section id="compact-wardrobe" class="compact-view" aria-label="Purrple’s wardrobe" hidden>
+        <div class="compact-outfit-status">
+          <strong id="compact-outfit-heading">Wearing now</strong>
+          <p id="compact-outfit-copy"></p>
+          <div id="compact-worn-items"></div>
+          <button class="text-button" type="button" id="compact-preview-reset" hidden>Back to saved outfit</button>
+        </div>
+        <div class="compact-wardrobe-search">
+          <label class="sr-only" for="compact-shop-search">Find an accessory</label>
+          <input id="compact-shop-search" type="search" placeholder="Find an accessory…" autocomplete="off">
+          <button class="text-button" id="compact-shop-clear" type="button" aria-label="Clear accessory search" hidden>Clear</button>
+        </div>
+        <div class="compact-shop-filters" id="compact-shop-filters" aria-label="Accessory filter"></div>
+        <div id="compact-shop-grid" class="compact-shop-grid"></div>
+      </section>
+    </main>
+    <footer class="compact-footer">
+      <button type="button" id="open-app">Dashboard ↗</button>
+      <button type="button" id="open-sidebar">Side panel</button>
+      <button type="button" id="compact-reshow">Show here</button>
+      <label><input id="compact-roam" type="checkbox"><span>Roam</span></label>
+    </footer>
+  </div>
+  <dialog id="compact-task-dialog" aria-labelledby="compact-edit-heading">
+    <form class="dialog-form" id="compact-task-edit-form">
+      <div class="dialog-heading"><h2 id="compact-edit-heading">Edit task</h2><button class="icon-button" type="button" id="compact-task-edit-close" aria-label="Close task editor">×</button></div>
+      <div class="field"><label for="compact-edit-title">Task name</label><input id="compact-edit-title" maxlength="200" required></div>
+      <div class="field"><label for="compact-edit-due-date">Due date</label><input id="compact-edit-due-date" type="date" min="1900-01-01" max="9998-12-31"></div>
+      <div class="two-fields">
+        <div class="field"><label for="compact-edit-priority">Priority</label><select id="compact-edit-priority"><option value="normal">Normal</option><option value="high">High</option></select></div>
+        <div class="field"><label for="compact-edit-effort">Task size</label><select id="compact-edit-effort"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select></div>
+      </div>
+      <p id="compact-task-edit-error" class="inline-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button type="button" id="compact-task-edit-cancel" class="button subtle">Cancel</button><button type="submit" id="compact-task-edit-save" class="button primary">Save task</button></div>
+    </form>
+  </dialog>
+  <div id="compact-status" class="compact-status" role="status" aria-live="polite" hidden></div>
+  <script src="js/talk.js"></script>
+  <script src="js/planner-calendar.js"></script>
+  <script src="js/wardrobe-v2.js"></script>
+  <script src="js/companion-domain.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/client.js"></script>
+  <script src="js/renderer-data.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/pet-menu.js"></script>
+  <script src="js/planner-ui.js"></script>
+  <script src="js/companion-games.js"></script>
+  <script src="js/companion-ui.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/view-transitions.js"></script><script src="js/compact.js"></script>
+  <script src="js/compact-companion.js"></script>
+<script src="js/planner-loading.js"></script>
+<script src="js/command-menu.js"></script>
+</body>
+</html>

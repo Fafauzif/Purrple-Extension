@@ -20,3 +20,42 @@ test('neckwear uses a source registration and a band pivot rather than the torso
  assert(curl.neckFit.x<curl.neck[0]-9 && curl.neckFit.scale[0]<.7);
  for(const item of Object.values(A.items).filter(item=>item.slot==='neck'))assert(item.pivot[1]>0&&item.pivot[1]<.25);
 });
+
+test('silhouette registration covers every approved source frame', () => {
+ for (const [id, asset] of Object.entries(A.sprites)) {
+  const anchors = A.registration[id];
+  assert.equal(anchors.length, asset.frames.length, id);
+  for (const [x, upperY, centerY] of anchors) {
+   assert(x > 0 && x < 256 && upperY > 0 && upperY < centerY && centerY < 256, id);
+  }
+ }
+});
+
+test('the turn holds a neutral drawing through the pivot and eases out to a profile', () => {
+ const timeline = R.timeline('turn');
+ const middle = R.frameAt('turn', R.durationFor('turn') / 2);
+ assert.equal(middle.key, 0);
+ assert(timeline[5].ms > timeline[4].ms);
+ assert.equal(R.frameAt('turn', 0).key, 5);
+ assert.equal(R.frameAt('turn', R.durationFor('turn')).key, 6);
+});
+
+test('the showcase chase leads through walking into the crouched play pose', () => {
+ const sourceOrder = R.timeline('chase').flatMap(({ source }, index, beats) =>
+   index === 0 || beats[index - 1].source !== source ? [source] : []);
+ assert.deepEqual(Array.from(sourceOrder), ['run', 'walk', 'toy']);
+});
+
+test('actor size is expressed in rendered CSS pixels across different canvas resolutions', () => {
+ const canvas=(width,height,cssWidth,cssHeight)=>({
+  width,height,getBoundingClientRect:()=>({width:cssWidth,height:cssHeight})
+ });
+ assert.equal(R.characterSize(undefined),128);
+ assert.equal(R.characterSize(900),256);
+ assert.equal(R.characterSize(1),64);
+ assert.equal(R.surfaceSize(canvas(600,440,300,220),128,418)*.5,128);
+ assert.equal(R.surfaceSize(canvas(320,270,288,243),128,261)*.9,128);
+ assert(Math.abs(R.surfaceSize(canvas(400,235,68,39.95),128,222,{miniature:true})*.17-38.4)<.25);
+ assert.equal(R.surfaceSize(canvas(400,235,0,0),128,222),0);
+ assert(R.surfaceSize(canvas(320,270,120,101.25),256,261)*.375<128);
+});

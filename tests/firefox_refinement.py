@@ -14,7 +14,7 @@ SHADOW='shadow-6066-11e4-a52e-4f735466cecf'
 
 def main():
     OUT.mkdir(parents=True,exist_ok=True);native.OUT=OUT
-    report={'version':'1.1.0','native_extension':True,'mocked_apis':False,'scope':'Native Firefox WebDriver user flows, privileged closed-shadow inspection, real 60-second alarm','checks':[]}
+    report={'version':json.loads((ROOT/'extension/manifest.json').read_text())['version'],'native_extension':True,'mocked_apis':False,'scope':'Native Firefox WebDriver user flows, privileged closed-shadow inspection, real 60-second alarm','checks':[]}
     def check(name,value,detail=None):
         report['checks'].append({'check':name,'pass':bool(value),'detail':detail});print(('PASS ' if value else 'FAIL ')+name,flush=True)
     d=None;server=None
@@ -29,8 +29,8 @@ def main():
         return 'moz-extension://'+uuid+'/',aid
     def popup(base):
         d.navigate(base+'popup.html');d.wait("return globalThis.PurrpleCompact?.getState() && !document.getElementById('compact-main').hidden",timeout=35)
-    def app(base):
-        d.navigate(base+'app.html');d.wait("return globalThis.PurrpleUI?.getState() && !document.getElementById('main').hidden",timeout=35)
+    def app(base,route=''):
+        d.navigate(base+'app.html'+route);d.wait("return globalThis.PurrpleUI?.getState() && !document.getElementById('main').hidden",timeout=35)
     def shadow():
         host=d.command('/element',{'using':'css selector','value':'purrple-companion'})
         return d.command('/element/'+host[native.ELEMENT]+'/shadow',method='GET')[SHADOW]
@@ -51,20 +51,25 @@ def main():
         d.wait("return globalThis.PurrpleCompact?.getState() && !document.getElementById('compact-main').hidden",timeout=30)
     def top():d.command('/window',{'handle':d.top_handle})
     def reopen_panel(talk=False):
-        sc('.paw');sc('[data-action="talk" ]' if talk else '[data-action="dashboard"]');frame()
+        sc('.actor')
+        sc('[data-action="today"]')
+        frame()
+        if talk:
+            d.click('#compact-pet')
+            d.click('#compact-pet-menu [data-action=talk]')
     try:
         # A real version-1.0 profile was copied before this implementation loaded.
         upgrade=ROOT/'qa-runtime/upgrade-v1-profile'
         if upgrade.exists():
             base,aid=install(upgrade);popup(base);old=d.state()
-            check('version-1-save-preserved-on-1-1-install',old['version']==1 and old['wallet']['balance']==15 and old['equipped']['head']=='moon-bow' and 'moon-bow' in old['owned'] and len(old['focusHistory'])==1,{'balance':old['wallet']['balance'],'equipped':old['equipped'],'focusHistory':len(old['focusHistory'])})
+            check('version-1-save-preserved-on-1-1-install',old['version']==d.js('return PurrpleCore.VERSION') and old['wallet']['balance']==15 and old['equipped']['head']=='moon-bow' and 'moon-bow' in old['owned'] and len(old['focusHistory'])==1,{'balance':old['wallet']['balance'],'equipped':old['equipped'],'focusHistory':len(old['focusHistory'])})
             check('old-save-talk-defaults-migrate-without-data-loss',d.action('TALK_REPLY',promptId='love-you').get('ok'))
             d.close();d=None
         else:
             report.setdefault('skipped',[]).append({'check':'version-1-save-upgrade','reason':'Optional prior-version browser profile is not present; no upgrade verification claimed.'})
         profile=ROOT/'qa-runtime/refinement-profile'
         if profile.exists():shutil.rmtree(profile)
-        base,aid=install(profile);check('native-1-1-install',aid=='purrple-companion@purrple.local')
+        base,aid=install(profile);check('native-extension-installs',aid=='purrple-companion@purrple.local')
         popup(base)
         check('compact-native-not-preview',d.js('return PurrpleClient.native && document.getElementById("preview-label").hidden'))
         check('fresh-state-no-invented-tasks-or-coins',not d.state()['tasks'] and d.state()['wallet']['balance']==0)
@@ -78,25 +83,30 @@ def main():
         d.click('#compact-task-add');d.wait('return PurrpleCompact.getState().tasks.length===1')
         first=d.state()['tasks'][0];check('native-compact-form-task-created',first['title']=='Draft closed immediately, without pressing save')
         check('native-committed-task-clears-draft',d.state()['drafts']['quickTask']=='')
-        app(base);d.click('[data-action="edit-task"]');d.wait('return document.getElementById("task-dialog").open')
+        app(base)
+        if d.js('return !!document.querySelector(".task-actions > summary")'):d.click('.task-actions > summary')
+        d.click('[data-action="edit-task"]');d.wait('return document.getElementById("task-dialog").open')
         d.fill('#task-title','Edited in full home, seen in compact');d.click('#save-task');d.wait('return !document.getElementById("task-dialog").open')
         popup(base);check('native-two-surface-task-edit-shared',d.state()['tasks'][0]['title']=='Edited in full home, seen in compact' and 'Edited in full home' in d.js('return document.getElementById("compact-task-list").textContent'))
-        d.click('[data-compact-action="complete"]');d.wait('return PurrpleCompact.getState().wallet.balance===20')
-        check('native-compact-completion-earns-twenty',d.state()['wallet']['balance']==20)
+        task_coins=d.js('return PurrpleCore.EFFORT[arguments[0]]',first['effort'])
+        d.click('[data-compact-action="complete"]');d.wait('return PurrpleCompact.getState().wallet.balance==='+str(task_coins))
+        check('native-compact-completion-earns-task-reward',d.state()['wallet']['balance']==task_coins)
         dedup=d.async_js('const done=arguments[arguments.length-1];Promise.all(Array.from({length:6},()=>browser.runtime.sendMessage({type:"ACTION",requestId:"same-native-refinement",action:{type:"TASK_TOGGLE",id:arguments[0]}}))).then(done);',first['id'])
-        check('native-duplicate-request-no-reward-farming',d.state()['wallet']['balance']==20 and sum(l.get('ref')==first['id'] and l['amount']>0 for l in d.state()['ledger'])==1)
+        check('native-duplicate-request-no-reward-farming',d.state()['wallet']['balance']==task_coins and sum(l.get('ref')==first['id'] and l['amount']>0 for l in d.state()['ledger'])==1)
         before=d.state();invalid=d.action('BACKUP_IMPORT',backup={'app':'Purrple','state':{'version':999}})
         check('native-invalid-import-preserves-save',not invalid.get('ok') and d.state()==before)
-        for i in range(40):
-            r=d.action('TASK_ADD',title='Outfit QA '+str(i),effort='large');task=next(t for t in r['state']['tasks'] if t['title']=='Outfit QA '+str(i));d.action('TASK_TOGGLE',id=task['id'])
         items=d.js('return PurrpleCore.CATALOG')
+        large_coins=d.js('return PurrpleCore.EFFORT.large')
+        task_count=(sum(item['price'] for item in items)+large_coins-1)//large_coins
+        for i in range(task_count):
+            r=d.action('TASK_ADD',title='Outfit QA '+str(i),effort='large');task=next(t for t in r['state']['tasks'] if t['title']=='Outfit QA '+str(i));d.action('TASK_TOGGLE',id=task['id'])
         for item in items:d.action('SHOP_BUY',id=item['id'])
-        check('native-fifteen-permanent-purchases',len(d.state()['owned'])==15)
+        check('native-all-wardrobe-purchases-retained',len(d.state()['owned'])==len(items))
         d.click('[data-compact-view="wardrobe"]');d.click('[data-compact-action="try"][data-id="cozy-beanie"]')
         check('native-try-on-keeps-save-unequipped',d.state()['equipped']['head'] is None)
         d.click('[data-compact-action="wear"][data-id="cozy-beanie"]');d.wait('return PurrpleCompact.getState().equipped.head==="cozy-beanie"')
         d.click('[data-compact-action="wear"][data-id="star-bandana"]');d.wait('return PurrpleCompact.getState().equipped.neck==="star-bandana"')
-        check('native-head-neck-combined-outfit',d.state()['equipped']=={'head':'cozy-beanie','neck':'star-bandana'})
+        check('native-head-neck-combined-outfit',d.state()['equipped']['head']=='cozy-beanie' and d.state()['equipped']['neck']=='star-bandana')
         d.screenshot('compact-wardrobe-native.png')
         d.click('[data-compact-view="today"]')
         d.js('const e=document.getElementById("compact-task-effort");e.value="large";e.dispatchEvent(new Event("change",{bubbles:true}));')
@@ -105,19 +115,21 @@ def main():
         check('native-immediate-draft-close-keeps-title-and-large-size',d.js('return document.getElementById("compact-task-title").value==="A large draft remembers its size" && document.getElementById("compact-task-effort").value==="large"'))
         draft_balance=d.state()['wallet']['balance'];d.click('#compact-task-add');d.wait('return PurrpleCompact.getState().tasks.some(t=>t.title==="A large draft remembers its size")')
         large=next(t for t in d.state()['tasks'] if t['title']=='A large draft remembers its size')
-        d.click('[data-compact-action="complete"][data-id="'+large['id']+'"]');d.wait('return PurrpleCompact.getState().wallet.balance==='+str(draft_balance+30))
-        check('native-restored-large-draft-earns-thirty',d.state()['wallet']['balance']==draft_balance+30 and large['effort']=='large')
-        d.click('[data-compact-view="talk"]');d.fill('[data-talk-search]','I love you');d.click('[data-talk-send="love-you"]');d.wait('return PurrpleCompact.getState().talk.last?.promptId==="love-you"')
-        firstreply=d.state()['talk']['last'];d.click('[data-talk-send="love-you"]');d.wait('return PurrpleCompact.getState().talk.last.text!==arguments[0]' if False else 'return PurrpleCompact.getState().talk.last.id!=='+json.dumps(firstreply['id']))
+        d.click('[data-compact-action="complete"][data-id="'+large['id']+'"]');d.wait('return PurrpleCompact.getState().wallet.balance==='+str(draft_balance+large_coins))
+        check('native-restored-large-draft-earns-large-reward',d.state()['wallet']['balance']==draft_balance+large_coins and large['effort']=='large')
+        app(base,'#talk');d.fill('[data-talk-search]','I love you');d.click('[data-talk-send="love-you"]');d.wait('return PurrpleUI.getState().talk.last?.promptId==="love-you"')
+        firstreply=d.state()['talk']['last'];d.click('[data-talk-send="love-you"]');d.wait('return PurrpleUI.getState().talk.last.id!=='+json.dumps(firstreply['id']))
         check('native-talk-rotates-local-authored-replies',d.state()['talk']['last']['text']!=firstreply['text'])
-        d.click('[data-talk-favorite="love-you"]');d.wait('return PurrpleCompact.getState().talk.favorites.includes("love-you")')
-        popup(base);d.click('[data-compact-view="talk"]');check('native-talk-history-and-favorite-survive-reopen',len(d.state()['talk']['history'])==2 and 'love-you' in d.state()['talk']['favorites'])
-        d.screenshot('compact-talk-native.png')
+        d.click('[data-talk-favorite="love-you"]');d.wait('return PurrpleUI.getState().talk.favorites.includes("love-you")')
+        app(base,'#talk');check('native-talk-history-and-favorite-survive-reopen',len(d.state()['talk']['history'])==2 and 'love-you' in d.state()['talk']['favorites'])
+        d.screenshot('conversation-library-native.png')
+        popup(base)
         d.click('[data-compact-view="focus"]');d.click('#compact-focus-start');d.wait('return PurrpleCompact.getState().focus?.status==="running"')
         d.click('#compact-focus-pause');d.wait('return PurrpleCompact.getState().focus?.status==="paused"');remain=d.state()['focus']['remainingMs'];popup(base)
         check('native-compact-paused-focus-persists',d.state()['focus']['status']=='paused' and d.state()['focus']['remainingMs']==remain)
         d.click('[data-compact-view="focus"]');d.click('#compact-focus-pause');d.wait('return PurrpleCompact.getState().focus?.status==="running"');d.click('#compact-focus-end');d.wait('return !PurrpleCompact.getState().focus')
         check('native-compact-focus-resume-and-cancel',d.state()['focus'] is None)
+        minute_reward=d.js('return PurrpleCore.focusReward(60000)')
         started=d.action('FOCUS_START',minutes=1,taskId=None);end=started['state']['focus']['endsAt'];balance=started['state']['wallet']['balance'];timer_start=time.monotonic()
         check('native-real-alarm-scheduled',any(a['name']=='purrple-next' for a in d.async_js('const done=arguments[arguments.length-1];browser.alarms.getAll().then(done);')))
         d.close();d=None;base,aid=install(profile);popup(base)
@@ -139,10 +151,10 @@ def main():
         check('native-panel-close-restores-cat-focus',inside('.actor','return arguments[0].getRootNode().activeElement===arguments[0];'))
         reopen_panel();check('native-floating-immediate-close-keeps-draft',d.js('return document.getElementById("compact-task-title").value')=='Floating draft, closed in the same breath')
         d.click('#panel-close');top();time.sleep(.15);check('native-iframe-close-button-handshake',inside('.panel'))
-        reopen_panel(True);d.fill('[data-talk-search]','I love you');d.click('[data-talk-send="love-you"]');d.wait('return PurrpleCompact.getState().talk.history.length===3');tokenURL=d.js('return location.href');top();time.sleep(.15)
+        reopen_panel(True);d.click('#compact-pet-menu [data-action=joke]');d.wait('return PurrpleCompact.getState().talk.history.length===3');tokenURL=d.js('return location.href');top();time.sleep(.15)
         check('native-floating-talk-same-saved-history',not inside('.panel'))
         d.screenshot('floating-talk-native.png')
-        sc('.panel-close');check('native-outer-close-removes-private-frame',inside('.panel','return !arguments[0].querySelector("iframe");'))
+        frame();d.click('#panel-close');top();time.sleep(.15);check('native-close-removes-private-frame',inside('.panel','return !arguments[0].querySelector("iframe");'))
         # A page can request public popup resources, but cannot authorize itself.
         d.js('const f=document.createElement("iframe");f.id="host-forged";f.src=arguments[0];document.body.append(f);',base+'popup.html?panel=1')
         fake=d.command('/element',{'using':'css selector','value':'#host-forged'});d.command('/frame',{'id':fake});d.wait('return document.getElementById("compact-error") && !document.getElementById("compact-error").hidden')
@@ -170,10 +182,10 @@ def main():
         check('native-hidden-host-and-unhide',not ownership.get('hidden',{}).get('active') and ownership.get('visible',{}).get('active'))
         while time.monotonic()-timer_start<62:time.sleep(min(2,62-(time.monotonic()-timer_start)))
         raw=d.async_js('const done=arguments[arguments.length-1];browser.storage.local.get("purrpleState").then(x=>done(x.purrpleState));')
-        check('native-real-minute-alarm-completes-without-ui-reconcile',raw['focus'] is None and raw['wallet']['balance']==balance+5 and len(raw['focusHistory'])==1)
-        d.action('FOCUS_FINISH');check('native-focus-bonus-remains-once',d.state()['wallet']['balance']==balance+5)
+        check('native-real-minute-alarm-completes-without-ui-reconcile',raw['focus'] is None and raw['wallet']['balance']==balance+minute_reward and len(raw['focusHistory'])==1)
+        d.action('FOCUS_FINISH');check('native-focus-bonus-remains-once',d.state()['wallet']['balance']==balance+minute_reward)
         backup=d.message({'type':'BACKUP_EXPORT'});restored=d.action('BACKUP_IMPORT',backup=backup['backup'])
-        check('native-talk-outfit-draft-backup-roundtrip',restored.get('ok') and restored['state']['equipped']=={'head':'cozy-beanie','neck':'star-bandana'} and len(restored['state']['talk']['history'])==3 and restored['state']['drafts']['quickTask']=='Floating draft, closed in the same breath' and restored['state']['drafts']['quickEffort']=='large')
+        check('native-talk-outfit-draft-backup-roundtrip',restored.get('ok') and restored['state']['equipped']['head']=='cozy-beanie' and restored['state']['equipped']['neck']=='star-bandana' and len(restored['state']['talk']['history'])==3 and restored['state']['drafts']['quickTask']=='Floating draft, closed in the same breath' and restored['state']['drafts']['quickEffort']=='large')
         d.command('/moz/context',{'context':'chrome'});errors=d.js('return Services.console.getMessageArray().filter(m=>m.sourceName && m.sourceName.startsWith(arguments[0]) && m.errorMessage).map(m=>({message:m.errorMessage,source:m.sourceName,line:m.lineNumber}));',base)
         check('native-no-extension-script-errors',not errors,errors)
         report['script_errors']=errors

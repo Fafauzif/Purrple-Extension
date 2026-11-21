@@ -4,16 +4,16 @@ const C=require('../extension/js/core.js');
 const NOW=Date.parse('2026-11-15T09:00:00Z');
 const fresh=()=>C.defaultState(NOW);
 const add=(s,patch={})=>C.reduce(s,{type:'TASK_ADD',title:'Read one chapter',...patch},NOW);
-test('catalog has fifteen distinct correctly slotted permanent items',()=>{
- assert.equal(C.CATALOG.length,15);assert.equal(new Set(C.CATALOG.map(i=>i.id)).size,15);
- assert.ok(C.CATALOG.every(i=>['head','neck'].includes(i.slot)&&i.price>=20&&i.price<=150));
+test('catalog keeps existing items and validates every slot and price',()=>{
+ assert.equal(C.CATALOG.length,23);assert.equal(new Set(C.CATALOG.map(i=>i.id)).size,23);
+ assert.ok(C.CATALOG.every(i=>C.SLOTS.includes(i.slot)&&i.price>=5&&i.price<=16));
 });
 test('task mutation is immutable and validated',()=>{
  const s=fresh(),t=add(s,{subtasks:['Open book','Read']});assert.equal(s.tasks.length,0);assert.equal(t.tasks.length,1);
  assert.equal(t.tasks[0].subtasks.length,2);assert.throws(()=>add(s,{title:' '}));assert.throws(()=>add(s,{effort:'huge'}));
  assert.throws(()=>C.reduce(t,{type:'TASK_ADD',id:t.tasks[0].id,title:'Duplicate'},NOW));
 });
-test('completion grants10/20/30 and reopening cannot farm coins',()=>{
+test('completion grants 1/2/3 and reopening cannot farm coins',()=>{
  for(const effort of ['small','medium','large']){
   let s=add(fresh(),{effort}),id=s.tasks[0].id;
   for(let i=0;i<5;i++){s=C.reduce(s,{type:'TASK_TOGGLE',id},NOW+i*2);s=C.reduce(s,{type:'TASK_TOGGLE',id},NOW+i*2+1);}
@@ -24,9 +24,9 @@ test('absolute completion from two stale surfaces remains completed and rewards 
  let s=add(fresh()),id=s.tasks[0].id;
  s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW);
  s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW+1);
- assert.equal(s.tasks[0].done,true);assert.equal(s.wallet.balance,10);assert.equal(s.ledger.length,1);
+ assert.equal(s.tasks[0].done,true);assert.equal(s.wallet.balance,1);assert.equal(s.ledger.length,1);
  s=C.reduce(s,{type:'TASK_SET_DONE',id,done:false},NOW+2);s=C.reduce(s,{type:'TASK_SET_DONE',id,done:false},NOW+3);
- assert.equal(s.tasks[0].done,false);assert.equal(s.wallet.balance,10);
+ assert.equal(s.tasks[0].done,false);assert.equal(s.wallet.balance,1);
  assert.throws(()=>C.reduce(s,{type:'TASK_SET_DONE',id},NOW));
 });
 test('recurring occurrences get unique rewards, reset subtasks and skip stale backlog',()=>{
@@ -34,17 +34,37 @@ test('recurring occurrences get unique rewards, reset subtasks and skip stale ba
  const old=s.tasks[0].id;s=C.reduce(s,{type:'TASK_TOGGLE',id:old},NOW);
  assert.equal(s.tasks.length,2);assert.equal(s.tasks[1].parentId,old);assert.ok(s.tasks[1].dueAt>NOW);assert.equal(s.tasks[1].subtasks[0].done,false);
  s=C.reduce(s,{type:'TASK_TOGGLE',id:old},NOW);s=C.reduce(s,{type:'TASK_TOGGLE',id:old},NOW);assert.equal(s.tasks.length,2);
- s=C.reduce(s,{type:'TASK_TOGGLE',id:s.tasks[1].id},NOW);assert.equal(s.wallet.balance,20);assert.equal(s.tasks.length,3);
+ s=C.reduce(s,{type:'TASK_TOGGLE',id:s.tasks[1].id},NOW);assert.equal(s.wallet.balance,2);assert.equal(s.tasks.length,3);
 });
 test('archive can be restored without data loss or an extra reward',()=>{
  let s=add(fresh()),id=s.tasks[0].id;s=C.reduce(s,{type:'TASK_ARCHIVE',id},NOW);
  assert.throws(()=>C.reduce(s,{type:'TASK_TOGGLE',id},NOW));
  s=C.reduce(s,{type:'TASK_ARCHIVE',id,archived:false},NOW);assert.equal(s.tasks[0].archived,false);
 });
+test('undo refuses to overwrite a newer task and restores the archived priority',()=>{
+ let s=add(fresh()),id=s.tasks[0].id;
+ s=C.reduce(s,{type:'TASK_PLAN_PRIORITY',id,enabled:true},NOW+1);
+ s=C.reduce(s,{type:'TASK_ARCHIVE',id,archived:true},NOW+2);
+ assert.deepEqual(s.priorities,[]);
+ const restore={type:'TASK_ARCHIVE',id,archived:false,expectedUpdatedAt:NOW+2,restorePriorityIndex:0};
+ assert.deepEqual(C.reduce(s,restore,NOW+3).priorities,[id]);
+ s=C.reduce(s,{type:'TASK_UPDATE',id,patch:{title:'Changed later'}},NOW+4);
+ assert.throws(()=>C.reduce(s,restore,NOW+5),/changed after archiving/);
+ s=C.reduce(s,{type:'TASK_ARCHIVE',id,archived:false},NOW+6);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW+7);
+ const undoDone={type:'TASK_SET_DONE',id,done:false,expectedUpdatedAt:NOW+7};
+ assert.equal(C.reduce(s,undoDone,NOW+8).tasks[0].done,false);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:false},NOW+9);
+ s=C.reduce(s,{type:'TASK_SET_DONE',id,done:true},NOW+10);
+ assert.throws(()=>C.reduce(s,undoDone,NOW+11),/changed after completion/);
+ assert.equal(s.wallet.balance,1);
+});
 test('purchase is idempotent, debit is atomic and outfits require ownership',()=>{
  let s=add(fresh(),{effort:'large'});s=C.reduce(s,{type:'TASK_TOGGLE',id:s.tasks[0].id},NOW);
- s=C.reduce(s,{type:'SHOP_BUY',id:'moon-bow'},NOW);assert.equal(s.wallet.balance,10);
- s=C.reduce(s,{type:'SHOP_BUY',id:'moon-bow'},NOW);assert.equal(s.wallet.balance,10);
+ s=add(add(s,{effort:'large'}));
+ for(const item of s.tasks.slice(1))s=C.reduce(s,{type:'TASK_SET_DONE',id:item.id,done:true},NOW);
+ s=C.reduce(s,{type:'SHOP_BUY',id:'moon-bow'},NOW);assert.equal(s.wallet.balance,1);
+ s=C.reduce(s,{type:'SHOP_BUY',id:'moon-bow'},NOW);assert.equal(s.wallet.balance,1);
  s=C.reduce(s,{type:'EQUIP',slot:'head',id:'moon-bow'},NOW);assert.equal(s.equipped.head,'moon-bow');
  assert.throws(()=>C.reduce(s,{type:'SHOP_BUY',id:'cozy-beanie'},NOW));
  assert.throws(()=>C.reduce(s,{type:'EQUIP',slot:'neck',id:'moon-bow'},NOW));
@@ -61,15 +81,15 @@ test('focus completion is clock-based and grants once after restart catchup',()=
  let s=C.reduce(fresh(),{type:'FOCUS_START',minutes:1},NOW);
  assert.throws(()=>C.reduce(s,{type:'FOCUS_FINISH'},NOW+30000));
  s=C.reconcile(JSON.parse(JSON.stringify(s)),NOW+61000);
- assert.equal(s.focus,null);assert.equal(s.wallet.balance,5);assert.equal(s.stats.focusMinutes,1);
- s=C.reconcile(s,NOW+90000);s=C.reduce(s,{type:'FOCUS_FINISH'},NOW+90001);assert.equal(s.wallet.balance,5);
+ assert.equal(s.focus,null);assert.equal(s.wallet.balance,0);assert.equal(s.stats.focusMinutes,1);
+ s=C.reconcile(s,NOW+90000);s=C.reduce(s,{type:'FOCUS_FINISH'},NOW+90001);assert.equal(s.wallet.balance,0);
 });
 test('paused timers do not elapse and resume excludes paused time',()=>{
  let s=C.reduce(fresh(),{type:'FOCUS_START',minutes:1},NOW);
  s=C.reduce(s,{type:'FOCUS_PAUSE'},NOW+20000);assert.equal(s.focus.remainingMs,40000);
  s=C.reconcile(s,NOW+200000);assert.equal(s.focus.remainingMs,40000);assert.equal(s.wallet.balance,0);
  s=C.reduce(s,{type:'FOCUS_RESUME'},NOW+200000);assert.equal(s.focus.endsAt,NOW+240000);
- s=C.reconcile(s,NOW+240001);assert.equal(s.wallet.balance,5);
+ s=C.reconcile(s,NOW+240001);assert.equal(s.wallet.balance,0);
 });
 test('backward clock movement cannot extend a paused session beyond its configured duration',()=>{
  let s=C.reduce(fresh(),{type:'FOCUS_START',minutes:1},NOW);
@@ -83,7 +103,7 @@ test('cancel and breaks do not grant focus rewards',()=>{
  s=C.reduce(s,{type:'BREAK_START',minutes:1},NOW);s=C.reconcile(s,NOW+61000);assert.equal(s.wallet.balance,0);assert.equal(s.focusHistory[0].kind,'break');
 });
 test('due reminders respect snooze, acknowledgment, archive and quiet hours',()=>{
- let s=add(fresh(),{dueAt:NOW-1000}),id=s.tasks[0].id;assert.equal(C.reminders(s,NOW).length,1);
+ let s=add(fresh(),{dueAt:NOW-1000}),id=s.tasks[0].id;s=C.reduce(s,{type:'SETTINGS',patch:{notifications:true}},NOW);assert.equal(C.reminders(s,NOW).length,1);
  s=C.reduce(s,{type:'REMINDER_SNOOZE',id,minutes:10},NOW);assert.equal(C.reminders(s,NOW+1000).length,0);
  assert.equal(C.reminders(s,NOW+600001).length,1);
  s=C.reduce(s,{type:'REMINDER_NOTIFIED',id},NOW+600002);assert.equal(C.reminders(s,NOW+700000).length,0);
@@ -102,16 +122,18 @@ test('settings validation protects nested fields and normalizes hidden sites',()
 });
 test('backup roundtrip preserves progress, ownership, subtasks and timer',()=>{
  let s=add(fresh(),{effort:'large',subtasks:['Read']});s=C.reduce(s,{type:'TASK_TOGGLE',id:s.tasks[0].id},NOW);
+ s=add(add(s,{effort:'large'}));
+ for(const item of s.tasks.slice(1))s=C.reduce(s,{type:'TASK_SET_DONE',id:item.id,done:true},NOW);
  s=C.reduce(s,{type:'SHOP_BUY',id:'moon-bow'},NOW);s=C.reduce(s,{type:'EQUIP',slot:'head',id:'moon-bow'},NOW);
  s=C.reduce(s,{type:'FOCUS_START',minutes:25},NOW);
  const restored=C.validateBackup(JSON.stringify({app:'Purrple',state:s}),NOW+1000);
- assert.equal(restored.wallet.balance,10);assert.deepEqual(restored.owned,['moon-bow']);assert.equal(restored.equipped.head,'moon-bow');assert.equal(restored.focus.remainingMs,1499000);
+ assert.equal(restored.wallet.balance,1);assert.deepEqual(restored.owned,['moon-bow']);assert.equal(restored.equipped.head,'moon-bow');assert.equal(restored.focus.remainingMs,1499000);
 });
 test('invalid and inconsistent backups fail without modifying existing data',()=>{
  const s=add(fresh());const bad=structuredClone(s);bad.wallet.balance=100;
  assert.throws(()=>C.validateBackup(bad,NOW));assert.equal(s.wallet.balance,0);
  assert.throws(()=>C.validateBackup('{broken',NOW));
- const newer=structuredClone(s);newer.version=2;assert.throws(()=>C.validateBackup(newer,NOW));
+ const newer=structuredClone(s);newer.version=3;assert.throws(()=>C.validateBackup(newer,NOW));
  const duplicates=structuredClone(s);duplicates.tasks.push({...duplicates.tasks[0]});assert.throws(()=>C.validateBackup(duplicates,NOW));
 });
 test('backup rejects canonical ID collisions after whitespace normalization',()=>{

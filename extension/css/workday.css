@@ -1,0 +1,74 @@
+:root {
+  --paper: #faf7f4;
+  --surface: #fffdfb;
+  --purple: #694484;
+  --purple-dark: #382b3c;
+  --muted: #65586a;
+  --line: #e6dce5;
+  --lilac: #eee4f4;
+  --radius: 16px;
+}
+.app-header { min-height: 76px; }
+.brand { font-size: 29px; }
+.brand-paw { width: 35px; height: 35px; }
+.main-nav { padding: 13px 0; }
+.main-nav button { min-height: 40px; }
+.page-heading { margin-bottom: 21px; }
+.page-heading p:not(.eyebrow) { margin-top: 7px; }
+.today-grid { grid-template-columns: minmax(0, 1fr) minmax(275px, 360px); }
+.companion-card { background: #f3eaf7; border-color: #e8d8ec; position: relative; }
+.companion-card .dashboard-pet { border: 0; background: transparent; margin: 6px auto; width: min(100%, 315px); padding: 0; display: block; border-radius: 14px; }
+.companion-card .dashboard-pet canvas { margin: 0; }
+.companion-top { align-items: baseline; }
+.companion-top h2 { font-size: 19px; }
+.companion-card .cat-line { min-height: 1.25em; padding: 0 16px; margin: 0 0 10px; }
+.pet-intro { padding: 10px 16px 13px; text-align: center; font-size: 13px; }
+#dashboard-pet-menu, #dashboard-pet-speech { background: var(--surface); border: 1px solid #d6c2df; padding: 12px; box-shadow: 0 7px 20px #3d224b20; border-radius: 13px; margin: 0 14px 14px; }
+#dashboard-pet-menu header { display: flex; justify-content: space-between; align-items: center; }
+#dashboard-pet-menu .pet-actions { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 0 0; }
+#dashboard-pet-menu button, #dashboard-pet-speech button { min-height: 33px; border: 1px solid var(--line); border-radius: 8px; padding: 5px 9px; background: var(--lilac); color: var(--purple-dark); }
+#dashboard-pet-speech .dismiss { float: right; margin: 0 0 5px 8px; }
+.pet-followups:not(:empty) { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.pet-announcement { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.day-section, .day-review { border-top: 1px solid var(--line); padding: 12px 0; margin-top: 16px; }
+.day-section h2 { font-size: 19px; }
+.day-section-header, .day-section li, .day-review li, .wrap-up li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.day-section ul, .day-review ul, .wrap-up ul { list-style: none; padding: 0; margin: 5px 0 0; }
+.day-section li span, .day-review li span, .wrap-up li span { overflow-wrap: anywhere; }
+.day-section li span, .day-review li span { flex: 1; }
+.day-section p { margin-top: 4px; }
+.day-review { margin-top: 24px; }
+.day-review > summary { cursor: pointer; max-width: max-content; font-weight: 800; min-height: 34px; }
+.day-review-content, #day-review-content { max-width: 680px; }
+.task-body .task-menu { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 3px 12px; margin: 5px 0 0; }
+.task-menu .text-button { min-height: 32px; }
+.focus-presets, .task-templates, .wrap-actions { display: flex; gap: 7px 14px; flex-wrap: wrap; }
+.focus-presets button, .task-templates button { min-height: 32px; }
+.parking-form { margin-top: 18px; }
+.parking-form > label { display: block; font-weight: 800; margin-bottom: 5px; }
+.wrap-up { margin-top: 18px; }
+.wrap-up h3 { margin-top: 16px; }
+.wrap-actions { margin-top: 12px; }
+.outfit-slots { grid-template-columns: 1fr; }
+.outfit-slots > div { min-width: 0; }
+.outfit-slots strong { overflow-wrap: anywhere; }
+#view-companion .button, #view-calendar .button, .wrap-actions .button { white-space: normal; }
+@media (max-width: 760px) {
+  .today-grid { grid-template-columns: minmax(0, 1fr); }
+  .companion-card { order: initial; }
+  .study-companion { order: initial; }
+  .main-nav { flex-wrap: wrap; scrollbar-gutter: auto; }
+  .main-nav button { padding-inline: 9px; }
+  .companion-card .dashboard-pet { max-width: 230px; }
+  .page-heading { margin-bottom: 15px; }
+  .app-header { min-height: 63px; }
+}
+.today-rail { min-width: 0; }
+.today-rail > .day-section { border-top: 0; margin-top: 0; padding-top: 0; }
+.today-rail > .planner-today { margin-top: 0; margin-bottom: 15px; }
+#today-completion { margin-top: 10px; }
+#view-today .list-toolbar { margin-top: 14px; }
+#confirm-dialog .dialog-actions { flex-wrap: wrap; }
+@media (max-height: 420px) {
+  .toast { position: static; transform: none; max-width: 100%; margin-bottom: 8px; box-shadow: none; }
+}
